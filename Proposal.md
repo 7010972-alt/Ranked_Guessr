@@ -5,3 +5,4 @@ For my major project I would like to add to my Geoguessr inspired game. I would 
 - muiltiplayer gamemode, one player chooses a location and the other has to guess on it taking turns
 - custom maps, allows the player to upload custom maps and practice on them
 - hint system, holds hints for different areas of the world showing them after a guess or saved as a library
+- satisfying effects, effects to make the game more satisfying
