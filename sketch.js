@@ -1,5 +1,4 @@
-//Grid Assignment
-//I am adding onto my arrays project so you can find most of my grid assignment work near the bottom of my code
+//SDS
 
 //Bertin Li
 //March 5/26
@@ -254,6 +253,10 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let geoTechPic;
+
+let validCountry = false;
+let selectedCountry;
 let displayAns;
 
 let afterViewing = false;
@@ -426,6 +429,11 @@ let gridShapeDropdown;
 let XButton;
 let autoMapCloseButton;
 
+let showLearnButton;
+let LearnMap;
+let openHintButton;
+let hintsDropDown;
+
 //set variables
 let blitzTime = 10;
 
@@ -476,6 +484,11 @@ let showRankScreen;
 //show grid screen
 let showGrid = false;
 let showGridScreen;
+
+//show grid screen
+let showLearn = false;
+let LearnScreen;
+let hintTextHolder;
 
 let griddedMap;
 let gridMapID;
@@ -602,14 +615,17 @@ function setup() {
   rankIcon.style("opacity", "2");
 
   allPinsDisplay = createImg(allPins, "all the pins");
-  allPinsDisplay.style("z-index", "21");
   allPinsDisplay.style("z-index", "-1");
   allPinsDisplay.style("opacity", "0");
 
   allShieldsDisplay = createImg(allShields, "all the Shields");
-  allShieldsDisplay.style("z-index", "21");
   allShieldsDisplay.style("z-index", "-1");
   allShieldsDisplay.style("opacity", "0");
+
+  geoTechPic = createImg("");
+  geoTechPic.style("z-index", "-1");
+  geoTechPic.style("opacity", "0");
+  geoTechPic.style("transform", "translate(-50%, -50%)");
 
   //leaflet map
   map = L.map("map").setView([0, 0], 1);
@@ -716,11 +732,13 @@ function setup() {
   //gridded map
   griddedMap = L.map("griddedmap").setView([0, 0], 1);
 
-  //from leaflet
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  //all English Tile Layer
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
     maxZoom: 19,
     minZoom: 1,
-    attribution: "&copy; OpenStreetMap contributors"
+    noWrap: true,
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
   }).addTo(griddedMap);
 
   //set points when normal map is clicked
@@ -900,6 +918,13 @@ function setup() {
 
   heatMapDropDown.changed(findHeatValues);
 
+  //dropdown menu that holds all of the countries Hints
+  hintsDropDown = createSelect();
+  hintsDropDown.size(160, 30);
+  hintsDropDown.style("z-index", "-1");
+
+  hintsDropDown.changed(currentHintDisplay);
+
   //type in the comparison value for your heat map
   heatMapType = createInput();
   heatMapType.size(75, 24);
@@ -969,6 +994,14 @@ function setup() {
 
   showGridButton.mousePressed(displayGrid);
 
+  //button to open the learn screen
+  showLearnButton = createButton("Learn");
+  showLearnButton.size(shieldSize, 20);
+  showLearnButton.style("position", "absolute");
+  showLearnButton.style("z-index", "-1");
+
+  showLearnButton.mousePressed(displayLearn);
+
   //button to open the datat transfer screen
   DataShowButton = createButton("Data Fuse");
   DataShowButton.size(shieldSize, 20);
@@ -993,6 +1026,15 @@ function setup() {
   gridModeButton.style("background-color", "red");
 
   gridModeButton.mousePressed(enterGridMode);
+
+  //button to enter a learn info for a country
+  openHintButton = createButton("View Tech");
+  openHintButton.size(160, 30);
+  openHintButton.style("position", "absolute");
+  openHintButton.style("z-index", "-1");
+  openHintButton.style("background-color", "red");
+
+  openHintButton.mousePressed(openCountryHint);
 
   //button to hide all of the buttons under the shield
   hideUnderButton = createButton("Show");
@@ -1122,6 +1164,38 @@ function setup() {
   showGridScreen.style("border-radius", "12px");
   showGridScreen.style("border", "4px solid black");
 
+  //the learn screen
+  LearnScreen = createDiv();
+  LearnScreen.style("background", "rgb(154, 255, 120)");
+  LearnScreen.style("z-index", "-1");
+  LearnScreen.style("opacity", "0");
+
+  LearnScreen.style("justify-content", "left");
+  LearnScreen.style("align-items", "center");
+  LearnScreen.style("font-weight", "bold");
+
+  LearnScreen.style("color", "black");
+  LearnScreen.style("border-radius", "12px");
+  LearnScreen.style("border", "4px solid black");
+
+  //holds the descriptions of the hints
+  hintTextHolder = createDiv();
+  hintTextHolder.style("background", "rgb(154, 255, 120)");
+  hintTextHolder.style("z-index", "-1");
+  hintTextHolder.style("opacity", "0");
+
+  hintTextHolder.style("justify-content", "left");
+  hintTextHolder.style("align-items", "center");
+  hintTextHolder.style("font-weight", "bold");
+
+  hintTextHolder.style("color", "black");
+  hintTextHolder.style("border-radius", "12px");
+  hintTextHolder.style("border", "4px solid black");
+
+  hintTextHolder.style("white-space", "normal");
+  hintTextHolder.style("word-wrap", "break-word");
+  hintTextHolder.style("overflow-wrap", "break-word");
+
   //images
   fourK = createImg("4K.png", "4K");
   fourK.style("z-index", "21");
@@ -1230,6 +1304,99 @@ function draw() {
   allHaveGuessed();
 }
 
+//runs when a hint is selected and displays the hint
+function currentHintDisplay() {
+  //creates a function for each of the techs so that they can be shown
+  for (let tech of Object.keys(hintedCountries[selectedCountry])) {
+    if (hintsDropDown.value() === tech) {
+      hintTextHolder.html(`
+        <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+        <br>
+        <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span>
+      `);
+
+      geoTechPic.attribute("src", hintedCountries[selectedCountry][tech].picture);
+    }  
+  }
+}
+
+function openCountryHint() {
+  if (validCountry) {
+    gridMapID.hide();
+
+    openHintButton.style("z-index", "-1");
+    openHintButton.style("opacity", "0");
+    hintsDropDown.style("z-index", "20");
+    hintsDropDown.style("opacity", "1");
+    geoTechPic.style("z-index", "24");
+    geoTechPic.style("opacity", "1");
+
+    //adds every tech to the dropdown menu
+    for (let key of Object.keys(hintedCountries[selectedCountry])) {
+      hintsDropDown.option(hintedCountries[selectedCountry][key].name, key);
+    }
+
+    currentHintDisplay();
+  }
+}
+
+let smallTextFont = "22px";
+let largeTextFont = "30px";
+
+//opens the learn screen
+function displayLearn() {
+  if (!showLearn) {
+    selectedCountry = undefined;
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">1. Click on a Country</span><br>
+      <span style="font-size: ${smallTextFont};">2. Click view tech (if green)</span><br>
+      <span style="font-size: ${smallTextFont};">3. Choose Tech from the Dropdown</span><br>
+      <br>
+
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Ex: (Exlusive) found only in that country</span><br>
+      <span style="font-size: ${smallTextFont};">Rr: (Rare) found in a couple countries</span><br>
+      <span style="font-size: ${smallTextFont};">Cm: (Common) found in many countries</span><br>
+    `);
+
+    hintTextHolder.style("z-index", "20");
+    hintTextHolder.style("opacity", "1");
+    openHintButton.style("background-color", "red");
+    LearnScreen.style("z-index", "20");
+    LearnScreen.style("opacity", "1");
+    openHintButton.style("z-index", "25");
+    openHintButton.style("opacity", "1");
+
+    gridMapID.show();
+    showLearn = true;
+  }
+  else {
+    closeLearn();
+  }
+}
+
+function closeLearn() {
+  hintsDropDown.elt.innerHTML = "";
+  
+  LearnScreen.style("z-index", "-1");
+  LearnScreen.style("opacity", "0");
+
+  openHintButton.style("z-index", "-1");
+  openHintButton.style("opacity", "0");
+  hintsDropDown.style("z-index", "-1");
+  hintsDropDown.style("opacity", "0");
+  hintTextHolder.style("z-index", "-1");
+  hintTextHolder.style("opacity", "0");
+  geoTechPic.style("z-index", "-1");
+  geoTechPic.style("opacity", "0");
+
+  gridMapID.hide();
+  showLearn = false;
+}
+
 //for testing purposes
 function crAns() {
   displayAns = L.marker([randomlocation.lat, randomlocation.lng]).addTo(map);
@@ -1292,6 +1459,7 @@ function closeAll() {
   closegrid();
   closeData();
   closeSettings();
+  closeLearn();
 }
 
 //shortens the time when all players of the parpty has guessed
@@ -1634,7 +1802,6 @@ function changeJoinWaitTest() {
 function fixMapSizes() {
   if (prevWidth !== windowWidth || prevHeight !== windowHeight) {
     map.invalidateSize();
-    // griddedMap.invalidateSize();
   }
   prevWidth = windowWidth;
   prevHeight = windowHeight;
@@ -1707,6 +1874,7 @@ function hideUnderShield() {
     gridModeButton.style("z-index", "-1");
     showSettingsButton.style("z-index", "-1");
     hintButton.style("z-index", "-1");
+    showLearnButton.style("z-index", "-1");
   }
   else {
     hideUnderButton.html("Hide");
@@ -1716,6 +1884,7 @@ function hideUnderShield() {
     gridModeButton.style("z-index", "2");
     showSettingsButton.style("z-index", "2");
     hintButton.style("z-index", "2");
+    showLearnButton.style("z-index", "2");
   }
 }
 
@@ -3281,7 +3450,7 @@ function fixsizes() {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 4 - xButOffset, windowHeight / 2 - windowWidth / 8 - xButOffset);
   }
-  else if (dataShow || showGrid || showingSettings) {
+  else if (dataShow || showGrid || showingSettings || showLearn) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 6.5 - xButOffset, windowHeight / 2.25 - windowWidth / 8 - xButOffset);
   }
@@ -3370,12 +3539,14 @@ function fixsizes() {
   gridModeButton.position(underShieldX, bannerHeight + shieldSize + 110);
   hintButton.position(underShieldX, bannerHeight + shieldSize + 135);
   showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
+  showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
+
 
   if (buttonsHidden) {
     hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 35);
   }
   else {
-    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 185);
+    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 210);
   }
 
   //change sizes of the rank info in relation to the screensizes
@@ -3390,9 +3561,33 @@ function fixsizes() {
   showGridScreen.style("font-size", windowWidth / 69 + "px");
   showGridScreen.style("padding-left", windowWidth / 40 + "px");
   showGridScreen.style("padding-top", windowWidth / 60 + "px");
+
+  LearnScreen.size(windowWidth / 1.5, windowWidth / 3.25);
+  LearnScreen.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
+  LearnScreen.style("font-size", windowWidth / 69 + "px");
+  LearnScreen.style("padding-left", windowWidth / 40 + "px");
+  LearnScreen.style("padding-top", windowWidth / 60 + "px");
+
+  hintTextHolder.size(windowWidth / 3, windowWidth / 3.25);
+  hintTextHolder.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
+  hintTextHolder.style("font-size", windowWidth / 69 + "px");
+  hintTextHolder.style("padding-left", windowWidth / 40 + "px");
+  hintTextHolder.style("padding-top", windowWidth / 60 + "px");
+
+  //tip picture pos
+
+  //move the right side of the learn screen
+  geoTechPic.position(windowWidth / 6.5 + (windowWidth / 1.5) * 0.75 + windowWidth / 35, (windowHeight / 2.25 - windowWidth / 8) + windowWidth / 6.5 + windowWidth / 100);
+  geoTechPic.size(windowWidth / 3.5, windowWidth / 3.5);
+
+  //tech button pos
+  openHintButton.position(175, 30);
+  hintsDropDown.position(175, 30);
+
   showGridDropDown.position(175, 30);
   gridShapeDropdown.position(175, 30);
   heatMapDropDown.position(255, 30);
+
 
   redCover.size(windowWidth, windowHeight - bannerHeight);
 
@@ -4560,13 +4755,6 @@ function saveProgress() {
 }
 
 
-//this is what I am making for my grid assignment
-//the basic idea is that the map will be divided into many grids to serve many purposes
-// - players can see how much the 2d map is stretched (places like Greenland look massive but are not actually)
-// - stats will be saved to each grid showing players their best and worst areas
-// - has a heat map so that players can see 
-
-
 //grid system for map
 const GRID_LENGTH = 15;
 const GRID_MODE_LENGTH = 10;
@@ -4609,8 +4797,6 @@ let CENTERX = 17;
 let greenSquares = [];
 let midSquares = [];
 let redSquares = [];
-
-
 
 //create a new grid if the player does not have one already used for holding info
 function addGrid() {
@@ -4659,125 +4845,167 @@ function addGrid() {
   }
 
   //function to determine the current grid
-  function onGridMapClick(e) {
-    if (selectSquare !== undefined) {
-      selectSquare.remove();
-    }
+
+  //also the learn map
+  async function onGridMapClick(e) {
 
     let lat = e.latlng.lat;
     let lng = e.latlng.lng;
 
-    let currentCol = Math.floor((lat + 90) / GRID_LENGTH);
-    let currentRow = Math.floor((lng + 180) / GRID_LENGTH);
-
-    currentgrid = mapGrid[currentCol][currentRow];
-
-    //if the player presses outside of the gridded map
-    if (currentgrid === undefined) {
-      currentgrid = "none";
-    }
-
-    //create a select square
-    selectSquare = L.polygon([
-      [currentCol * GRID_LENGTH - 90, currentRow * GRID_LENGTH - 180],
-      [currentCol * GRID_LENGTH - 90, (currentRow + 1) * GRID_LENGTH - 180],
-      [(currentCol + 1) * GRID_LENGTH - 90, (currentRow + 1) * GRID_LENGTH - 180],
-      [(currentCol + 1) * GRID_LENGTH - 90, currentRow * GRID_LENGTH - 180]
-    ], {
-      color: "rgb(187, 196, 74)",
-      weight: 1,
-      opacity: 1,
-
-      fillColor: "yellow",
-      fillOpacity: 0.3
-    }).addTo(griddedMap);
-
-    //remove all guesses that had been there before
-    for (let item of shownPastGuesses) {
-      item.remove();
-    }
-    shownPastGuesses = [];
-
-    //show all guesses that were in that grid
-    for (let info of currentgrid.pastGuesses) {
-      //display the icon based on the set that was played
-      let showIcon = answerIcon;
-      if (info.roundType === "blitz") {
-        showIcon = blitzAnswer;
+    //if it is acting as the stats grid displayer
+    if (showGrid) {
+      if (selectSquare !== undefined) {
+        selectSquare.remove();
       }
-      else if (info.roundType === "NMPZ") {
-        showIcon = NMPZAnswer;
+  
+  
+      let currentCol = Math.floor((lat + 90) / GRID_LENGTH);
+      let currentRow = Math.floor((lng + 180) / GRID_LENGTH);
+  
+      currentgrid = mapGrid[currentCol][currentRow];
+  
+      //if the player presses outside of the gridded map
+      if (currentgrid === undefined) {
+        currentgrid = "none";
       }
-      else if (info.roundType === "blink") {
-        showIcon = blinkAnswer;
-      }
-      else if (info.roundType === "blur") {
-        showIcon = blurAnswer;
-      }
-
-
-      //create all the guesses that have been in the selected grid
-      let gridAnswerMark = L.marker([info.answerLat, info.answerLng], {icon: showIcon}).addTo(griddedMap);
-      let gridClickedMark = L.marker([info.clickedLat, info.clickedLng], {icon: markerIcon}).addTo(griddedMap);
-      let gridAnswerLine = L.polyline([[info.clickedLat, info.clickedLng],[info.answerLat, info.answerLng]], {
-        color: info.lineColor,
-        opacity: 0.7
+  
+      //create a select square
+      selectSquare = L.polygon([
+        [currentCol * GRID_LENGTH - 90, currentRow * GRID_LENGTH - 180],
+        [currentCol * GRID_LENGTH - 90, (currentRow + 1) * GRID_LENGTH - 180],
+        [(currentCol + 1) * GRID_LENGTH - 90, (currentRow + 1) * GRID_LENGTH - 180],
+        [(currentCol + 1) * GRID_LENGTH - 90, currentRow * GRID_LENGTH - 180]
+      ], {
+        color: "rgb(187, 196, 74)",
+        weight: 1,
+        opacity: 1,
+  
+        fillColor: "yellow",
+        fillOpacity: 0.3
       }).addTo(griddedMap);
-
-      //when clicked show the viewer what that location looked like
-      //basically entering a replay
-      gridAnswerMark.on("click", function () {
-        viewing = true;
-        resetGridView();
-
-        //apply the NMPZ effect
-        if (info.roundType === "NMPZ" || info.roundType === "blink") {
-          viewingNMPZ = true;
+  
+      //remove all guesses that had been there before
+      for (let item of shownPastGuesses) {
+        item.remove();
+      }
+      shownPastGuesses = [];
+  
+      //show all guesses that were in that grid
+      for (let info of currentgrid.pastGuesses) {
+        //display the icon based on the set that was played
+        let showIcon = answerIcon;
+        if (info.roundType === "blitz") {
+          showIcon = blitzAnswer;
         }
-        else {
-          viewingNMPZ = false;
+        else if (info.roundType === "NMPZ") {
+          showIcon = NMPZAnswer;
         }
-
-        //apply the blur effect
-        if (info.roundType === "blur") {
-          blurCover.style("z-index", "1");
-        }
-        //apply the blink effect
         else if (info.roundType === "blink") {
-          runBlink();
+          showIcon = blinkAnswer;
+        }
+        else if (info.roundType === "blur") {
+          showIcon = blurAnswer;
+        }
+  
+  
+        //create all the guesses that have been in the selected grid
+        let gridAnswerMark = L.marker([info.answerLat, info.answerLng], {icon: showIcon}).addTo(griddedMap);
+        let gridClickedMark = L.marker([info.clickedLat, info.clickedLng], {icon: markerIcon}).addTo(griddedMap);
+        let gridAnswerLine = L.polyline([[info.clickedLat, info.clickedLng],[info.answerLat, info.answerLng]], {
+          color: info.lineColor,
+          opacity: 0.7
+        }).addTo(griddedMap);
+  
+        //when clicked show the viewer what that location looked like
+        //basically entering a replay
+        gridAnswerMark.on("click", function () {
+          viewing = true;
+          resetGridView();
+  
+          //apply the NMPZ effect
+          if (info.roundType === "NMPZ" || info.roundType === "blink") {
+            viewingNMPZ = true;
+          }
+          else {
+            viewingNMPZ = false;
+          }
+  
+          //apply the blur effect
+          if (info.roundType === "blur") {
+            blurCover.style("z-index", "1");
+          }
+          //apply the blink effect
+          else if (info.roundType === "blink") {
+            runBlink();
+          }
+  
+          //hide the map grid page
+          showGridScreen.style("z-index", "-1");
+          showGridScreen.style("opacity", "0");
+          gridMapID.hide();
+          showGridDropDown.style("z-index", "-1");
+          showGridDropDown.style("opacity", "0");
+          heatMapDropDown.style("z-index", "-1");
+          heatMapDropDown.style("opacity", "0");
+          heatMapType.style("z-index", "-1");
+          heatMapType.style("opacity", "0");
+          Labels.style("z-index", "-1");
+          Labels.style("opacity", "0");
+          showGrid = false;
+  
+          //make sure the player cannot access map
+          mapID.hide();
+          hideMapButton.attribute("disabled", "");
+  
+          //show the previous location
+          newlat = info.answerLat;
+          newlng = info.answerLng;
+          switching = true;
+  
+        });
+  
+        //place all marks in list for later removal
+        shownPastGuesses.push(gridAnswerMark);
+        shownPastGuesses.push(gridClickedMark);
+        shownPastGuesses.push(gridAnswerLine);
+      }
+    }
+
+
+    //what runs in learn mode
+    else if (showLearn) {
+      //attempts to find a country
+      try {
+        let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=3&addressdetails=1`);
+        let data = await response.json();
+
+        //if country is found
+        if (data.address && data.address.country) {
+          selectedCountry = data.address.country
+
+          //if the selected country is one that I have added hints to
+          if (selectedCountry in hintedCountries) {
+            openHintButton.style("background-color", "green");
+            validCountry = true;
+          }
+          else {
+            openHintButton.style("background-color", "red");
+            validCountry = false;
+          }
         }
 
-        //hide the map grid page
-        showGridScreen.style("z-index", "-1");
-        showGridScreen.style("opacity", "0");
-        gridMapID.hide();
-        showGridDropDown.style("z-index", "-1");
-        showGridDropDown.style("opacity", "0");
-        heatMapDropDown.style("z-index", "-1");
-        heatMapDropDown.style("opacity", "0");
-        heatMapType.style("z-index", "-1");
-        heatMapType.style("opacity", "0");
-        Labels.style("z-index", "-1");
-        Labels.style("opacity", "0");
-        showGrid = false;
-
-        //make sure the player cannot access map
-        mapID.hide();
-        hideMapButton.attribute("disabled", "");
-
-        //show the previous location
-        newlat = info.answerLat;
-        newlng = info.answerLng;
-        switching = true;
-
-      });
-
-      //place all marks in list for later removal
-      shownPastGuesses.push(gridAnswerMark);
-      shownPastGuesses.push(gridClickedMark);
-      shownPastGuesses.push(gridAnswerLine);
+        //if a country is not found
+        else {
+          openHintButton.style("background-color", "red");
+          validCountry = false;
+        }
+      }
+      catch (error) {
+        console.log("Error finding country:", error);
+      }
     }
   }
+
 
   griddedMap.on("click", onGridMapClick);
 }
