@@ -253,6 +253,11 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+const DEFAULT_SMALL_TEXT = 22
+const DEFAULT_LARGE_TEXT = 30
+let smallTextFont = "22px";
+let largeTextFont = "30px";
+
 let geoTechPic;
 
 let validCountry = false;
@@ -1309,11 +1314,30 @@ function currentHintDisplay() {
   //creates a function for each of the techs so that they can be shown
   for (let tech of Object.keys(hintedCountries[selectedCountry])) {
     if (hintsDropDown.value() === tech) {
-      hintTextHolder.html(`
-        <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
-        <br>
-        <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span>
-      `);
+
+      //display the info on each hint
+      if (hintsDropDown.value() !== "Main") {
+        hintTextHolder.html(`
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span>
+        `);
+      }
+
+      //dislpay info on the main
+      else {
+        hintTextHolder.html(`
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">Driving Direction: ${hintedCountries[selectedCountry][tech].driving}</span><br>
+          <span style="font-size: ${smallTextFont};">Liscense Plate: ${hintedCountries[selectedCountry][tech].plate}</span><br>
+          <span style="font-size: ${smallTextFont};">Language: ${hintedCountries[selectedCountry][tech].language}</span><br>
+          <span style="font-size: ${smallTextFont};">Difficulty: ${hintedCountries[selectedCountry][tech].difficulty}</span><br>
+
+        `);
+      }
 
       geoTechPic.attribute("src", hintedCountries[selectedCountry][tech].picture);
     }  
@@ -1339,9 +1363,6 @@ function openCountryHint() {
     currentHintDisplay();
   }
 }
-
-let smallTextFont = "22px";
-let largeTextFont = "30px";
 
 //opens the learn screen
 function displayLearn() {
@@ -1538,6 +1559,7 @@ function resetGuessStatus() {
 
 function windowResized() {
   resetMapSize();
+  currentHintDisplay();
 }
 
 //makes the map go back to its size after the endscreen
@@ -3641,7 +3663,12 @@ function fixsizes() {
   //always have start party button and the hint button in the middle of the screen
   startPartyButton.position(windowWidth / 2 - 40, windowHeight / 1.2);
   partyHintButton.position(windowWidth / 2 - 40, windowHeight / 1.2 + 50);
-  
+
+  let maxScreenSize = 1920
+
+  //scale the text sizes
+  smallTextFont = String(DEFAULT_SMALL_TEXT * ((windowWidth) / maxScreenSize)) + "px"
+  largeTextFont = String(DEFAULT_LARGE_TEXT * ((windowWidth) / maxScreenSize)) + "px"
 }
 
 //shows the grids
