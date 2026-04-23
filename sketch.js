@@ -1,4 +1,4 @@
-//SDS
+//SDS Major Project
 
 //Bertin Li
 //March 5/26
@@ -253,6 +253,10 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let allGeoHints = [];
+
+let inQuiz = false;
+
 const DEFAULT_SMALL_TEXT = 22
 const DEFAULT_LARGE_TEXT = 30
 let smallTextFont = "22px";
@@ -433,6 +437,9 @@ let refreshButton;
 let gridShapeDropdown;
 let XButton;
 let autoMapCloseButton;
+
+let quizModeButton;
+let quizImage;
 
 let showLearnButton;
 let LearnMap;
@@ -1007,6 +1014,14 @@ function setup() {
 
   showLearnButton.mousePressed(displayLearn);
 
+  //button to enter quiz mode
+  quizModeButton = createButton("Quiz");
+  quizModeButton.size(shieldSize, 20);
+  quizModeButton.style("position", "absolute");
+  quizModeButton.style("z-index", "-1");
+
+  quizModeButton.mousePressed(enterQuiz);
+
   //button to open the datat transfer screen
   DataShowButton = createButton("Data Fuse");
   DataShowButton.size(shieldSize, 20);
@@ -1222,6 +1237,11 @@ function setup() {
   plus10.style("transform", "translate(-50%, -50%)");
   plus10.style("pointer-events", "none");
 
+  //image to show the hint in quiz mode
+  quizImage = createImg("GeoTechs/BG/BG-walksign.png");
+  quizImage.style("z-index", "-1");
+  quizImage.style("transform", "translate(-50%, -50%)");
+  quizImage.style("pointer-events", "none");
 
   //load info
 
@@ -1271,6 +1291,8 @@ function setup() {
   changeMapSize();
 
   resetMapSize();
+
+  addAllGeoHints();
 }
 
 function draw() {
@@ -1307,6 +1329,42 @@ function draw() {
   showGridDrop();
   resetGuessStatus();
   allHaveGuessed();
+}
+
+//add all geo hints into one list for the quiz mode
+function addAllGeoHints() {
+  allGeoHints = [];
+  for (let name in hintedCountries) {
+    let country = hintedCountries[name];
+    for (let hintName in country) {
+      let geoHint = country[hintName];
+      if (hintName !== "Main") {
+        if (geoHint.type === "EX") {
+          allGeoHints.push({
+            country: name,
+            picture: geoHint.picture,
+            type: geoHint.type,
+          });
+        }
+      }
+    }
+  }
+}
+
+//makes the player enter the quiz mode
+function enterQuiz() {
+  inQuiz = !inQuiz;
+  if (inQuiz) {
+    quizImage.style("z-index", "1");
+    street.attribute(
+      "src",
+      `https://www.google.com/maps?q=&layer=c&cbll=0,0&cbp=11,0,0,0,0&output=svembed`
+    );
+  }
+  else {
+    quizImage.style("z-index", "-1");
+    mapChange();
+  }
 }
 
 //runs when a hint is selected and displays the hint
@@ -1898,6 +1956,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "-1");
     hintButton.style("z-index", "-1");
     showLearnButton.style("z-index", "-1");
+    quizModeButton.style("z-index", "-1");
   }
   else {
     hideUnderButton.html("Hide");
@@ -1908,6 +1967,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "2");
     hintButton.style("z-index", "2");
     showLearnButton.style("z-index", "2");
+    quizModeButton.style("z-index", "2");
   }
 }
 
@@ -3563,13 +3623,21 @@ function fixsizes() {
   hintButton.position(underShieldX, bannerHeight + shieldSize + 135);
   showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
   showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
+  quizModeButton.position(underShieldX, bannerHeight + shieldSize + 210);
 
+  let lowervalue = windowHeight;
+  if (windowHeight > windowWidth) {
+    lowervalue = windowWidth;
+  }
+
+  quizImage.position(windowWidth / 2, windowHeight / 2);
+  quizImage.size(lowervalue, lowervalue);
 
   if (buttonsHidden) {
     hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 35);
   }
   else {
-    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 210);
+    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 235);
   }
 
   //change sizes of the rank info in relation to the screensizes
