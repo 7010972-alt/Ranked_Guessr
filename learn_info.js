@@ -1,4 +1,93 @@
 let hintedCountries = {
+  "Albania": {
+    Main: {
+      desc: "One of the easiest countries in my opinion is Albania. The only tricky part about ALbania is that it shares a ton of similarities with Italy.",
+      name: "Albania (ALB)",
+      picture: "GeoTechs/ALB/ALB-Main.png",
+      driving: "Right",
+      plate: "Red Stripe / Double Blue",
+      language: "Albanian",
+      difficulty: 3
+    },
+
+    ALBSHRoad: {
+      desc: "SH roading is only found in ALbania. Be careful as Italy has similar letters but no SH roads",
+      name: "EX: SH Roads",
+      picture: "GeoTechs/ALB/ALB-SHroad.png",
+      type: "EX"
+    },
+
+    ALBRedStripe: {
+      desc: "The red stripe instead of a blue stripe licsense plate is only found in Albania",
+      name: "EX: Red Plate",
+      picture: "GeoTechs/ALB/ALB-RedStripe.png",
+      type: "EX"
+    },
+
+    ALBDoubleBlue: {
+      desc: "The double blue stripe is only found in Italy, Albania and sometimes France",
+      name: "RR: Double Blue",
+      picture: "GeoTechs/ALB/ALB-DoubleBLue.png",
+      type: "RR"
+    },
+
+    ALBStopSign: {
+      desc: "The S on ALB stop signs look a little different as each end of the S seems stunted in a way",
+      name: "RR: Stop Sign",
+      picture: "GeoTechs/ALB/ALB-ShortS.png",
+      type: "RR"
+    },
+
+    ALBSkyRift: {
+      desc: "These breaks in the Sky are found in ALbania but also in Montenegro",
+      name: "RR: Sky Rift",
+      picture: "GeoTechs/ALB/ALB-Akyrift.png",
+      type: "RR"
+    },
+
+    ALBBollard: {
+      desc: "This is the Italian Bollard that is also found in Albania",
+      name: "RR: Bollard",
+      picture: "GeoTechs/ALB/ALB-Bollard.png",
+      type: "RR"
+    },
+
+    ALBUpsideDownTriangle: {
+      desc: "This special pole is found commonly in Albania but also in countries like Slovakia and Romania",
+      name: "RR: Inverted Triangle",
+      picture: "GeoTechs/ALB/ALB-UpsideDownTriangle.png",
+      type: "RR"
+    },
+
+    ALBBlackCheverons: {
+      desc: "Black Cheverons are found only in a couple countries like Greece, Italy and Albania",
+      name: "RR: Black Cheverons",
+      picture: "GeoTechs/ALB/ALB-Cheverons.png",
+      type: "RR"
+    },
+
+    ALBDryMountains: {
+      desc: "Dry mountains can be found in Greece and other Balkan countries",
+      name: "CM: Dry Mountains",
+      picture: "GeoTechs/ALB/ALB-drymountains.png",
+      type: "CM"
+    },
+
+    ALBMetalPoles: {
+      desc: "These cylinder metal poles are found all over Europe",
+      name: "CM: Metal Poles",
+      picture: "GeoTechs/ALB/ALB-MetalPoles.png",
+      type: "CM"
+    },
+
+    ALBBlackSignBack: {
+      desc: "Many countries have black sign backs, but it is less common in Europe",
+      name: "CM: Black Backs",
+      picture: "GeoTechs/ALB/ALB-BlackSignBacks.png",
+      type: "CM"
+    },
+  },
+
   "Bulgaria": {
     Main: {
       desc: "BG (Bulgaria) is generally an easy country. It is very mountainous, and they use a greek like language. Also, it does not share many similarities with it's neighbours",
@@ -198,6 +287,47 @@ let hintedCountries = {
     },
   },
 
+  "Montenegro": {
+    Main: {
+      desc: "MONT (Montenegro) is a pretty simple but nieche country to learn. Can share similarities with Albania",
+      name: "Montenegro (MONT)",
+      picture: "GeoTechs/MONT/MONT-.Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Montenegrin",
+      difficulty: 4
+    },
+
+    MONTSkyRift: {
+      desc: "The sky rift is the main hint towards Montenegro as it is mainly only found in ALbania and MONT",
+      name: "RR: Sky Rift",
+      picture: "GeoTechs/MONT/MONT-Skyridt.png",
+      type: "RR"
+    },
+
+    MONTGarudrail: {
+      desc: "Rusted Gaurdrails are very common in MONT and also a key hint towards the country",
+      name: "RR: Rusted Rail",
+      picture: "GeoTechs/MONT/MONT-.Gaurdrail.png",
+      type: "RR"
+    },
+
+    MONTRroads: {
+      desc: "other than North Mac, MONT is the only other European country that uses Rroads",
+      name: "RR: R Roads",
+      picture: "GeoTechs/MONT/MONT-.Rroad.png",
+      type: "RR"
+    },
+
+    MONTMountains: {
+      desc: "Large Rock Exposed Mountains are common in MONT",
+      name: "RR: Large Mountains",
+      picture: "GeoTechs/MONT/MONT-LargeMountains.png",
+      type: "RR"
+    },
+
+  },
+
   "North Macedonia": {
     Main: {
       desc: "MAC (North Macedonia) is a tiny country that does not have much coverage. However, it is not the easiest to recognize",
@@ -207,13 +337,6 @@ let hintedCountries = {
       plate: "Standard Europe",
       language: "North Macedonia",
       difficulty: 7
-    },
-
-    MACRroad: {
-      desc: "One of the most reliable ways to tell MAC is their R roads. They are almost unique in Europe",
-      name: "EX: R roads",
-      picture: "GeoTechs/N.MAC/N.MAC-Rroads.png",
-      type: "EX"
     },
 
     MACSkinnyBollard: {
@@ -227,6 +350,13 @@ let hintedCountries = {
       desc: "Some EU countries have yellow town signs including MAC",
       name: "RR: Yellow Signs",
       picture: "GeoTechs/N.MAC/N.MAC-townsign.png",
+      type: "RR"
+    },
+
+    MACRroad: {
+      desc: "One of the most reliable ways to tell MAC is their R roads. They are also found in MONT",
+      name: "RR: R roads",
+      picture: "GeoTechs/N.MAC/N.MAC-Rroads.png",
       type: "RR"
     },
 
@@ -314,7 +444,7 @@ let hintedCountries = {
 
     RMThinStopSigns: {
       desc: "The border on RM stop signs are thin",
-      name: "RR: RM Stop Sign",
+      name: "RR: Stop Sign",
       picture: "GeoTechs/RM/RM-ThinStopsign.png",
       type: "RR"
     },
