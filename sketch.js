@@ -1334,7 +1334,7 @@ function currentHintDisplay() {
           <span style="font-size: ${smallTextFont};">Driving Direction: ${hintedCountries[selectedCountry][tech].driving}</span><br>
           <span style="font-size: ${smallTextFont};">Liscense Plate: ${hintedCountries[selectedCountry][tech].plate}</span><br>
           <span style="font-size: ${smallTextFont};">Language: ${hintedCountries[selectedCountry][tech].language}</span><br>
-          <span style="font-size: ${smallTextFont};">Difficulty: ${hintedCountries[selectedCountry][tech].difficulty}</span><br>
+          <span style="font-size: ${smallTextFont};">Difficulty: ${hintedCountries[selectedCountry][tech].difficulty}/10</span><br>
 
         `);
       }
@@ -1368,6 +1368,7 @@ function openCountryHint() {
 function displayLearn() {
   if (!showLearn) {
     selectedCountry = undefined;
+    validCountry = false;
     hintTextHolder.html(`
       <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
       <br>
