@@ -88,6 +88,88 @@ let hintedCountries = {
     },
   },
 
+  "Bosnia and Herzegovina": {
+    Main: {
+      desc: "Bosnia and Herzegovina (BOS) is a very difficult country. I have missed this country on several occasions as it isn't fully unique in any way",
+      name: "BOS (Bosnia and Herzegovina)",
+      picture: "GeoTechs/BOS/BOS-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Bosnian",
+      difficulty: 8
+    },
+
+    BOSDashedWalkway: {
+      desc: "The dashed 2 lines with a uniquely thick body and skinny arms are unique to BOS",
+      name: "EX: Walkway",
+      picture: "GeoTechs/BOS/BOS-Dashed.png",
+      type: "EX"
+    },
+
+    BOSTallSigns: {
+      desc: "Tall Stop Signs are seen in urban BOS",
+      name: "RR: Tall Signs",
+      picture: "GeoTechs/BOS/BOS-TallSigns.png",
+      type: "RR"
+    },
+
+    BOSCarKnob: {
+      desc: "This little Knob with a wide blur is common in BOS and rarely seen in other places",
+      name: "RR: Car Knob",
+      picture: "GeoTechs/BOS/BOS-Knob.png",
+      type: "RR"
+    },
+
+    BOSBollard: {
+      desc: "These bollards look like the Austrian ones",
+      name: "RR: Bollard",
+      picture: "GeoTechs/BOS/BOS-Bollard.png",
+      type: "RR"
+    },
+
+    BOSMRoads: {
+      desc: "M roads are everywhere in BOS but also seen in many other countries like Russia",
+      name: "RR: M roads",
+      picture: "GeoTechs/BOS/BOS-Mroads.png",
+      type: "RR"
+    },
+
+    BOSBtype: {
+      desc: "B type gaurdrail is only in a couple of countries",
+      name: "RR: B-Type Rail",
+      picture: "GeoTechs/BOS/BOS-Btyperail.png",
+      type: "RR"
+    },
+
+    BOSBrownSign: {
+      desc: "Brown town signs can be rare to find over Europe and are seen in BOS",
+      name: "RR: Brown Signs",
+      picture: "GeoTechs/BOS/BOS-brownSign.png",
+      type: "RR"
+    },
+
+    BOSSmallCam: {
+      desc: "Almost all of Rural BOS was taken with small cam. It has a unique car blur",
+      name: "CM: Small Cam",
+      picture: "GeoTechs/BOS/BOS-SmallCam.png",
+      type: "CM"
+    },
+
+    BOSMetalPoles: {
+      desc: "Metal Poles are common in BOS",
+      name: "CM: Metal Poles",
+      picture: "GeoTechs/BOS/BOS-MetlaPoles.png",
+      type: "CM"
+    },
+
+    BOSHills: {
+      desc: "BOS is covered in Mountains and Hills",
+      name: "CM: Mountains",
+      picture: "GeoTechs/BOS/BOS-Hills.png",
+      type: "CM"
+    },
+  },
+
   "Bulgaria": {
     Main: {
       desc: "BG (Bulgaria) is generally an easy country. It is very mountainous, and they use a greek like language. Also, it does not share many similarities with it's neighbours",
@@ -191,6 +273,88 @@ let hintedCountries = {
     }
   },
 
+  "Croatia": {
+    Main: {
+      desc: "CR (Croatia) is a pretty difficult country as it is easily mixed up with the rest of the Balkans, especially Bosnia",
+      name: "Croatia (CR)",
+      picture: "GeoTechs/CR/CR-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Croation",
+      difficulty: 7
+    },
+
+    CRBlueHydrant: {
+      desc: "This special blue hydrant is almost unique to Croatia. Also, it has another variant that is missing the bottom piece",
+      name: "EX: Blue Hydrant",
+      picture: "GeoTechs/CR/CR-BlueHydrant.png",
+      type: "EX"
+    },
+
+    CRWhitezblueSticker: {
+      desc: "Lots of CR sign backs will have some sort of white and blue sticker. Especially this variation",
+      name: "EX: Blue Sticker",
+      picture: "GeoTechs/CR/CR-WhiteBlueSticker.png",
+      type: "EX"
+    },
+
+    CRAlternatingInsulators: {
+      desc: "CR wooden poles have alternating hook insulators",
+      name: "RR: Alternating Insuls",
+      picture: "GeoTechs/CR/CR-alternatingInsulators.png",
+      type: "RR"
+    },
+
+    CRDroads: {
+      desc: "D roads are common over Europe but seen a lot in Croatia",
+      name: "RR: D roads",
+      picture: "GeoTechs/CR/CR-Droads.png",
+      type: "RR"
+    },
+
+    CRRedBollard: {
+      desc: "The simple red bollard is used all over balkans and Hungary area. However, they are different than the BOS ones",
+      name: "RR: Red Bollard",
+      picture: "GeoTechs/CR/CR-RedBollard.png",
+      type: "RR"
+    },
+
+    CRFoldedBacks: {
+      desc: "CR sign backs will always be folded like Poland",
+      name: "RR: Folded Backs",
+      picture: "GeoTechs/CR/CR-FoldedBacks.png",
+      type: "RR"
+    },
+
+    CRYellowTownSigns: {
+      desc: "Yellow town signs can be found. Also, the arrow one can appear",
+      name: "RR: Yellow Town Signs",
+      picture: "GeoTechs/CR/CR-YellowTown.png",
+      type: "RR"
+    },
+
+    CRRedBrickBuildings: {
+      desc: "These are typically rare in the Balkans and are found a lot in Croatia",
+      name: "RR: Red Brick Houses",
+      picture: "GeoTechs/CR/CR-RedBrick.png",
+      type: "RR"
+    },
+
+    CRHorizontalLamp: {
+      desc: "This short horizontal lamp attached stifly at the top of the pole is common in Croatia and BOS",
+      name: "RR: Horizontal Lamp",
+      picture: "GeoTechs/CR/CR-HorizontalShortLamp.png",
+      type: "RR"
+    },
+
+    CRSkinnyRoading: {
+      desc: "Croatia is covered in skinny poor roads especially in rural rounds",
+      name: "CM: Skinny Roads",
+      picture: "GeoTechs/CR/CR-SkinnyPoorRoads.png",
+      type: "CM"
+    },
+  },
+
   "Greece": {
     Main: {
       desc: "GR (Greece) is typically a easy country with unique infrastructure, language, and landscape. However, a very difficult of part greece are the islands.",
@@ -213,13 +377,6 @@ let hintedCountries = {
       desc: "Many times GR is free due to it's very unique long road name. It starts with a letter E and is very long. Only ever seen in Greece but not on all roads",
       name: "EX: Greece Road Name",
       picture: "GeoTechs/GR/GR-RoadName.png",
-      type: "EX"
-    },
-
-    GRDoubleWhite: {
-      desc: "Double White lines in europe almost exclusive to Poland and GR. However, the 2 countries look completely different making this an EX tech",
-      name: "EX: Double White",
-      picture: "GeoTechs/GR/GR-WhiteDouble.png",
       type: "EX"
     },
 
@@ -249,6 +406,13 @@ let hintedCountries = {
       name: "EX: Mini Church",
       picture: "GeoTechs/GR/GR-MiniChurches.png",
       type: "EX"
+    },
+
+    GRDoubleWhite: {
+      desc: "Double White lines in europe almost exclusive to Poland and GR",
+      name: "RR: Double White",
+      picture: "GeoTechs/GR/GR-WhiteDouble.png",
+      type: "RR"
     },
 
     GRDarkPoles: {
@@ -298,17 +462,17 @@ let hintedCountries = {
       difficulty: 4
     },
 
+    MONTGarudrail: {
+      desc: "Rusted Gaurdrails are very common in MONT and also a key hint towards the country",
+      name: "EX: Rusted Rail",
+      picture: "GeoTechs/MONT/MONT-.Gaurdrail.png",
+      type: "EX"
+    },
+
     MONTSkyRift: {
       desc: "The sky rift is the main hint towards Montenegro as it is mainly only found in ALbania and MONT",
       name: "RR: Sky Rift",
       picture: "GeoTechs/MONT/MONT-Skyridt.png",
-      type: "RR"
-    },
-
-    MONTGarudrail: {
-      desc: "Rusted Gaurdrails are very common in MONT and also a key hint towards the country",
-      name: "RR: Rusted Rail",
-      picture: "GeoTechs/MONT/MONT-.Gaurdrail.png",
       type: "RR"
     },
 
@@ -335,7 +499,7 @@ let hintedCountries = {
       picture: "GeoTechs/N.MAC/N.MAC-Main.png",
       driving: "Right",
       plate: "Standard Europe",
-      language: "North Macedonia",
+      language: "Macedonian",
       difficulty: 7
     },
 
@@ -474,6 +638,46 @@ let hintedCountries = {
       desc: "RM is covered in agriculture but often it is hilly with even some higher hills in the background",
       name: "CM: Landscape",
       picture: "GeoTechs/RM/RM-agriculture.png",
+      type: "CM"
+    },
+  },
+
+  "Serbia": {
+    Main: {
+      desc: "Serb (Serbia) can be a vary difficult country even when learned. It is really only dependent on one meta",
+      name: "Serbia (Serb)",
+      picture: "GeoTechs/SERB/SERB-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Serbian",
+      difficulty: 6
+    },
+
+    SerbBollard: {
+      desc: "These usually flat offcentered reflectors are only found in Serb",
+      name: "EX: Uneven Bollard",
+      picture: "GeoTechs/SERB/SERB-unevenBollard.png",
+      type: "EX"
+    },
+
+    SerbTownSign: {
+      desc: "Yellow bilingual town signs are common in Serbia",
+      name: "RR: Town Sign",
+      picture: "GeoTechs/SERB/SERB-townsigns.png",
+      type: "RR"
+    },
+
+    SerbGaurdrail: {
+      desc: "This is the B-type gaurdrail only found in certain countries in Europe",
+      name: "RR: B-Type Rail",
+      picture: "GeoTechs/SERB/SERB-Btypegaurdrail.png",
+      type: "RR"
+    },
+
+    SerbCorn: {
+      desc: "Corn is found very commonly in Serbia especially in the flat North",
+      name: "CM: Corn",
+      picture: "GeoTechs/SERB/SERB-Corn.png",
       type: "CM"
     },
   },

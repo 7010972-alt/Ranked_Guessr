@@ -56,6 +56,9 @@ function preload() {
 
   intenseMusic = loadSound("intense_music.mp3");
 
+  //load the country borders
+  countriesGeoJSON = loadJSON("countryBorders.geojson");
+
   partyConnect(
     "wss://demoserver.p5party.org",
     "country_guessr"
@@ -253,6 +256,10 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let countryOutline;
+
+let previousMeta;
+let randomMeta;
 let allGeoHints = [];
 
 let inQuiz = false;
@@ -264,6 +271,7 @@ let largeTextFont = "30px";
 
 let geoTechPic;
 
+let pickedCountry;
 let validCountry = false;
 let selectedCountry;
 let displayAns;
@@ -658,8 +666,7 @@ function setup() {
   marker = L.marker([0, 0]).addTo(map);
 
   //when the map is clicked
-  function onMapClick(e) {
-
+  async function onMapClick(e) {
     if (!lockedIn) {
       randomPitch();
     }
@@ -680,6 +687,7 @@ function setup() {
           lng: lng,
         };
       }
+
       if (inParty && timeLeft >= 1) {
         if (currentParty === "normal") {
           shared.normalClickedPositions[myId] = {
@@ -1241,6 +1249,7 @@ function setup() {
   quizImage = createImg("GeoTechs/BG/BG-walksign.png");
   quizImage.style("z-index", "-1");
   quizImage.style("transform", "translate(-50%, -50%)");
+  quizImage.style("opacity", "0");
   quizImage.style("pointer-events", "none");
 
   //load info
@@ -1355,14 +1364,21 @@ function addAllGeoHints() {
 function enterQuiz() {
   inQuiz = !inQuiz;
   if (inQuiz) {
+    pickedCountry = undefined;
+    quizImage.style("opacity", "1");
+
+    if (countryOutline !== undefined) {
+      countryOutline.remove();
+    }
+
+    randomMeta = random(allGeoHints)
+    quizImage.attribute("src", randomMeta.picture);
     quizImage.style("z-index", "1");
-    street.attribute(
-      "src",
-      `https://www.google.com/maps?q=&layer=c&cbll=0,0&cbp=11,0,0,0,0&output=svembed`
-    );
+    covering= true;
   }
   else {
     quizImage.style("z-index", "-1");
+    covering= false;
     mapChange();
   }
 }
@@ -3853,7 +3869,7 @@ function bannerTextChange() {
   else if (onLastSetGuess) {
     banner.html("Distance: " + round(displayAmount).toLocaleString() + measurement + " | Points: " + displayPoints + " | Round Overall: " + totalSetPoints);
   }
-  else {
+  else if (!inQuiz) {
     banner.html("Distance: " + round(displayAmount).toLocaleString() + measurement + " | Points: " + displayPoints);
   }
 }
@@ -4018,7 +4034,92 @@ function setupMap() {
 
 //this handles submitting guesses and leaving the end screen after a guess
 //also displaying all the marks and setting values
-function confirmed() {
+async function confirmed() {
+
+  //confirm a guess in quiz mode
+  if (inQuiz) {
+    if (allowGuess && !endScreen) {
+      allowGuess = false;
+      try {
+        let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickedPoint.lat}&lon=${clickedPoint.lng}&zoom=3&addressdetails=1`);
+        let data = await response.json();
+  
+        //if country is found
+        if (data.address && data.address.country) {
+          pickedCountry = data.address.country
+        }
+  
+        //if a country is not found
+        else {
+          pickedCountry = "none"
+        }
+      }
+      catch (error) {
+        console.log("Error");
+      }
+
+      let fillColor = "red"
+  
+      if (randomMeta.country === pickedCountry) {
+        fillColor = "green"
+      }
+
+      endScreen = true;
+
+      //fill screen with map
+      mapID.style("bottom", "0px");
+      mapID.style("right", "0px");
+      mapID.size(windowWidth, windowHeight - bannerHeight);
+      map.invalidateSize();
+
+
+      //makes an outline around the correct country
+      countryOutline = L.geoJSON(countriesGeoJSON, {
+        filter: function(feature) {
+          return feature.properties.name === randomMeta.country;
+        },
+        style: {
+          color: fillColor,
+          weight: 3,
+          fillOpacity: 0.5
+        }
+      }).addTo(map);
+
+      //next country
+      randomMeta = random(allGeoHints)
+
+      //make sure that there isn't a repeat
+      while (randomMeta === previousMeta) {
+        randomMeta  = random(allGeoHints)
+      }
+
+      previousMeta = randomMeta;
+      quizImage.attribute("src", randomMeta.picture);
+
+      allowGuess = true;
+    }
+
+    else if (endScreen) {
+      countryOutline.remove();
+
+      //change map size back to original
+      enlarged = false;
+      endScreen = false;
+      resetMapSize();
+      mapID.size(mapOriginalWidth, mapOriginalHeight);
+      map.invalidateSize();
+      map.setView([0, 0], 1);
+
+      marker.setLatLng([0, 0]);
+      clickedPoint = {
+        lat: 0,
+        lng: 0,
+      };
+    }
+
+    return;
+  }
+
   //exit the viewing mode
   if (viewing) {
     viewing = false;
@@ -5070,6 +5171,10 @@ function addGrid() {
 
     //what runs in learn mode
     else if (showLearn) {
+      if (countryOutline !== undefined) {
+        countryOutline.remove();
+      }
+
       //attempts to find a country
       try {
         let response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=3&addressdetails=1`);
@@ -5079,15 +5184,30 @@ function addGrid() {
         if (data.address && data.address.country) {
           selectedCountry = data.address.country
 
+          let fillingcol = "red"
+
           //if the selected country is one that I have added hints to
           if (selectedCountry in hintedCountries) {
             openHintButton.style("background-color", "green");
             validCountry = true;
+            fillingcol = "green"
           }
           else {
             openHintButton.style("background-color", "red");
             validCountry = false;
           }
+
+          //makes an outline around the correct country
+          countryOutline = L.geoJSON(countriesGeoJSON, {
+            filter: function(feature) {
+              return feature.properties.name === selectedCountry;
+            },
+            style: {
+              color: fillingcol,
+              weight: 3,
+              fillOpacity: 0.5
+            }
+          }).addTo(griddedMap);
         }
 
         //if a country is not found
@@ -5097,7 +5217,7 @@ function addGrid() {
         }
       }
       catch (error) {
-        console.log("Error finding country:", error);
+        console.log("Error");
       }
     }
   }
