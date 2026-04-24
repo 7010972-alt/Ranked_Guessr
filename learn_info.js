@@ -451,6 +451,60 @@ let hintedCountries = {
     },
   },
 
+  "Hungary": {
+    Main: {
+      desc: "HG (Hungary) is often a free country having relaiable techs that give it away. However, some rounds can be near impossible or be indistinguishable from Romania",
+      name: "Hungary (HG)",
+      picture: "GeoTechs/HG/HG-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Hungary",
+      difficulty: 3
+    },
+
+    HGSkinnyHoleyPole: {
+      desc: "This type of Skinny holey pole is foud in Hungary. The holes go all the way to the bottom whereas Poland's do not",
+      name: "EX: Skinny Holey Pole",
+      picture: "GeoTechs/HG/HG-SkinnyHoleyPole.png",
+      type: "EX"
+    },
+
+    HGGreenMarker: {
+      desc: "These low to the ground Green road numbers are found in Hungary",
+      name: "EX: Road Numbers",
+      picture: "GeoTechs/HG/HG-RoaSign.png",
+      type: "EX"
+    },
+
+    HG4Screws: {
+      desc: "Almost all signs in Hungary have these 4 bolts on their road signs",
+      name: "RR: Sign Screws",
+      picture: "GeoTechs/HG/HG-4screws.png",
+      type: "RR"
+    },
+
+    HGRedBollard: {
+      desc: "Red Bollards are found in muiltiple countries",
+      name: "RR: Red Bollard",
+      picture: "GeoTechs/HG/HG-Bollard.png",
+      type: "RR"
+    },
+
+    HGNeatStreets: {
+      desc: "Many streets in Hungary are in a neat faashion with the houses perfectly spaced out",
+      name: "RR: Neat Streets",
+      picture: "GeoTechs/HG/HG-NeatStreets.png",
+      type: "RR"
+    },
+    
+    HGPoleSupport: {
+      desc: "These concrete support blicks are very common in Hungary",
+      name: "RR: ",
+      picture: "GeoTechs/HG/HG-Support.png",
+      type: "RR"
+    },
+  },
+
   "Montenegro": {
     Main: {
       desc: "MONT (Montenegro) is a pretty simple but nieche country to learn. Can share similarities with Albania",
@@ -686,7 +740,7 @@ let hintedCountries = {
     Main: {
       desc: "Turk (Turkey) is a very easy country between europe and Asia. It is easily recognized but can be tricky on some rural rounds.",
       name: "Turkey (Turk)",
-      picture: "GeoTechs/GR/GR-Main.png",
+      picture: "GeoTechs/Turk/Turk-Main.png",
       driving: "Right",
       plate: "Standard Europe",
       language: "Turkish",
