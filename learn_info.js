@@ -1,4 +1,14 @@
 let hintedCountries = {
+
+  General: {
+    Intro: {
+      desc: "GeoGuessr is a very difficult game. This is the basic general guide made for beginners. The first time you play it you are relying on previous knowledge. The 100th time you rely on memorization",
+      name: "1: Into",
+      picture: "GeoTechs/BG/BGMain.png",
+      type: "TUT"
+    },
+  },
+
   "Albania": {
     Main: {
       desc: "One of the easiest countries in my opinion is Albania. The only tricky part about ALbania is that it shares a ton of similarities with Italy.",

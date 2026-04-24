@@ -41,20 +41,20 @@ let intenseMusic;
 
 function preload() {
   //load sound
-  numberRacking = loadSound("number_racking.mp3");
-  terribleGuess = loadSound("terrible_guess.mp3");
-  goodGuessSound = loadSound("good_guess.mp3");
-  clickSound = loadSound("click_sound.mp3");
-  timeWarning = loadSound("has_guessed.mp3");
+  numberRacking = loadSound("Sounds/number_racking.mp3");
+  terribleGuess = loadSound("Sounds/terrible_guess.mp3");
+  goodGuessSound = loadSound("Sounds/good_guess.mp3");
+  clickSound = loadSound("Sounds/click_sound.mp3");
+  timeWarning = loadSound("Sounds/has_guessed.mp3");
 
-  chillMusic1 = loadSound("chill_music1.mp3");
-  chillMusic2 = loadSound("chill_music2.mp3");
-  chillMusic3 = loadSound("chill_music3.mp3");
-  chillMusic4 = loadSound("chill_music4.mp3");
-  chillMusic5 = loadSound("chill_music5.mp3");
-  chillMusic6 = loadSound("chill_music6.mp3");
+  chillMusic1 = loadSound("Sounds/chill_music1.mp3");
+  chillMusic2 = loadSound("Sounds/chill_music2.mp3");
+  chillMusic3 = loadSound("Sounds/chill_music3.mp3");
+  chillMusic4 = loadSound("Sounds/chill_music4.mp3");
+  chillMusic5 = loadSound("Sounds/chill_music5.mp3");
+  chillMusic6 = loadSound("Sounds/chill_music6.mp3");
 
-  intenseMusic = loadSound("intense_music.mp3");
+  intenseMusic = loadSound("Sounds/intense_music.mp3");
 
   //load the country borders
   countriesGeoJSON = loadJSON("countryBorders.geojson");
@@ -153,42 +153,42 @@ let nextMaxStreak = 0;
 let shieldSize = 80;
 let rankIcon;
 
-let allPins = "allPins.png";
+let allPins = "Assets/allPins.png";
 let allPinsDisplay;
 
-let allShields = "allShields.png";
+let allShields = "Assets/allShields.png";
 let allShieldsDisplay;
 
-let coalS = "coalShield.png";
-let bronzeS = "bronzeShield.png";
-let silverS = "silverShield.png";
-let goldS = "goldShield.png";
-let diamondS = "diamondShield.png";
-let obsidianS = "obsidianShield.png";
-let slimeS = "slimeShield.png";
-let interS = "interShield.png";
+let coalS = "Assets/coalShield.png";
+let bronzeS = "Assets/bronzeShield.png";
+let silverS = "Assets/silverShield.png";
+let goldS = "Assets/goldShield.png";
+let diamondS = "Assets/diamondShield.png";
+let obsidianS = "Assets/obsidianShield.png";
+let slimeS = "Assets/slimeShield.png";
+let interS = "Assets/interShield.png";
 
 let currentShield = coalS;
 
-let coalP = "coalPin.png";
-let bronzeP = "bronzePin.png";
-let silverP = "silverPin.png";
-let goldP = "goldPin.png";
-let diamondP = "diamondPin.png";
-let obsidianP = "obsidianPin.png";
-let slimeP = "slimePin.png";
-let interP = "interdimensionalPin.png";
+let coalP = "Assets/coalPin.png";
+let bronzeP = "Assets/bronzePin.png";
+let silverP = "Assets/silverPin.png";
+let goldP = "Assets/goldPin.png";
+let diamondP = "Assets/diamondPin.png";
+let obsidianP = "Assets/obsidianPin.png";
+let slimeP = "Assets/slimePin.png";
+let interP = "Assets/interdimensionalPin.png";
 
 let currentPin = coalP;
 
 //markers
 let answermarker;
 let marker;
-let greenAnswer = "green_marker.png";
-let yellowAnswer = "bolt_answer.png";
-let purpleanswer = "NMPZ_answer.png";
-let whiteanswer = "Blink_answer.png";
-let blackanswer = "Blur_answer.png";
+let greenAnswer = "Assets/green_marker.png";
+let yellowAnswer = "Assets/bolt_answer.png";
+let purpleanswer = "Assets/NMPZ_answer.png";
+let whiteanswer = "Assets/Blink_answer.png";
+let blackanswer = "Assets/Blur_answer.png";
 
 let answerIcon = L.icon({
   iconUrl: greenAnswer,
@@ -940,7 +940,7 @@ function setup() {
 
   //dropdown menu that holds all of the countries Hints
   hintsDropDown = createSelect();
-  hintsDropDown.size(160, 30);
+  hintsDropDown.size(160, 20);
   hintsDropDown.style("z-index", "-1");
 
   hintsDropDown.changed(currentHintDisplay);
@@ -1225,28 +1225,28 @@ function setup() {
   hintTextHolder.style("overflow-wrap", "break-word");
 
   //images
-  fourK = createImg("4K.png", "4K");
+  fourK = createImg("Assets/4K.png", "4K");
   fourK.style("z-index", "21");
   fourK.style("transform", "translate(-50%, -50%)");
   fourK.style("pointer-events", "none");
 
-  fourHalfK = createImg("4.8K.png", "4.8K");
+  fourHalfK = createImg("Assets/4.8K.png", "4.8K");
   fourHalfK.style("z-index", "21");
   fourHalfK.style("transform", "translate(-50%, -50%)");
   fourHalfK.style("pointer-events", "none");
 
-  plus5 = createImg("+5.png", "+5");
+  plus5 = createImg("Assets/+5.png", "+5");
   plus5.style("z-index", "21");
   plus5.style("transform", "translate(-50%, -50%)");
   plus5.style("pointer-events", "none");
 
-  plus10 = createImg("+10.png", "+10");
+  plus10 = createImg("Assets/+10.png", "+10");
   plus10.style("z-index", "21");
   plus10.style("transform", "translate(-50%, -50%)");
   plus10.style("pointer-events", "none");
 
   //image to show the hint in quiz mode
-  quizImage = createImg("GeoTechs/BG/BG-walksign.png");
+  quizImage = createImg("GeoTechs/GR/GR-Bollard.png", "the hint image");
   quizImage.style("z-index", "-1");
   quizImage.style("transform", "translate(-50%, -50%)");
   quizImage.style("opacity", "0");
@@ -1364,6 +1364,13 @@ function addAllGeoHints() {
 function enterQuiz() {
   inQuiz = !inQuiz;
   if (inQuiz) {
+
+    //adds every general tech to the options
+    for (let step in hintedCountries.General) {
+      hintsDropDown.option(hintedCountries.General[step].name, step);
+      console.log("added")
+    }
+
     pickedCountry = undefined;
     quizImage.style("opacity", "1");
 
@@ -1371,7 +1378,7 @@ function enterQuiz() {
       countryOutline.remove();
     }
 
-    randomMeta = random(allGeoHints)
+    randomMeta = random(allGeoHints);
     quizImage.attribute("src", randomMeta.picture);
     quizImage.style("z-index", "1");
     covering= true;
@@ -1424,8 +1431,6 @@ function openCountryHint() {
 
     openHintButton.style("z-index", "-1");
     openHintButton.style("opacity", "0");
-    hintsDropDown.style("z-index", "20");
-    hintsDropDown.style("opacity", "1");
     geoTechPic.style("z-index", "24");
     geoTechPic.style("opacity", "1");
 
@@ -1458,6 +1463,8 @@ function displayLearn() {
       <span style="font-size: ${smallTextFont};">Cm: (Common) found in many countries</span><br>
     `);
 
+    hintsDropDown.style("z-index", "25");
+    hintsDropDown.style("opacity", "1");
     hintTextHolder.style("z-index", "20");
     hintTextHolder.style("opacity", "1");
     openHintButton.style("background-color", "red");
@@ -3688,8 +3695,8 @@ function fixsizes() {
   geoTechPic.size(windowWidth / 3.5, windowWidth / 3.5);
 
   //tech button pos
-  openHintButton.position(175, 30);
-  hintsDropDown.position(175, 30);
+  openHintButton.position(10, 10);
+  hintsDropDown.position(10, 40);
 
   showGridDropDown.position(175, 30);
   gridShapeDropdown.position(175, 30);
