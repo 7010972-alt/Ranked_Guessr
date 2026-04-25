@@ -1,10 +1,287 @@
 let hintedCountries = {
 
   General: {
+    Home: {
+      name: "Home"
+    },
+
     Intro: {
-      desc: "GeoGuessr is a very difficult game. This is the basic general guide made for beginners. The first time you play it you are relying on previous knowledge. The 100th time you rely on memorization",
-      name: "1: Into",
-      picture: "GeoTechs/BG/BGMain.png",
+      desc: "This is a general guide made for complete beginners. We will cover the absolute basics, such as driving directions, as well as more advanced concepts like camera generations.",
+      name: "0: Intro",
+      picture: "GeoTechs/0_Guide/1.Intro.png",
+      type: "TUT"
+    },
+
+    Languages: {
+      desc: "Languages are a big part of GeoGuessr being found everywhere including road names. Some countries are easy to identify based on their languages, like Thailand. It is important to understand which languages are found in different parts of the world.",
+      name: "1.0: Languages",
+      picture: "GeoTechs/0_Guide/1.0.png",
+      type: "TUT"
+    },
+
+    Languages1: {
+      desc: "English is a major global language and appears on every continent. Major countries like the USA, Canada, the UK, South Africa, and Australia primarily use English. Other countries include New Zealand, the Philippines, and Ireland. Additionally, many countries use English as a secondary language, such as India and many parts of Africa.",
+      name: "1.1: English",
+      picture: "GeoTechs/0_Guide/1.1.png",
+      type: "TUT"
+    },
+
+    Languages2: {
+      desc: "Every country in the Americas south of Mexico primarily speaks Spanish, as does Spain. The main exception is Brazil, which speaks Portuguese.",
+      name: "1.2: Spanish",
+      picture: "GeoTechs/0_Guide/1.2.png",
+      type: "TUT"
+    },
+
+    Languages3: {
+      desc: "Most European countries use languages written in the Latin alphabet. This includes Hungarian, Romanian, French, Danish, and many others. Countries like the Philippines, Indonesia, and Malaysia also use the Latin alphabet.",
+      name: "1.3: Latin Alphabet (ABC's)",
+      picture: "GeoTechs/0_Guide/1.3.png",
+      type: "TUT"
+    },
+
+    Languages4: {
+      desc: "Languages that use the Cyrillic alphabet are primarily found in Eastern Europe, Ukraine, and most notably Russia. Many advanced players (including myself) learn to read the Cyrillic alphabet to help pinpoint cities.",
+      name: "1.4: Cyrillic",
+      picture: "GeoTechs/0_Guide/1.4.png",
+      type: "TUT"
+    },
+
+    Languages5: {
+      desc: "Chinese, Korean, and Japanese are all distinguishable from each other. These unique writing systems make East Asia easier to identify, especially in urban rounds.",
+      name: "1.5: East Asian",
+      picture: "GeoTechs/0_Guide/1.5.png",
+      type: "TUT"
+    },
+
+    Languages6: {
+      desc: "The Middle East primarily uses Arabic, which appears as flowing, connected script. Israel uses Hebrew, which looks more angular and block-like. Be aware that countries like Tunisia also use Arabic.",
+      name: "1.6: Arabic",
+      picture: "GeoTechs/0_Guide/1.6.png",
+      type: "TUT"
+    },
+
+    Languages7: {
+      desc: "India is home to many languages, such as Hindi. Many Indian scripts are very distinctive, often featuring a horizontal line across the top of the letters. Bengali looks somewhat similar but is still clearly distinguishable.",
+      name: "1.7: India / Bangladesh",
+      picture: "GeoTechs/0_Guide/1.7.png",
+      type: "TUT"
+    },
+
+    Sun: {
+      desc: "In GeoGuessr, the sun is your best friend. With the help of your compass, you can often determine which hemisphere you are in just by looking at the sky.",
+      name: "2.0: Sun / Compass",
+      picture: "GeoTechs/0_Guide/2.0.png",
+      type: "TUT"
+    },
+
+    Sun1: {
+      desc: "Before diving into sun strategies, let's talk about the compass. The red arrow points north, while the white one points south. Knowing this, in coastal rounds you can tell which coast you are on. For example, seeing water to the west in Japan can be very helpful.",
+      name: "2.1: Compass",
+      picture: "GeoTechs/0_Guide/2.1.png",
+      type: "TUT"
+    },
+
+    Sun2: {
+      desc: "To properly use sun techniques, first align the sun in the center of your screen. If the red side (north) is higher than the white side, you are most likely in the Southern Hemisphere, and vice versa.",
+      name: "2.2: Sun Tech",
+      picture: "GeoTechs/0_Guide/2.2.png",
+      type: "TUT"
+    },
+
+    Sun3: {
+      desc: "A reliable sun is what you will most often encounter. This is when the sun is clearly visible and the compass shows a large enough angle to confirm the hemisphere. Usually, around a 30-degree tilt is enough to be confident.",
+      name: "2.3: Sun Type: Reliable",
+      picture: "GeoTechs/0_Guide/2.3.png",
+      type: "TUT"
+    },
+
+    Sun4: {
+      desc: "An unreliable sun is when the compass angle is not strong enough to confirm the hemisphere. This can happen near the equator, or during sunrise or sunset when the sun is low in the sky.",
+      name: "2.4: Sun Type: Unreliable",
+      picture: "GeoTechs/0_Guide/2.4.png",
+      type: "TUT"
+    },
+
+    Sun5: {
+      desc: "A misleading sun is the worst case. This is when the sun appears to indicate the wrong hemisphere. This usually happens during cloudy conditions or poor camera coverage, where players may mistake bright spots for the sun.",
+      name: "2.5: Sun Type: Misleading",
+      picture: "GeoTechs/0_Guide/2.5.png",
+      type: "TUT"
+    },
+
+    Sun6: {
+      desc: "It is especially important for new players to build the habit of checking the sun. Learn to identify whether the sun is reliable, and avoid being misled.",
+      name: "2.6: Conclusion",
+      picture: "GeoTechs/0_Guide/2.6.png",
+      type: "TUT"
+    },
+
+    DrivingDirection: {
+      desc: "A key part of GeoGuessr for both new and advanced players is understanding driving directions. This is especially important because GeoGuessr uses Street View. Here is a quick overview of countries and their driving directions.",
+      name: "3.0: Driving Directions",
+      picture: "GeoTechs/0_Guide/3.0.jpg",
+      type: "TUT"
+    },
+
+    DrivingDirection1: {
+      desc: "Many players think you need another car to determine driving direction, but this is not true. In most cases, you can see parts of your own car and which side of the road you are on. A major example is the antenna on the back of the car in South Africa, which shows you are driving on the left side.",
+      name: "3.1: Finding Direction",
+      picture: "GeoTechs/0_Guide/3.1.png",
+      type: "TUT"
+    },
+
+    DrivingDirection2: {
+      desc: "Another (usually) reliable way to determine driving direction is by looking at which side of the road signs are placed, especially stop signs.",
+      name: "3.2: Finding Direction 2",
+      picture: "GeoTechs/0_Guide/3.2.png",
+      type: "TUT"
+    },
+
+    DrivingDirection3: {
+      desc: "Keep in mind that some countries have very narrow roads, and in those cases it can be impossible to determine the driving direction. This forces you to rely on other clues.",
+      name: "3.3: Skinny Roads",
+      picture: "GeoTechs/0_Guide/3.3.png",
+      type: "TUT"
+    },
+
+    DrivingDirection4: {
+      desc: "Some very important countries to remember include South Africa, Kenya, Australia, Indonesia, Japan, the UK, and Ireland. Since most of the world drives on the right, it is often easier to focus on memorizing left-hand driving countries.",
+      name: "3.4: Important Countries",
+      picture: "GeoTechs/0_Guide/3.4.png",
+      type: "TUT"
+    },
+
+    LiscensePlates: {
+      desc: "Although they are blured Liscense Plates are some of the easiest yet most helpful tips in the game.",
+      name: "4.0: Liscense Plates",
+      picture: "GeoTechs/0_Guide/4.0.png",
+      type: "TUT"
+    },
+
+    LiscensePlates1: {
+      desc: "Thick Plates or sometimes called Short Plates are found Primarily in North America down to Panama and Africa, with some countries in south america also having them. The shape of the plate is noticibely wider and shorter in a sense compared to the rest of the world.",
+      name: "4.1: Thick Plates",
+      picture: "GeoTechs/0_Guide/4.1.png",
+      type: "TUT"
+    },
+
+    LiscensePlates2: {
+      desc: "A very useful tool for brand new players are the iconic standard EU plate with a blue strip on the left. all of EU has this blue strip on the left but some countries have different plates than the standard EU plat so look out for those.",
+      name: "4.2: EU Plates",
+      picture: "GeoTechs/0_Guide/4.2.png",
+      type: "TUT"
+    },
+
+    LiscensePlates3: {
+      desc: "Yellow Plates are a rare find that is almost always a sellout to the country. Yellow Thick plates are found in Columbia, lots of North Africa, and Ney York (US). Skinny yellow plates are found in Israel, Netherlands, New South Wales (Australia) and UK (back plate only)",
+      name: "4.3: Yellow Plates",
+      picture: "GeoTechs/0_Guide/4.3.png",
+      type: "TUT"
+    },
+
+    LiscensePlates4: {
+      desc: "Keep in mind that in a lot of countries their commercial vehicles will feature a different color plate than their normal cars, another problem is that some people have custom plates that are strange in color. One last note is that, plates in US, Canada, Mexico and more are different between regions so they won't have the smae plate across the nation.",
+      name: "4.4: Conclusion",
+      picture: "GeoTechs/0_Guide/4.4.png",
+      type: "TUT"
+    },
+
+    Landscape: {
+      desc: "Landscapes can be tricky, but some countries have very recognizable features like hills, forests, or snow.",
+      name: "6.0: Landscapes",
+      picture: "GeoTechs/0_Guide/6.0.png",
+      type: "TUT"
+    },
+
+    Landscape1: {
+      desc: "Elevation is easy to understand but hard to memorize. Learn which regions are flat and which have mountains.",
+      name: "6.10: Elevation",
+      picture: "GeoTechs/0_Guide/6.1.png",
+      type: "TUT"
+    },
+
+    Landscape11: {
+      desc: "Dry, sandy mountains are rare and found in places like Oman, Peru, Mexico, Chile, and the US.",
+      name: "6.11: Elevation: Dry Mountains",
+      picture: "GeoTechs/0_Guide/6.11.png",
+      type: "TUT"
+    },
+
+    Landscape12: {
+      desc: "Shrubby mountains appear in Greece, Spain, Italy, Mexico, India, South Africa, and Argentina.",
+      name: "6.12: Elevation: Shrub Mountains",
+      picture: "GeoTechs/0_Guide/6.12.png",
+      type: "TUT"
+    },
+
+    Landscape13: {
+      desc: "Forested mountains are common in Europe, Japan, and the Nordics. Tropical ones appear in Southeast Asia and parts of South America.",
+      name: "6.13: Elevation: Forested Mountains",
+      picture: "GeoTechs/0_Guide/6.13.png",
+      type: "TUT"
+    },
+
+    Landscape14: {
+      desc: "Very flat areas include Northern Europe (excluding Nordics/UK), Northern Russia, Central US/Canada, and Australia.",
+      name: "6.14: Elevation: Flat",
+      picture: "GeoTechs/0_Guide/6.14.png",
+      type: "TUT"
+    },
+
+    Landscape2: {
+      desc: "Vegetation is useful for narrowing down regions and countries.",
+      name: "6.20: Vegetation",
+      picture: "GeoTechs/0_Guide/6.20.png",
+      type: "TUT"
+    },
+
+    Landscape21: {
+      desc: "Palms are common near the equator and coasts, but some grow as far as southern Australia or the UK.",
+      name: "6.21: Palms",
+      picture: "GeoTechs/0_Guide/6.21.png",
+      type: "TUT"
+    },
+
+    Landscape22: {
+      desc: "Southern pines (thin trunks, leaves at the top) appear in the southeastern US and parts of Europe.",
+      name: "6.22: Southern Pines",
+      picture: "GeoTechs/0_Guide/6.22.png",
+      type: "TUT"
+    },
+
+    Landscape23: {
+      desc: "Stunted pines grow in extreme climates, like northern Canada, the Nordics, and southern South America.",
+      name: "6.23: Stunted Pines",
+      picture: "GeoTechs/0_Guide/6.23.png",
+      type: "TUT"
+    },
+
+    Landscape3: {
+      desc: "Soil color can be a strong clue and sometimes a giveaway.",
+      name: "6.30: Soil",
+      picture: "GeoTechs/0_Guide/6.3.png",
+      type: "TUT"
+    },
+
+    Landscape31: {
+      desc: "Red soil is very common in Brazil but also appears in Africa and Southeast Asia.",
+      name: "6.31: Red Soil",
+      picture: "GeoTechs/0_Guide/6.31.png",
+      type: "TUT"
+    },
+
+    Landscape32: {
+      desc: "White soil is often found in coastal areas like Mexico, Indonesia, the Philippines, and Northern Brazil.",
+      name: "6.32: White Soil",
+      picture: "GeoTechs/0_Guide/6.32.png",
+      type: "TUT"
+    },
+  
+    Landscape4: {
+      desc: "Landscape takes time to learn. Don’t worry if it feels difficult at first.",
+      name: "6.40: Conclusion",
+      picture: "GeoTechs/0_Guide/6.4.png",
       type: "TUT"
     },
   },

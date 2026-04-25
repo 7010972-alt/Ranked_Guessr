@@ -256,6 +256,7 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let countryTech = false;
 let countryOutline;
 
 let previousMeta;
@@ -566,7 +567,7 @@ window.addEventListener("beforeunload", removePlayerFromLists);
 
 document.addEventListener("visibilitychange", function() {
   if (document.visibilityState === "visible") {
-    if (!afterViewing) {
+    if (!afterViewing && (setActive || inParty)) {
       location.reload();
     }
     else {
@@ -1365,12 +1366,6 @@ function enterQuiz() {
   inQuiz = !inQuiz;
   if (inQuiz) {
 
-    //adds every general tech to the options
-    for (let step in hintedCountries.General) {
-      hintsDropDown.option(hintedCountries.General[step].name, step);
-      console.log("added")
-    }
-
     pickedCountry = undefined;
     quizImage.style("opacity", "1");
 
@@ -1392,45 +1387,105 @@ function enterQuiz() {
 
 //runs when a hint is selected and displays the hint
 function currentHintDisplay() {
-  //creates a function for each of the techs so that they can be shown
-  for (let tech of Object.keys(hintedCountries[selectedCountry])) {
-    if (hintsDropDown.value() === tech) {
 
-      //display the info on each hint
-      if (hintsDropDown.value() !== "Main") {
+  if (countryTech) {
+    //creates a function for each of the techs so that they can be shown
+    for (let tech of Object.keys(hintedCountries[selectedCountry])) {
+      if (hintsDropDown.value() === tech) {
+  
+        //display the info on each hint
+        if (hintsDropDown.value() !== "Main") {
+          hintTextHolder.html(`
+            <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+            <br>
+            <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span>
+          `);
+        }
+  
+        //dislpay info on the main
+        else {
+          hintTextHolder.html(`
+            <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+            <br>
+            <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span><br>
+            <br>
+            <span style="font-size: ${smallTextFont};">Driving Direction: ${hintedCountries[selectedCountry][tech].driving}</span><br>
+            <span style="font-size: ${smallTextFont};">Liscense Plate: ${hintedCountries[selectedCountry][tech].plate}</span><br>
+            <span style="font-size: ${smallTextFont};">Language: ${hintedCountries[selectedCountry][tech].language}</span><br>
+            <span style="font-size: ${smallTextFont};">Difficulty: ${hintedCountries[selectedCountry][tech].difficulty}/10</span><br>
+  
+          `);
+        }
+  
+        geoTechPic.attribute("src", hintedCountries[selectedCountry][tech].picture);
+      }  
+    }
+  }
+
+  else {
+
+    //on the home screen show selection map
+    for (let tech of Object.keys(hintedCountries.General)) {
+      if (hintsDropDown.value() === "Home") {
+        geoTechPic.style("z-index", "-1");
+        geoTechPic.style("opacity", "0");
+
         hintTextHolder.html(`
-          <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
           <br>
-          <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span>
+          <span style="font-size: ${smallTextFont};">1. Click on a Country</span><br>
+          <span style="font-size: ${smallTextFont};">2. Click view tech (if green)</span><br>
+          <span style="font-size: ${smallTextFont};">3. Choose Tech from the Dropdown</span><br>
+          <br>
+
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">Ex: (Exlusive) found only in that country</span><br>
+          <span style="font-size: ${smallTextFont};">Rr: (Rare) found in a couple countries</span><br>
+          <span style="font-size: ${smallTextFont};">Cm: (Common) found in many countries</span><br>
         `);
+
+        gridMapID.show();
       }
 
-      //dislpay info on the main
-      else {
-        hintTextHolder.html(`
-          <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries[selectedCountry][tech].name}</span><br>
-          <br>
-          <span style="font-size: ${smallTextFont};">${hintedCountries[selectedCountry][tech].desc}</span><br>
-          <br>
-          <span style="font-size: ${smallTextFont};">Driving Direction: ${hintedCountries[selectedCountry][tech].driving}</span><br>
-          <span style="font-size: ${smallTextFont};">Liscense Plate: ${hintedCountries[selectedCountry][tech].plate}</span><br>
-          <span style="font-size: ${smallTextFont};">Language: ${hintedCountries[selectedCountry][tech].language}</span><br>
-          <span style="font-size: ${smallTextFont};">Difficulty: ${hintedCountries[selectedCountry][tech].difficulty}/10</span><br>
+      //when the home screen is left and they enter the guide
+      if (hintsDropDown.value() === tech) {
 
+        //remove map and reset variables
+        selectedCountry = undefined;
+        validCountry = false;
+        openHintButton.style("background-color", "red")
+        geoTechPic.style("z-index", "24");
+        geoTechPic.style("opacity", "1");
+
+        if (countryOutline !== undefined) {
+          countryOutline.remove();
+        }
+
+        gridMapID.hide();
+  
+        //display the info on each hint
+        hintTextHolder.html(`
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">${hintedCountries.General[tech].name}</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">${hintedCountries.General[tech].desc}</span>
         `);
+
+        geoTechPic.attribute("src", hintedCountries.General[tech].picture);
       }
 
-      geoTechPic.attribute("src", hintedCountries[selectedCountry][tech].picture);
-    }  
+    }
+
   }
 }
 
 function openCountryHint() {
   if (validCountry) {
+    hintsDropDown.elt.innerHTML = "";
+
+    countryTech = true;
     gridMapID.hide();
 
-    openHintButton.style("z-index", "-1");
-    openHintButton.style("opacity", "0");
     geoTechPic.style("z-index", "24");
     geoTechPic.style("opacity", "1");
 
@@ -1446,22 +1501,19 @@ function openCountryHint() {
 //opens the learn screen
 function displayLearn() {
   if (!showLearn) {
+    hintsDropDown.elt.innerHTML = "";
+
+    //adds every general tech to the options
+    for (let step in hintedCountries.General) {
+      hintsDropDown.option(hintedCountries.General[step].name, step);
+      console.log("added")
+    }
+
+    currentHintDisplay();
+
+    countryTech = false;
     selectedCountry = undefined;
     validCountry = false;
-    hintTextHolder.html(`
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">1. Click on a Country</span><br>
-      <span style="font-size: ${smallTextFont};">2. Click view tech (if green)</span><br>
-      <span style="font-size: ${smallTextFont};">3. Choose Tech from the Dropdown</span><br>
-      <br>
-
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">Ex: (Exlusive) found only in that country</span><br>
-      <span style="font-size: ${smallTextFont};">Rr: (Rare) found in a couple countries</span><br>
-      <span style="font-size: ${smallTextFont};">Cm: (Common) found in many countries</span><br>
-    `);
 
     hintsDropDown.style("z-index", "25");
     hintsDropDown.style("opacity", "1");
@@ -1473,7 +1525,6 @@ function displayLearn() {
     openHintButton.style("z-index", "25");
     openHintButton.style("opacity", "1");
 
-    gridMapID.show();
     showLearn = true;
   }
   else {
@@ -1498,6 +1549,11 @@ function closeLearn() {
 
   gridMapID.hide();
   showLearn = false;
+  countryTech = false;
+
+  if (countryOutline !== undefined) {
+    countryOutline.remove();
+  }
 }
 
 //for testing purposes
