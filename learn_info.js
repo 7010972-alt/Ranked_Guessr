@@ -21,49 +21,49 @@ let hintedCountries = {
 
     Languages1: {
       desc: "English is a major global language and appears on every continent. Major countries like the USA, Canada, the UK, South Africa, and Australia primarily use English. Other countries include New Zealand, the Philippines, and Ireland. Additionally, many countries use English as a secondary language, such as India and many parts of Africa.",
-      name: "1.1: English",
+      name: "- 1.1: English",
       picture: "GeoTechs/0_Guide/1.1.png",
       type: "TUT"
     },
 
     Languages2: {
       desc: "Every country in the Americas south of Mexico primarily speaks Spanish, as does Spain. The main exception is Brazil, which speaks Portuguese.",
-      name: "1.2: Spanish",
+      name: "- 1.2: Spanish",
       picture: "GeoTechs/0_Guide/1.2.png",
       type: "TUT"
     },
 
     Languages3: {
       desc: "Most European countries use languages written in the Latin alphabet. This includes Hungarian, Romanian, French, Danish, and many others. Countries like the Philippines, Indonesia, and Malaysia also use the Latin alphabet.",
-      name: "1.3: Latin Alphabet (ABC's)",
+      name: "- 1.3: Latin Alphabet (ABC's)",
       picture: "GeoTechs/0_Guide/1.3.png",
       type: "TUT"
     },
 
     Languages4: {
       desc: "Languages that use the Cyrillic alphabet are primarily found in Eastern Europe, Ukraine, and most notably Russia. Many advanced players (including myself) learn to read the Cyrillic alphabet to help pinpoint cities.",
-      name: "1.4: Cyrillic",
+      name: "- 1.4: Cyrillic",
       picture: "GeoTechs/0_Guide/1.4.png",
       type: "TUT"
     },
 
     Languages5: {
       desc: "Chinese, Korean, and Japanese are all distinguishable from each other. These unique writing systems make East Asia easier to identify, especially in urban rounds.",
-      name: "1.5: East Asian",
+      name: "- 1.5: East Asian",
       picture: "GeoTechs/0_Guide/1.5.png",
       type: "TUT"
     },
 
     Languages6: {
       desc: "The Middle East primarily uses Arabic, which appears as flowing, connected script. Israel uses Hebrew, which looks more angular and block-like. Be aware that countries like Tunisia also use Arabic.",
-      name: "1.6: Arabic",
+      name: "- 1.6: Arabic",
       picture: "GeoTechs/0_Guide/1.6.png",
       type: "TUT"
     },
 
     Languages7: {
       desc: "India is home to many languages, such as Hindi. Many Indian scripts are very distinctive, often featuring a horizontal line across the top of the letters. Bengali looks somewhat similar but is still clearly distinguishable.",
-      name: "1.7: India / Bangladesh",
+      name: "- 1.7: India / Bangladesh",
       picture: "GeoTechs/0_Guide/1.7.png",
       type: "TUT"
     },
@@ -77,42 +77,42 @@ let hintedCountries = {
 
     Sun1: {
       desc: "Before diving into sun strategies, let's talk about the compass. The red arrow points north, while the white one points south. Knowing this, in coastal rounds you can tell which coast you are on. For example, seeing water to the west in Japan can be very helpful.",
-      name: "2.1: Compass",
+      name: "- 2.1: Compass",
       picture: "GeoTechs/0_Guide/2.1.png",
       type: "TUT"
     },
 
     Sun2: {
       desc: "To properly use sun techniques, first align the sun in the center of your screen. If the red side (north) is higher than the white side, you are most likely in the Southern Hemisphere, and vice versa.",
-      name: "2.2: Sun Tech",
+      name: "- 2.2: Sun Tech",
       picture: "GeoTechs/0_Guide/2.2.png",
       type: "TUT"
     },
 
     Sun3: {
       desc: "A reliable sun is what you will most often encounter. This is when the sun is clearly visible and the compass shows a large enough angle to confirm the hemisphere. Usually, around a 30-degree tilt is enough to be confident.",
-      name: "2.3: Sun Type: Reliable",
+      name: "- 2.3: Sun Type: Reliable",
       picture: "GeoTechs/0_Guide/2.3.png",
       type: "TUT"
     },
 
     Sun4: {
       desc: "An unreliable sun is when the compass angle is not strong enough to confirm the hemisphere. This can happen near the equator, or during sunrise or sunset when the sun is low in the sky.",
-      name: "2.4: Sun Type: Unreliable",
+      name: "- 2.4: Sun Type: Unreliable",
       picture: "GeoTechs/0_Guide/2.4.png",
       type: "TUT"
     },
 
     Sun5: {
       desc: "A misleading sun is the worst case. This is when the sun appears to indicate the wrong hemisphere. This usually happens during cloudy conditions or poor camera coverage, where players may mistake bright spots for the sun.",
-      name: "2.5: Sun Type: Misleading",
+      name: "- 2.5: Sun Type: Misleading",
       picture: "GeoTechs/0_Guide/2.5.png",
       type: "TUT"
     },
 
     Sun6: {
       desc: "It is especially important for new players to build the habit of checking the sun. Learn to identify whether the sun is reliable, and avoid being misled.",
-      name: "2.6: Conclusion",
+      name: "- 2.6: Conclusion",
       picture: "GeoTechs/0_Guide/2.6.png",
       type: "TUT"
     },
@@ -126,28 +126,28 @@ let hintedCountries = {
 
     DrivingDirection1: {
       desc: "Many players think you need another car to determine driving direction, but this is not true. In most cases, you can see parts of your own car and which side of the road you are on. A major example is the antenna on the back of the car in South Africa, which shows you are driving on the left side.",
-      name: "3.1: Finding Direction",
+      name: "- 3.1: Finding Direction",
       picture: "GeoTechs/0_Guide/3.1.png",
       type: "TUT"
     },
 
     DrivingDirection2: {
       desc: "Another (usually) reliable way to determine driving direction is by looking at which side of the road signs are placed, especially stop signs.",
-      name: "3.2: Finding Direction 2",
+      name: "- 3.2: Finding Direction 2",
       picture: "GeoTechs/0_Guide/3.2.png",
       type: "TUT"
     },
 
     DrivingDirection3: {
       desc: "Keep in mind that some countries have very narrow roads, and in those cases it can be impossible to determine the driving direction. This forces you to rely on other clues.",
-      name: "3.3: Skinny Roads",
+      name: "- 3.3: Skinny Roads",
       picture: "GeoTechs/0_Guide/3.3.png",
       type: "TUT"
     },
 
     DrivingDirection4: {
       desc: "Some very important countries to remember include South Africa, Kenya, Australia, Indonesia, Japan, the UK, and Ireland. Since most of the world drives on the right, it is often easier to focus on memorizing left-hand driving countries.",
-      name: "3.4: Important Countries",
+      name: "- 3.4: Important Countries",
       picture: "GeoTechs/0_Guide/3.4.png",
       type: "TUT"
     },
@@ -161,29 +161,85 @@ let hintedCountries = {
 
     LiscensePlates1: {
       desc: "Thick Plates or sometimes called Short Plates are found Primarily in North America down to Panama and Africa, with some countries in south america also having them. The shape of the plate is noticibely wider and shorter in a sense compared to the rest of the world.",
-      name: "4.1: Thick Plates",
+      name: "- 4.1: Thick Plates",
       picture: "GeoTechs/0_Guide/4.1.png",
       type: "TUT"
     },
 
     LiscensePlates2: {
       desc: "A very useful tool for brand new players are the iconic standard EU plate with a blue strip on the left. all of EU has this blue strip on the left but some countries have different plates than the standard EU plat so look out for those.",
-      name: "4.2: EU Plates",
+      name: "- 4.2: EU Plates",
       picture: "GeoTechs/0_Guide/4.2.png",
       type: "TUT"
     },
 
     LiscensePlates3: {
       desc: "Yellow Plates are a rare find that is almost always a sellout to the country. Yellow Thick plates are found in Columbia, lots of North Africa, and Ney York (US). Skinny yellow plates are found in Israel, Netherlands, New South Wales (Australia) and UK (back plate only)",
-      name: "4.3: Yellow Plates",
+      name: "- 4.3: Yellow Plates",
       picture: "GeoTechs/0_Guide/4.3.png",
       type: "TUT"
     },
 
     LiscensePlates4: {
       desc: "Keep in mind that in a lot of countries their commercial vehicles will feature a different color plate than their normal cars, another problem is that some people have custom plates that are strange in color. One last note is that, plates in US, Canada, Mexico and more are different between regions so they won't have the smae plate across the nation.",
-      name: "4.4: Conclusion",
+      name: "- 4.4: Conclusion",
       picture: "GeoTechs/0_Guide/4.4.png",
+      type: "TUT"
+    },
+
+    Coverage: {
+      desc: "GeoGuessr uses Google Street View, so countries without Street View are not included. Here is a map of global coverage.",
+      name: "5.0 Coverage Map",
+      picture: "GeoTechs/0_Guide/5.0.png",
+      type: "TUT"
+    },
+
+    Coverage1: {
+      desc: "Most of North America has coverage, including the US and much of Canada. Coverage is limited in Central America, with Guatemala, Costa Rica, and Panama being the main countries.",
+      name: "- 5.1 North America",
+      picture: "GeoTechs/0_Guide/5.1.png",
+      type: "TUT"
+    },
+
+    Coverage2: {
+      desc: "Most of South America is covered, though large gaps remain in the Amazon and some northern regions.",
+      name: "- 5.2 South America",
+      picture: "GeoTechs/0_Guide/5.2.png",
+      type: "TUT"
+    },
+
+    Coverage3: {
+      desc: "Africa has the least coverage overall. Key countries include South Africa, Kenya, Senegal, Tunisia, and Nigeria, with many gaps elsewhere.",
+      name: "- 5.3 Africa",
+      picture: "GeoTechs/0_Guide/5.3.png",
+      type: "TUT"
+    },
+
+    Coverage4: {
+      desc: "Europe has very strong coverage, missing only a few areas such as Belarus and parts of Ukraine.",
+      name: "- 5.4 Europe",
+      picture: "GeoTechs/0_Guide/5.4.png",
+      type: "TUT"
+    },
+
+    Coverage5: {
+      desc: "Australia has coverage mainly around the coasts, with less inland. Many Oceania islands also have coverage.",
+      name: "- 5.5 Oceania",
+      picture: "GeoTechs/0_Guide/5.5.png",
+      type: "TUT"
+    },
+
+    Coverage6: {
+      desc: "Asia has major gaps in the Middle East, around India and neighboring regions. China has almost no coverage except for Hong Kong.",
+      name: "- 5.6 Southern Asia",
+      picture: "GeoTechs/0_Guide/5.6.png",
+      type: "TUT"
+    },
+
+    Coverage7: {
+      desc: "Russia, Kazakhstan, and Mongolia have sparse coverage. Most of Russia’s coverage is in the western part of the country.",
+      name: "- 5.7 Northern Asia",
+      picture: "GeoTechs/0_Guide/5.7.png",
       type: "TUT"
     },
 
@@ -196,92 +252,141 @@ let hintedCountries = {
 
     Landscape1: {
       desc: "Elevation is easy to understand but hard to memorize. Learn which regions are flat and which have mountains.",
-      name: "6.10: Elevation",
+      name: "- 6.10: Elevation",
       picture: "GeoTechs/0_Guide/6.1.png",
       type: "TUT"
     },
 
     Landscape11: {
       desc: "Dry, sandy mountains are rare and found in places like Oman, Peru, Mexico, Chile, and the US.",
-      name: "6.11: Elevation: Dry Mountains",
+      name: "-- 6.11: Elevation: Dry Mountains",
       picture: "GeoTechs/0_Guide/6.11.png",
       type: "TUT"
     },
 
     Landscape12: {
       desc: "Shrubby mountains appear in Greece, Spain, Italy, Mexico, India, South Africa, and Argentina.",
-      name: "6.12: Elevation: Shrub Mountains",
+      name: "-- 6.12: Elevation: Shrub Mountains",
       picture: "GeoTechs/0_Guide/6.12.png",
       type: "TUT"
     },
 
     Landscape13: {
       desc: "Forested mountains are common in Europe, Japan, and the Nordics. Tropical ones appear in Southeast Asia and parts of South America.",
-      name: "6.13: Elevation: Forested Mountains",
+      name: "-- 6.13: Elevation: Forested Mountains",
       picture: "GeoTechs/0_Guide/6.13.png",
       type: "TUT"
     },
 
     Landscape14: {
       desc: "Very flat areas include Northern Europe (excluding Nordics/UK), Northern Russia, Central US/Canada, and Australia.",
-      name: "6.14: Elevation: Flat",
+      name: "-- 6.14: Elevation: Flat",
       picture: "GeoTechs/0_Guide/6.14.png",
       type: "TUT"
     },
 
     Landscape2: {
       desc: "Vegetation is useful for narrowing down regions and countries.",
-      name: "6.20: Vegetation",
+      name: "- 6.20: Vegetation",
       picture: "GeoTechs/0_Guide/6.20.png",
       type: "TUT"
     },
 
     Landscape21: {
       desc: "Palms are common near the equator and coasts, but some grow as far as southern Australia or the UK.",
-      name: "6.21: Palms",
+      name: "-- 6.21: Palms",
       picture: "GeoTechs/0_Guide/6.21.png",
       type: "TUT"
     },
 
     Landscape22: {
       desc: "Southern pines (thin trunks, leaves at the top) appear in the southeastern US and parts of Europe.",
-      name: "6.22: Southern Pines",
+      name: "-- 6.22: Southern Pines",
       picture: "GeoTechs/0_Guide/6.22.png",
       type: "TUT"
     },
 
     Landscape23: {
       desc: "Stunted pines grow in extreme climates, like northern Canada, the Nordics, and southern South America.",
-      name: "6.23: Stunted Pines",
+      name: "-- 6.23: Stunted Pines",
       picture: "GeoTechs/0_Guide/6.23.png",
       type: "TUT"
     },
 
     Landscape3: {
       desc: "Soil color can be a strong clue and sometimes a giveaway.",
-      name: "6.30: Soil",
+      name: "- 6.30: Soil",
       picture: "GeoTechs/0_Guide/6.3.png",
       type: "TUT"
     },
 
     Landscape31: {
       desc: "Red soil is very common in Brazil but also appears in Africa and Southeast Asia.",
-      name: "6.31: Red Soil",
+      name: "-- 6.31: Red Soil",
       picture: "GeoTechs/0_Guide/6.31.png",
       type: "TUT"
     },
 
     Landscape32: {
       desc: "White soil is often found in coastal areas like Mexico, Indonesia, the Philippines, and Northern Brazil.",
-      name: "6.32: White Soil",
+      name: "-- 6.32: White Soil",
       picture: "GeoTechs/0_Guide/6.32.png",
       type: "TUT"
     },
   
     Landscape4: {
       desc: "Landscape takes time to learn. Don’t worry if it feels difficult at first.",
-      name: "6.40: Conclusion",
+      name: "- 6.40: Conclusion",
       picture: "GeoTechs/0_Guide/6.4.png",
+      type: "TUT"
+    },
+
+    People: {
+      desc: "This is a very straightforward meta often used by beginners. When people are visible, you can often make an educated guess based on clothing, environment, and general appearance.",
+      name: "7.0: People",
+      picture: "GeoTechs/0_Guide/7.0.png",
+      type: "TUT"
+    },
+
+    People1: {
+      desc: "In Africa, it is much more common to see people in Street View compared to many other regions. This can be a strong indicator that you are in Africa.",
+      name: "- 7.1: Africa",
+      picture: "GeoTechs/0_Guide/7.1.png",
+      type: "TUT"
+    },
+
+    People2: {
+      desc: "In India and Southeast Asia, motorcycles are very common, so you will often see people riding them on the road.",
+      name: "- 7.2: Road",
+      picture: "GeoTechs/0_Guide/7.2.png",
+      type: "TUT"
+    },
+
+    People3: {
+      desc: "A common 50/50 for beginners is the Philippines vs. Colombia. The people generally look different, so spotting locals can help you decide.",
+      name: "- 7.3: Philippines 50/50",
+      picture: "GeoTechs/0_Guide/7.3.png",
+      type: "TUT"
+    },
+
+    People4: {
+      desc: "Another common 50/50 is South Africa vs. Australia. Both drive on the left, speak English, and are in the Southern Hemisphere. However, it is often harder to find people visible in these countries.",
+      name: "- 7.4: South Africa 50/50",
+      picture: "GeoTechs/0_Guide/7.4.png",
+      type: "TUT"
+    },
+
+    People5: {
+      desc: "Car sniping is when you look at people inside vehicles. This is sometimes used in South Africa vs. Australia 50/50 situations.",
+      name: "- 7.5: Car Sniping",
+      picture: "GeoTechs/0_Guide/7.5.png",
+      type: "TUT"
+    },
+
+    People6: {
+      desc: "If you do not see any people or cars, it often suggests a remote area. This is common in very cold or heavily forested regions. On the other hand, lots of people can indicate densely populated areas like India or Nigeria.",
+      name: "- 7.6: Remoteness",
+      picture: "GeoTechs/0_Guide/7.6.png",
       type: "TUT"
     },
   },
@@ -1020,6 +1125,88 @@ let hintedCountries = {
       name: "CM: Corn",
       picture: "GeoTechs/SERB/SERB-Corn.png",
       type: "CM"
+    },
+  },
+
+  "Slovenia": {
+    Main: {
+      desc: "SV (Slovenia) is a pretty unique country that is sometimes mistaken for Austria.",
+      name: "Slovenia (SV)",
+      picture: "GeoTechs/SV/SV-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "Slovene",
+      difficulty: 5
+    },
+
+    SVRoadMarker: {
+      desc: "This Road marker is unique to Slovenia",
+      name: "EX: Road Marker",
+      picture: "GeoTechs/SV/SV-RoadMarker.png",
+      type: "EX"
+    },
+
+    SVFireHydrant: {
+      desc: "This red Fire hydrant can be found in Slovenia",
+      name: "EX: Hydrant",
+      picture: "GeoTechs/SV/SV-RedHydrant.png",
+      type: "EX"
+    },
+
+    SVBollard: {
+      desc: "This bollard looks like the Austrian one, except that the reflector is lighter in color",
+      name: "RR: Bollard",
+      picture: "GeoTechs/SV/SV-Bollard.png",
+      type: "RR"
+    },
+
+    SVLongDahsed: {
+      desc: "This is only primarily shared with Norway",
+      name: "RR: Long Dashed Lines",
+      picture: "GeoTechs/SV/SV-LongDashed.png",
+      type: "RR"
+    },
+
+    SVFoldedBacks: {
+      desc: "All signs in Slovenia will have folded backs instead of flat ones.",
+      name: "RR: Folded Backs",
+      picture: "GeoTechs/SV/SV-FoldedBacks.png",
+      type: "RR"
+    },
+
+    SVRedHouseNames: {
+      desc: "These red house signs are really rare amongst the world and are found in Slovenia.",
+      name: "RR: Red House Signs",
+      picture: "GeoTechs/SV/SV-REdhouses.png",
+      type: "RR"
+    },
+
+    SVTimberHousing: {
+      desc: "These Timber houses are found in Slovenia and some neighbouring countries.",
+      name: "RR: Timber Houses",
+      picture: "GeoTechs/SV/SV-TimerHouseing.png",
+      type: "RR"
+    },
+
+    SVYellowTownSigns: {
+      desc: "These yellow town signs are used in Slovenia.",
+      name: "RR: Yellow Town Signs",
+      picture: "GeoTechs/SV/SV-YellowTownSigns.png",
+      type: "RR"
+    },
+
+    SVRollingHills: {
+      desc: "These rolling hills combined with forested hills are very common in Slovenia",
+      name: "CC: Rolling Hills",
+      picture: "GeoTechs/SV/SV-RollingHills.png",
+      type: "CC"
+    },
+
+    SVAtype: {
+      desc: "A type gaurdrails are used in Slovenia but not in Croatia.",
+      name: "CC: A Type Rail",
+      picture: "GeoTechs/SV/SV-Gaurdrail.png",
+      type: "CC"
     },
   },
 

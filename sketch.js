@@ -256,6 +256,7 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let allOutlines = [];
 let countryTech = false;
 let countryOutline;
 
@@ -454,6 +455,8 @@ let showLearnButton;
 let LearnMap;
 let openHintButton;
 let hintsDropDown;
+let nextButton;
+let backButton;
 
 //set variables
 let blitzTime = 10;
@@ -870,6 +873,22 @@ function setup() {
   startSetButton.style("z-index", "21");
 
   startSetButton.mousePressed(startSet);
+
+  //button to move to the next dropdown order
+  nextButton = createButton("Next (D)");
+  nextButton.size(80, 30);
+  nextButton.style("position", "absolute");
+  nextButton.style("z-index", "-1");
+
+  nextButton.mousePressed(nextIndex);
+
+  //button to move to the previous dropdown order
+  backButton = createButton("Back (A)");
+  backButton.size(80, 30);
+  backButton.style("position", "absolute");
+  backButton.style("z-index", "-1");
+
+  backButton.mousePressed(previousIndex);
 
   //button to enter the waiting lobby
   joinButton = createButton("Join Party");
@@ -1341,6 +1360,48 @@ function draw() {
   allHaveGuessed();
 }
 
+//makes an outline around every country that has hints on
+function displayallOutlines() {
+  for (let outline of allOutlines) {
+    outline.remove();
+  }
+
+  for (let country in hintedCountries) {
+    if (country !== "General") {
+      //makes an outline around the country
+      let newOutline = L.geoJSON(countriesGeoJSON, {
+        filter: function(feature) {
+          return feature.properties.name === country;
+        },
+        style: {
+          color: "yellow",
+          weight: 2,
+          fillOpacity: 0.2,
+          opacity: 0.3
+        }
+      }).addTo(griddedMap);
+
+      allOutlines.push(newOutline);
+    }
+  }
+}
+
+function nextIndex() {
+  if (hintsDropDown.elt.selectedIndex < hintsDropDown.elt.options.length - 1) {
+    hintsDropDown.elt.selectedIndex++;
+  }
+
+  currentHintDisplay();
+}
+
+function previousIndex() {
+  if (hintsDropDown.elt.selectedIndex >= 1) {
+    hintsDropDown.elt.selectedIndex--;
+  }
+
+  currentHintDisplay();
+}
+
 //add all geo hints into one list for the quiz mode
 function addAllGeoHints() {
   allGeoHints = [];
@@ -1387,7 +1448,6 @@ function enterQuiz() {
 
 //runs when a hint is selected and displays the hint
 function currentHintDisplay() {
-
   if (countryTech) {
     //creates a function for each of the techs so that they can be shown
     for (let tech of Object.keys(hintedCountries[selectedCountry])) {
@@ -1433,12 +1493,18 @@ function currentHintDisplay() {
         hintTextHolder.html(`
           <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
           <br>
+          <span style="font-size: ${smallTextFont};">Beginner Guide in next page</span><br>
+          <span style="font-size: ${smallTextFont};">(Next button in bottom right)</span><br>
+          <br>
+
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
+          <br>
           <span style="font-size: ${smallTextFont};">1. Click on a Country</span><br>
           <span style="font-size: ${smallTextFont};">2. Click view tech (if green)</span><br>
           <span style="font-size: ${smallTextFont};">3. Choose Tech from the Dropdown</span><br>
           <br>
 
-          <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">Tech Types</span><br>
           <br>
           <span style="font-size: ${smallTextFont};">Ex: (Exlusive) found only in that country</span><br>
           <span style="font-size: ${smallTextFont};">Rr: (Rare) found in a couple countries</span><br>
@@ -1506,7 +1572,6 @@ function displayLearn() {
     //adds every general tech to the options
     for (let step in hintedCountries.General) {
       hintsDropDown.option(hintedCountries.General[step].name, step);
-      console.log("added")
     }
 
     currentHintDisplay();
@@ -1524,8 +1589,14 @@ function displayLearn() {
     LearnScreen.style("opacity", "1");
     openHintButton.style("z-index", "25");
     openHintButton.style("opacity", "1");
+    backButton.style("z-index", "20");
+    backButton.style("opacity", "1");
+    nextButton.style("z-index", "20");
+    nextButton.style("opacity", "1");
 
     showLearn = true;
+
+    displayallOutlines();
   }
   else {
     closeLearn();
@@ -1546,6 +1617,10 @@ function closeLearn() {
   hintTextHolder.style("opacity", "0");
   geoTechPic.style("z-index", "-1");
   geoTechPic.style("opacity", "0");
+  backButton.style("z-index", "-1");
+  backButton.style("opacity", "0");
+  nextButton.style("z-index", "-1");
+  nextButton.style("opacity", "0");
 
   gridMapID.hide();
   showLearn = false;
@@ -3817,6 +3892,11 @@ function fixsizes() {
   //scale the text sizes
   smallTextFont = String(DEFAULT_SMALL_TEXT * ((windowWidth) / maxScreenSize)) + "px"
   largeTextFont = String(DEFAULT_LARGE_TEXT * ((windowWidth) / maxScreenSize)) + "px"
+
+  backButton.position(0, windowHeight - 30);
+  nextButton.position(windowWidth - 80, windowHeight - 30);
+
+
 }
 
 //shows the grids
@@ -4032,9 +4112,12 @@ function keyPressed() {
   if (key === " ") {
     confirmed();
   }
-  // if (key === "h") {
-  //   crAns();
-  // }
+  if (key === "d") {
+    nextIndex();
+  }
+  if (key === "a") {
+    previousIndex();
+  }
 }
 
 
