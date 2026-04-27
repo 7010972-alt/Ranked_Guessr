@@ -389,6 +389,69 @@ let hintedCountries = {
       picture: "GeoTechs/0_Guide/7.6.png",
       type: "TUT"
     },
+
+    CarTech: {
+      desc: "Car tech is guessing based on the google car that you are driving in. Unique cars can be used to distinguish the country like Mongolia.",
+      name: "9.0: Car Tech",
+      picture: "GeoTechs/0_Guide/9.0.png",
+      type: "TUT"
+    },
+
+    CarTech1: {
+      desc: "The roof rack car is found mainly in Ghana, Guatemala, and kyrgyzstan. Also, found on many islands and part of South Africa",
+      name: "- 9.1: Roof Rack",
+      picture: "GeoTechs/0_Guide/9.1.png",
+      type: "TUT"
+    },
+
+    CarTech2: {
+      desc: "Truck coverage is more common that roof rack. Many times it is blurred and hard to tell aswell.",
+      name: "- 9.20: Truck",
+      picture: "GeoTechs/0_Guide/9.2.png",
+      type: "TUT"
+    },
+
+    CarTech21: {
+      desc: "Truck coverage is by far the most common in Africa. Countries that only have truck coverage are Kenya, Senegal, Namibia, and Rwanda.",
+      name: "-- 9.21: Africa Truck",
+      picture: "GeoTechs/0_Guide/9.21.png",
+      type: "TUT"
+    },
+
+    CarTech22: {
+      desc: "Panama, Costa Rica, Paraguay, Kazahkstan, Oman, Iceland, and parts of Turkey.",
+      name: "-- 9.22: Non-Africa Truck",
+      picture: "GeoTechs/0_Guide/9.22.png",
+      type: "TUT"
+    },
+
+    CarTech3: {
+      desc: "White car is usually visible at the back and found in many countries. Botswana, Losotho, Eswatini, Chile, Bolivia. Can also be found in parts of South east Asia.",
+      name: "- 9.3: White Car",
+      picture: "GeoTechs/0_Guide/9.3.png",
+      type: "TUT"
+    },
+
+    CarTech4: {
+      desc: "Same as white car but black. Found mainly in Argentina, Uruguay and Peru.",
+      name: "- 9.4: Black Car",
+      picture: "GeoTechs/0_Guide/9.4.png",
+      type: "TUT"
+    },
+
+    CarTech5: {
+      desc: "Trash Cam is really poor quality and found mostly in India, Nepal, Bhutan, Lebanon, Finland and Cambodia. Keep in mind it can be found anywhere but is mainly found in those countries.",
+      name: "- 9.5: Trash Cam",
+      picture: "GeoTechs/0_Guide/9.5.png",
+      type: "TUT"
+    },
+
+    CarTech6: {
+      desc: "Low cam is when the camera is mounted noticably lower. Small cam is similar however they have a unique skull shaped blur so do not mix them up. Low cam is primarily found in Japan and Switzerland.",
+      name: "- 9.6: Low Cam",
+      picture: "GeoTechs/0_Guide/9.6.png",
+      type: "TUT"
+    },
   },
 
   "Albania": {
