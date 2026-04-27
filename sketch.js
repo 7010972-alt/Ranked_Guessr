@@ -1360,6 +1360,12 @@ function draw() {
   allHaveGuessed();
 }
 
+//moves the pin based on lat and lng, used for test purposes
+function manual(lat, lng) {
+  marker.setLatLng([lat, lng]);
+  clickedPoint = { lat: lat, lng: lng };
+}
+
 //makes an outline around every country that has hints on
 function displayallOutlines() {
   for (let outline of allOutlines) {

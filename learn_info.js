@@ -480,6 +480,81 @@ let hintedCountries = {
     },
   },
 
+  "Austria": {
+    Main: {
+      desc: "AT (Austria) is an insanely mountanous country and is one of the 3 German speaking countries.",
+      name: "Austria (AT)",
+      picture: "GeoTechs/AT/AT-Main.png",
+      driving: "Right",
+      plate: "Standard Europe",
+      language: "German",
+      difficulty: 6
+    },
+
+    ATBollard: {
+      desc: "One of the main giveaways for Austria are these bollards. Careful as many countries under Austria have similar ones. However, they are usually not as dark of a red as Austria's.",
+      name: "EX: Bollard",
+      picture: "GeoTechs/AT/AT-Bollard.png",
+      type: "EX"
+    },
+
+    ATCrossSection: {
+      desc: "This sign is unique to AT",
+      name: "EX: Cross Section",
+      picture: "GeoTechs/AT/AT-CrossSection.png",
+      type: "EX"
+    },
+
+    ATSignClippings: {
+      desc: "These 4 clippings on the edges of signs are pretty much unique to Austria",
+      name: "EX: Clippings",
+      picture: "GeoTechs/AT/AT-Clippings.png",
+      type: "EX"
+    },
+
+    ATBlueSignMarkers: {
+      desc: "These blue town markers with a thick white outline are unique to AT. However, they can come in different sizes throughout the country but all look similar",
+      name: "EX: Blue Town Sign",
+      picture: "GeoTechs/AT/AT-BlueSign.png",
+      type: "EX"
+    },
+
+    ATRoadMarker: {
+      desc: "These small blue road markers are unique to AT",
+      name: "RR: Road Markers",
+      picture: "GeoTechs/AT/AT-Roadmarkers.png",
+      type: "RR"
+    },
+
+    ATWalksign: {
+      desc: "These unique walksigns are unique to Austria. Keep in mind some other countries have designs where there are 2 dotted lines, but the person looks different.",
+      name: "EX: Walksign",
+      picture: "GeoTechs/AT/AT-Walksign.png",
+      type: "EX"
+    },
+
+    ATGreenSign: {
+      desc: "These Green signs are used for many local locations",
+      name: "EX: Green Signs",
+      picture: "GeoTechs/AT/AT-GreenSign.png",
+      type: "EX"
+    },
+
+    ATAlpineARch: {
+      desc: "Alpine architecture is seen all over Austria and within other Alp countries.",
+      name: "RR: Alpine Arch.",
+      picture: "GeoTechs/AT/AT-Alpinearch.png",
+      type: "RR"
+    },
+
+    ATWoodenPoles: {
+      desc: "Almost all poles in AUstria are wooden",
+      name: "CC: Wooden Pole",
+      picture: "GeoTechs/AT/AT-WoodenPoles.png",
+      type: "CC"
+    },
+  },
+
   "Bosnia and Herzegovina": {
     Main: {
       desc: "Bosnia and Herzegovina (BOS) is a very difficult country. I have missed this country on several occasions as it isn't fully unique in any way",
@@ -566,7 +641,7 @@ let hintedCountries = {
     Main: {
       desc: "BG (Bulgaria) is generally an easy country. It is very mountainous, and they use a greek like language. Also, it does not share many similarities with it's neighbours",
       name: "Bulgaria (BG)",
-      picture: "GeoTechs/BG/BGMain.png",
+      picture: "GeoTechs/BG/BG-Main.png",
       driving: "Right",
       plate: "Standard Europe",
       language: "Bulgarian",
@@ -673,7 +748,7 @@ let hintedCountries = {
       driving: "Right",
       plate: "Standard Europe",
       language: "Croation",
-      difficulty: 7
+      difficulty: 8
     },
 
     CRBlueHydrant: {
@@ -901,7 +976,7 @@ let hintedCountries = {
     Main: {
       desc: "MONT (Montenegro) is a pretty simple but nieche country to learn. Can share similarities with Albania",
       name: "Montenegro (MONT)",
-      picture: "GeoTechs/MONT/MONT-.Main.png",
+      picture: "GeoTechs/MONT/MONT-Main.png",
       driving: "Right",
       plate: "Standard Europe",
       language: "Montenegrin",
@@ -1085,6 +1160,109 @@ let hintedCountries = {
       name: "CM: Landscape",
       picture: "GeoTechs/RM/RM-agriculture.png",
       type: "CM"
+    },
+  },
+
+  "Russia": {
+    Main: {
+      desc: `Russia is the perfect example of "Easy to Recognize, Impossible to gues within". Also, most of these metas are shared with Ukraine so I reccomend also seeing the Ukraine techs."`,
+      name: "Russia (RS)",
+      picture: "GeoTechs/RS/RS-Main.png",
+      driving: "Right",
+      plate: "Skinny White",
+      language: "Russian",
+      difficulty: 2
+    },
+
+    RSBollardSpam: {
+      desc: "RS spams bollards in intersections and they all have a red reflector even though variations exist",
+      name: "EX: Bollard Spam",
+      picture: "GeoTechs/RS/RS-BollardSpam.png",
+      type: "EX"
+    },
+
+    RSYellowWalkWay: {
+      desc: "Some walkways in RS are yellow and white stripes",
+      name: "EX: Walk Way",
+      picture: "GeoTechs/RS/RS-WhiteandYellow.png",
+      type: "EX"
+    },
+
+    RSUrbanRShousing: {
+      desc: "Urban RS housing have these massive condos and are rare elsewhere",
+      name: "EX: Massive Condos",
+      picture: "GeoTechs/RS/RS-UrbanHousing.png",
+      type: "EX"
+    },
+
+    RSGloomy: {
+      desc: "These Gloomy looking villages are insanely easy to recognize",
+      name: "EX: Gloomy Village",
+      picture: "GeoTechs/RS/RS-SadNeighbourhood.png",
+      type: "EX"
+    },
+
+    RSBlackPaint: {
+      desc: "Bottom of a lot of road signs are painted black",
+      name: "EX: Black Bottoms",
+      picture: "GeoTechs/RS/RS-BlackBottm.png",
+      type: "EX"
+    },
+
+    RSWhiteBottom: {
+      desc: "Many poles are painted white at the bottom",
+      name: "EX: White Painted Bottoms",
+      picture: "GeoTechs/RS/RS-PaintedBottom.png",
+      type: "EX"
+    },
+
+    RSWalkways: {
+      desc: "These 3 striped walkways with a yellow reflector are found in RS. Keep in mind that some of the baltics use 3 stripes but do not have the reflector",
+      name: "EX: Walk Sign",
+      picture: "GeoTechs/RS/RS-Walkway.png",
+      type: "EX"
+    },
+
+    RSLargeTownSign: {
+      desc: "These larger town signs are used in RS",
+      name: "EX: Large Town SIgn",
+      picture: "GeoTechs/RS/RS-LargeTownSign.png",
+      type: "EX"
+    },
+
+    RSSingleTown: {
+      desc: "these blue town signs are in RS",
+      name: "EX: Single Town Sign",
+      picture: "GeoTechs/RS/RS-SignletownSign.png",
+      type: "EX"
+    },
+
+    RSHangingTess: {
+      desc: "I have only spotted these interesting trees in RS. They have hanging dryish looking leaves",
+      name: "EX: Hanging Trees",
+      picture: "GeoTechs/RS/RS-HangingTree.png",
+      type: "EX"
+    },
+
+    RSRoadMarker: {
+      desc: "This small blue road marker is found in RS",
+      name: "EX: Road Marker",
+      picture: "GeoTechs/RS/RS-RoadMarker.png",
+      type: "EX"
+    },
+
+    RSWideHighways: {
+      desc: "Abnormally wide Highways are found all over RS",
+      name: "RR: Wide Highways",
+      picture: "GeoTechs/RS/RS-WideHighways.png",
+      type: "RR"
+    },
+
+    RSAPoles: {
+      desc: "APoles are found in RS",
+      name: "RR: A poles",
+      picture: "GeoTechs/RS/RS-Apole.png",
+      type: "RR"
     },
   },
 
@@ -1324,6 +1502,39 @@ let hintedCountries = {
       name: "CM: Cheverons",
       picture: "GeoTechs/Turk/Turk-Chevs.png",
       type: "CM"
+    },
+  },
+
+  "Ukraine": {
+    Main: {
+      desc: "There are only 3 techs here, the rest of Ukraine techs can be found in the Russia section as they share most if not all Infrastructure. Ukraine is almost insanely difficult to tell apart from Russia if not for it's google car. However, it is not allways visible making Ukraine a difficult country.",
+      name: "Ukraine (UKR)",
+      picture: "GeoTechs/UKR/UKR-Main.png",
+      driving: "Right",
+      plate: "Skinny White",
+      language: "Ukranian / Russian",
+      difficulty: 7
+    },
+
+    UKRRedCar: {
+      desc: "This red car sells out UKR. If most the entire back is red with an antenna or no antenna then you are in UKR. This car is not always visible but most UKR coverage was taken with this.",
+      name: "EX: Red Car",
+      picture: "GeoTechs/UKR/UKR-RedCar.png",
+      type: "EX"
+    },
+
+    UKRColoredInfrastructure: {
+      desc: "Many things in UKR are colored yellow and blue (the color of their flag).",
+      name: "EX: flag colors",
+      picture: "GeoTechs/UKR/UKR-ColoredFencing.png",
+      type: "EX"
+    },
+
+    UKRPoorRoading: {
+      desc: "compared to Russia, UKR has terrible roading, there is almost always patches in the road which is less common in Russia.",
+      name: "EX: Poor Roading",
+      picture: "GeoTechs/UKR/UKR-PoorRoading.png",
+      type: "EX"
     },
   },
 };
