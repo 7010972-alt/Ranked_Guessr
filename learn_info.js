@@ -1053,6 +1053,13 @@ let hintedCountries = {
       type: "EX"
     },
 
+    MONTcheveron: {
+      desc: "do not mistaken this for the white on black Cheveron",
+      name: "EX: Cheveron",
+      picture: "GeoTechs/MONT/MONT-Cheveron.png",
+      type: "EX"
+    },
+
     MONTSkyRift: {
       desc: "The sky rift is the main hint towards Montenegro as it is mainly only found in ALbania and MONT",
       name: "RR: Sky Rift",

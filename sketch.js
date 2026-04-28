@@ -130,46 +130,72 @@ function preload() {
   });
 }
 
-let particles = []
+let particles = [];
 
-let speed = 0.25;
+const PARTICLESPEED = 0.5;
+const FADE_SPEED = 0.05;
+const PART_SIZE = 5;
 
+
+//class for particles when you click
 class Particle {
-
   constructor(x, y, image) {
     this.x = x,
     this.y = y,
-    this.radius = 5,
+    this.radius = PART_SIZE,
     this.image = image,
     this.part;
-    this.speedx = random(-speed, speed)
-    this.speedy = random(-speed, speed)
+    this.speedxmuilt = random(-PARTICLESPEED, PARTICLESPEED);
+    this.speedymuilt = random(-PARTICLESPEED, PARTICLESPEED);
+    this.speedx;
+    this.speedy;
     this.opacity = 1;
   }
 
+  //show the image
   display() {
     let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
 
     this.part = L.imageOverlay(this.image, latLngBounds, {
-        opacity: 1,
+      opacity: 1,
     }).addTo(map);
   }
 
+
+  //moves the images and deletes them when they fade
   move() {
-    let sizeScale = (1 / (map.getZoom() * 20))
-    let speedScale = (1 / (map.getZoom() / 2))
+    // let sizeScale = 1 / (map.getZoom() * 10);
+    // let speedScale = 1 / (map.getZoom() / 2);
+
+    let sizeScale = 1;
+    let speedScale = 1;
 
 
-    this.opacity -= 0.05
+    //forced to hardcode as leaflet map does not have constant change for zoom levels
+    if (map.getZoom() === 2) {
+      sizeScale = 1;
+      speedScale = 1;
+    }
+    else if (map.getZoom() === 3) {
+      sizeScale = 0.75;
+      speedScale = 0.75;
+    }
+    
+    this.speedx = PARTICLESPEED * this.speedxmuilt;
+    this.speedy = PARTICLESPEED * this.speedymuilt;
+
+    this.radius = PART_SIZE;
+
+    this.opacity -= FADE_SPEED;
     this.x += this.speedx * speedScale;
     this.y += this.speedy * speedScale;
-    this.radius * sizeScale;
+    this.radius = this.radius * sizeScale;
     this.part.remove();
 
     let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
 
     this.part = L.imageOverlay(this.image, latLngBounds, {
-        opacity: this.opacity,
+      opacity: this.opacity,
     }).addTo(map);
 
     if (this.opacity < 0) {
@@ -314,8 +340,8 @@ let allGeoHints = [];
 
 let inQuiz = false;
 
-const DEFAULT_SMALL_TEXT = 22
-const DEFAULT_LARGE_TEXT = 30
+const DEFAULT_SMALL_TEXT = 22;
+const DEFAULT_LARGE_TEXT = 30;
 let smallTextFont = "22px";
 let largeTextFont = "30px";
 
@@ -705,7 +731,7 @@ function setup() {
   //all English Tile Layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
-    maxZoom: 19,
+    maxZoom: 8,
     minZoom: 1,
     noWrap: true,
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
@@ -1587,7 +1613,7 @@ function currentHintDisplay() {
         //remove map and reset variables
         selectedCountry = undefined;
         validCountry = false;
-        openHintButton.style("background-color", "red")
+        openHintButton.style("background-color", "red");
         geoTechPic.style("z-index", "24");
         geoTechPic.style("opacity", "1");
 
@@ -3889,7 +3915,7 @@ function fixsizes() {
   //tip picture pos
 
   //move the right side of the learn screen
-  geoTechPic.position(windowWidth / 6.5 + (windowWidth / 1.5) * 0.75 + windowWidth / 35, (windowHeight / 2.25 - windowWidth / 8) + windowWidth / 6.5 + windowWidth / 100);
+  geoTechPic.position(windowWidth / 6.5 + windowWidth / 1.5 * 0.75 + windowWidth / 35, windowHeight / 2.25 - windowWidth / 8 + windowWidth / 6.5 + windowWidth / 100);
   geoTechPic.size(windowWidth / 3.5, windowWidth / 3.5);
 
   //tech button pos
@@ -3954,11 +3980,11 @@ function fixsizes() {
   startPartyButton.position(windowWidth / 2 - 40, windowHeight / 1.2);
   partyHintButton.position(windowWidth / 2 - 40, windowHeight / 1.2 + 50);
 
-  let maxScreenSize = 1920
+  let maxScreenSize = 1920;
 
   //scale the text sizes
-  smallTextFont = String(DEFAULT_SMALL_TEXT * ((windowWidth) / maxScreenSize)) + "px"
-  largeTextFont = String(DEFAULT_LARGE_TEXT * ((windowWidth) / maxScreenSize)) + "px"
+  smallTextFont = String(DEFAULT_SMALL_TEXT * (windowWidth / maxScreenSize)) + "px";
+  largeTextFont = String(DEFAULT_LARGE_TEXT * (windowWidth / maxScreenSize)) + "px";
 
   backButton.position(0, windowHeight - 30);
   nextButton.position(windowWidth - 80, windowHeight - 30);
@@ -4259,22 +4285,22 @@ async function confirmed() {
   
         //if country is found
         if (data.address && data.address.country) {
-          pickedCountry = data.address.country
+          pickedCountry = data.address.country;
         }
   
         //if a country is not found
         else {
-          pickedCountry = "none"
+          pickedCountry = "none";
         }
       }
       catch (error) {
         console.log("Error");
       }
 
-      let fillColor = "red"
+      let fillColor = "red";
   
       if (randomMeta.country === pickedCountry) {
-        fillColor = "green"
+        fillColor = "green";
       }
 
       endScreen = true;
@@ -4299,11 +4325,11 @@ async function confirmed() {
       }).addTo(map);
 
       //next country
-      randomMeta = random(allGeoHints)
+      randomMeta = random(allGeoHints);
 
       //make sure that there isn't a repeat
       while (randomMeta === previousMeta) {
-        randomMeta  = random(allGeoHints)
+        randomMeta  = random(allGeoHints);
       }
 
       previousMeta = randomMeta;
@@ -5395,15 +5421,15 @@ function addGrid() {
 
         //if country is found
         if (data.address && data.address.country) {
-          selectedCountry = data.address.country
+          selectedCountry = data.address.country;
 
-          let fillingcol = "red"
+          let fillingcol = "red";
 
           //if the selected country is one that I have added hints to
           if (selectedCountry in hintedCountries) {
             openHintButton.style("background-color", "green");
             validCountry = true;
-            fillingcol = "green"
+            fillingcol = "green";
           }
           else {
             openHintButton.style("background-color", "red");
