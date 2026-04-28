@@ -130,6 +130,54 @@ function preload() {
   });
 }
 
+let particles = []
+
+let speed = 0.25;
+
+class Particle {
+
+  constructor(x, y, image) {
+    this.x = x,
+    this.y = y,
+    this.radius = 5,
+    this.image = image,
+    this.part;
+    this.speedx = random(-speed, speed)
+    this.speedy = random(-speed, speed)
+    this.opacity = 1;
+  }
+
+  display() {
+    let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
+
+    this.part = L.imageOverlay(this.image, latLngBounds, {
+        opacity: 1,
+    }).addTo(map);
+  }
+
+  move() {
+    let sizeScale = (1 / (map.getZoom() * 20))
+    let speedScale = (1 / (map.getZoom() / 2))
+
+
+    this.opacity -= 0.05
+    this.x += this.speedx * speedScale;
+    this.y += this.speedy * speedScale;
+    this.radius * sizeScale;
+    this.part.remove();
+
+    let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
+
+    this.part = L.imageOverlay(this.image, latLngBounds, {
+        opacity: this.opacity,
+    }).addTo(map);
+
+    if (this.opacity < 0) {
+      particles = particles.filter(item => item !== this);
+    }
+  }
+}
+
 let street;
 let map;
 let mapID;
@@ -681,6 +729,15 @@ function setup() {
     let lng = wrapped.lng;
     //what runs normally 
     if (!gridMode) {
+
+
+      //spawn particles
+      for (let i = 0; i < 25; i++) {
+        let newPart = new Particle(lat, lng, slimeP);
+        newPart.display();
+        particles.push(newPart);
+      }
+
 
       //when screen is clicked then move the marker to the clicked location and set the clicked coords
       if (endScreen === false && !lockedIn && !(inParty && timeLeft <= 0)) {
@@ -1358,6 +1415,10 @@ function draw() {
   showGridDrop();
   resetGuessStatus();
   allHaveGuessed();
+
+  for (let part of particles) {
+    part.move();
+  }
 }
 
 //moves the pin based on lat and lng, used for test purposes
