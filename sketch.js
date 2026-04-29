@@ -134,15 +134,16 @@ let particles = [];
 
 const PARTICLESPEED = 0.5;
 const FADE_SPEED = 0.05;
-const PART_SIZE = 5;
+const PART_SIZE = 10;
 
 
 //class for particles when you click
 class Particle {
-  constructor(x, y, image) {
+  constructor(x, y, image, lat) {
     this.x = x,
     this.y = y,
-    this.radius = PART_SIZE,
+    this.sizeX = PART_SIZE,
+    this.sizeY = PART_SIZE,
     this.image = image,
     this.part;
     this.speedxmuilt = random(-PARTICLESPEED, PARTICLESPEED);
@@ -150,53 +151,51 @@ class Particle {
     this.speedx;
     this.speedy;
     this.opacity = 1;
+    this.yScale;
   }
 
   //show the image
   display() {
-    let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
+    let latLngBounds = L.latLngBounds([[this.x - this.sizeX, this.y - this.sizeY], [this.x + this.sizeX, this.y + this.sizeY]]);
 
     this.part = L.imageOverlay(this.image, latLngBounds, {
       opacity: 1,
-    }).addTo(map);
+    }).addTo(mainMap);
   }
 
 
   //moves the images and deletes them when they fade
   move() {
-    // let sizeScale = 1 / (map.getZoom() * 10);
-    // let speedScale = 1 / (map.getZoom() / 2);
 
     let sizeScale = 1;
     let speedScale = 1;
+    this.yScale = 1
 
-
-    //forced to hardcode as leaflet map does not have constant change for zoom levels
-    if (map.getZoom() === 2) {
-      sizeScale = 1;
-      speedScale = 1;
-    }
-    else if (map.getZoom() === 3) {
-      sizeScale = 0.75;
-      speedScale = 0.75;
-    }
+    sizeScale = sizeScale * (1 / (2 ** (mainMap.getZoom() - 1)))
+    speedScale = speedScale * (1 / (2 ** (mainMap.getZoom() - 1)))
     
     this.speedx = PARTICLESPEED * this.speedxmuilt;
     this.speedy = PARTICLESPEED * this.speedymuilt;
 
-    this.radius = PART_SIZE;
+    this.sizeX = PART_SIZE;
+    this.sizeY = PART_SIZE;
+
+    this.yScale = map(Math.abs(clickedPoint.lat), 1, 90, 1, 0.15);
 
     this.opacity -= FADE_SPEED;
-    this.x += this.speedx * speedScale;
+    this.x += this.speedx * speedScale * this.yScale;
     this.y += this.speedy * speedScale;
-    this.radius = this.radius * sizeScale;
+    this.sizeX = this.sizeX * sizeScale * this.yScale;
+    this.sizeY = this.sizeY * sizeScale;
+
+
     this.part.remove();
 
-    let latLngBounds = L.latLngBounds([[this.x - this.radius, this.y - this.radius], [this.x + this.radius, this.y + this.radius]]);
+    let latLngBounds = L.latLngBounds([[this.x - this.sizeX, this.y - this.sizeY], [this.x + this.sizeX, this.y + this.sizeY]]);
 
     this.part = L.imageOverlay(this.image, latLngBounds, {
       opacity: this.opacity,
-    }).addTo(map);
+    }).addTo(mainMap);
 
     if (this.opacity < 0) {
       particles = particles.filter(item => item !== this);
@@ -205,7 +204,7 @@ class Particle {
 }
 
 let street;
-let map;
+let mainMap;
 let mapID;
 
 //let stats
@@ -254,6 +253,8 @@ let slimeP = "Assets/slimePin.png";
 let interP = "Assets/interdimensionalPin.png";
 
 let currentPin = coalP;
+
+let particleImage = "Assets/particle.png"
 
 //markers
 let answermarker;
@@ -726,7 +727,7 @@ function setup() {
   geoTechPic.style("transform", "translate(-50%, -50%)");
 
   //leaflet map
-  map = L.map("map").setView([0, 0], 1);
+  mainMap = L.map("map").setView([0, 0], 1);
 
   //all English Tile Layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
@@ -735,13 +736,13 @@ function setup() {
     minZoom: 1,
     noWrap: true,
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-  }).addTo(map);
+  }).addTo(mainMap);
 
 
   mapID = select("#map");
 
   //marker placement
-  marker = L.marker([0, 0]).addTo(map);
+  marker = L.marker([0, 0]).addTo(mainMap);
 
   //when the map is clicked
   async function onMapClick(e) {
@@ -749,7 +750,7 @@ function setup() {
       randomPitch();
     }
 
-    let wrapped = map.wrapLatLng(e.latlng);
+    let wrapped = mainMap.wrapLatLng(e.latlng);
 
     let lat = wrapped.lat;
     let lng = wrapped.lng;
@@ -757,11 +758,14 @@ function setup() {
     if (!gridMode) {
 
 
-      //spawn particles
-      for (let i = 0; i < 25; i++) {
-        let newPart = new Particle(lat, lng, slimeP);
-        newPart.display();
-        particles.push(newPart);
+      if (!endScreen) {
+        //spawn particles
+        for (let i = 0; i < 25; i++) {
+          let newPart = new Particle(lat, lng, particleImage, lat);
+          newPart.display();
+          newPart.move();
+          particles.push(newPart);
+        }
       }
 
 
@@ -860,7 +864,7 @@ function setup() {
 
   addGrid();
 
-  map.on('click', onMapClick);
+  mainMap.on('click', onMapClick);
 
   //create top banner
   textsize = (windowWidth + windowHeight) / textSizeScreenDividor;
@@ -1726,7 +1730,7 @@ function closeLearn() {
 
 //for testing purposes
 function crAns() {
-  displayAns = L.marker([randomlocation.lat, randomlocation.lng]).addTo(map);
+  displayAns = L.marker([randomlocation.lat, randomlocation.lng]).addTo(mainMap);
 }
 
 function toggleMapClose() {
@@ -2129,7 +2133,7 @@ function changeJoinWaitTest() {
 //when the window sizes change then make the map adjust
 function fixMapSizes() {
   if (prevWidth !== windowWidth || prevHeight !== windowHeight) {
-    map.invalidateSize();
+    mainMap.invalidateSize();
   }
   prevWidth = windowWidth;
   prevHeight = windowHeight;
@@ -2220,9 +2224,9 @@ function hideUnderShield() {
 
 //takes all the extra markers off of the map
 function clearMap() {
-  map.eachLayer(function(layer) {
+  mainMap.eachLayer(function(layer) {
     if (!(layer instanceof L.TileLayer) && layer !== marker) {
-      map.removeLayer(layer);
+      mainMap.removeLayer(layer);
     }
   });
 }
@@ -2337,7 +2341,7 @@ function toggleHint() {
       fillOpacity: 0.2,
       //lat to meters conversion
       radius: hintRadius * 111139
-    }).addTo(map);
+    }).addTo(mainMap);
   }
   else {
     //make red
@@ -2701,7 +2705,7 @@ function showAllMarks(marks, mapcoords) {
 
   //clear all markers
   for (let item of displayMarkers) {
-    map.removeLayer(item);
+    mainMap.removeLayer(item);
   }
   displayMarkers = [];
 
@@ -2743,14 +2747,14 @@ function showAllMarks(marks, mapcoords) {
       iconAnchor: [20, 37],
     });
 
-    let muiltMarker = L.marker([info.lat, info.lng], {icon: muiltIcon}).addTo(map);
+    let muiltMarker = L.marker([info.lat, info.lng], {icon: muiltIcon}).addTo(mainMap);
     let muiltAnswerLine = L.polyline(
       [[info.lat, info.lng], [mapcoords.lat, mapcoords.lng]],
       {
         color: lineCol,
         opacity: 0.7
       }
-    ).addTo(map);
+    ).addTo(mainMap);
 
     displayMarkers.push(muiltMarker);
     displayMarkers.push(muiltAnswerLine);
@@ -2859,8 +2863,8 @@ function resetLocals() {
 
 
   mapID.size(mapOriginalWidth, mapOriginalHeight);
-  map.invalidateSize();
-  map.setView([0, 0], 1);
+  mainMap.invalidateSize();
+  mainMap.setView([0, 0], 1);
 
   marker.setLatLng([0, 0]);
   clickedPoint = { lat: 0, lng: 0 };
@@ -4222,7 +4226,7 @@ function hideMap() {
   else {
     mapID.show();
     mapShowing = true;
-    map.invalidateSize();
+    mainMap.invalidateSize();
   }
 }
 
@@ -4309,7 +4313,7 @@ async function confirmed() {
       mapID.style("bottom", "0px");
       mapID.style("right", "0px");
       mapID.size(windowWidth, windowHeight - bannerHeight);
-      map.invalidateSize();
+      mainMap.invalidateSize();
 
 
       //makes an outline around the correct country
@@ -4322,7 +4326,7 @@ async function confirmed() {
           weight: 3,
           fillOpacity: 0.5
         }
-      }).addTo(map);
+      }).addTo(mainMap);
 
       //next country
       randomMeta = random(allGeoHints);
@@ -4346,8 +4350,8 @@ async function confirmed() {
       endScreen = false;
       resetMapSize();
       mapID.size(mapOriginalWidth, mapOriginalHeight);
-      map.invalidateSize();
-      map.setView([0, 0], 1);
+      mainMap.invalidateSize();
+      mainMap.setView([0, 0], 1);
 
       marker.setLatLng([0, 0]);
       clickedPoint = {
@@ -4770,14 +4774,14 @@ function leaveMap() {
     answerLine.remove();
   }
   
-  map.setView([0, 0], 1);
+  mainMap.setView([0, 0], 1);
 
   //change map size back to original
   enlarged = false;
   resetMapSize();
   mapID.size(mapOriginalWidth, mapOriginalHeight);
-  map.invalidateSize();
-  map.setView([0, 0], 1);
+  mainMap.invalidateSize();
+  mainMap.setView([0, 0], 1);
 
   for (let item of setMarkers) {
     item.remove();
@@ -4822,7 +4826,7 @@ function afterGuess() {
   mapID.style("bottom", "0px");
   mapID.style("right", "0px");
   mapID.size(windowWidth, windowHeight - bannerHeight);
-  map.invalidateSize();
+  mainMap.invalidateSize();
 
   currentAnswerIcon = answerIcon;
 
@@ -4991,12 +4995,12 @@ function afterGuess() {
 
         //show the previous guesses, the idea is that the final guess will be shown normally so all 5 guesses will be shown
         for (i = 0; i < maxRounds - 1; i++) {
-          let setAnswerMarker = L.marker([setLocations[i][0], setLocations[i][1]], {icon: currentAnswerIcon}).addTo(map);
-          let setClickedMarker = L.marker([setClickedPoints[i][0], setClickedPoints[i][1]], {icon: markerIcon}).addTo(map);
+          let setAnswerMarker = L.marker([setLocations[i][0], setLocations[i][1]], {icon: currentAnswerIcon}).addTo(mainMap);
+          let setClickedMarker = L.marker([setClickedPoints[i][0], setClickedPoints[i][1]], {icon: markerIcon}).addTo(mainMap);
           let setAnswerLine = L.polyline([[setLocations[i][0], setLocations[i][1]],[setClickedPoints[i][0], setClickedPoints[i][1]]], {
             color: setLineColors[i],
             opacity: 0.7
-          }).addTo(map);
+          }).addTo(mainMap);
   
           setMarkers.push(setAnswerMarker);
           setMarkers.push(setClickedMarker);
@@ -5060,12 +5064,12 @@ function afterGuess() {
     answerLine = L.polyline([[calcLocation.lat, calcLocation.lng],[clickedPoint.lat, clickedPoint.lng]], {
       color: lineCol,
       opacity: 0.7
-    }).addTo(map);
+    }).addTo(mainMap);
   
     adjustAfterGuess();
   }
 
-  answermarker = L.marker([calcLocation.lat, calcLocation.lng], {icon: currentAnswerIcon}).addTo(map);
+  answermarker = L.marker([calcLocation.lat, calcLocation.lng], {icon: currentAnswerIcon}).addTo(mainMap);
 
   //show user the answer in street view on another window
   answermarker.on("click", function () {
@@ -5088,7 +5092,7 @@ function adjustAfterGuess() {
   );
   
   //leaflit feautre to make the map fit 2 coordinates 
-  map.fitBounds(bounds, {padding: [answerPadding, answerPadding]});
+  mainMap.fitBounds(bounds, {padding: [answerPadding, answerPadding]});
 }
 
 //prevents the street view from being clicked
@@ -5123,7 +5127,7 @@ function changeMapSize() {
   mapID.mouseOver(() => {
     if (windowWidth + windowHeight > 2000 && !enlarged && !endScreen) {
       mapID.size(newWidth, newHeight);
-      map.invalidateSize();
+      mainMap.invalidateSize();
       enlarged = true;
     }
   });
@@ -5131,7 +5135,7 @@ function changeMapSize() {
   mapID.mouseOut(() => {
     if (windowWidth + windowHeight > 2000 && enlarged && !endScreen) {
       mapID.size(mapOriginalWidth, mapOriginalHeight);
-      map.invalidateSize();
+      mainMap.invalidateSize();
       enlarged = false;
     }
   });
@@ -5768,7 +5772,7 @@ function enterGridMode() {
           opacity: gridOpacity,
           weight: gridWeight
         }
-      ).addTo(map);
+      ).addTo(mainMap);
       gridModeLines.push(gridModeLine);
     }
 
@@ -5781,7 +5785,7 @@ function enterGridMode() {
           opacity: gridOpacity,
           weight: gridWeight
         }
-      ).addTo(map);
+      ).addTo(mainMap);
       gridModeLines.push(gridModeLine);
     }
 
@@ -5807,7 +5811,7 @@ function enterGridMode() {
 
 //change the color of the square after a guess based on how they did
 function gridModeSquareColChange() {
-  map.setView([randomlocation.lat, randomlocation.lng], 4);
+  mainMap.setView([randomlocation.lat, randomlocation.lng], 4);
 
   let answerY = Math.floor((randomlocation.lat + 90) / GRID_MODE_LENGTH);
   let answerX = Math.floor((randomlocation.lng + 180) / GRID_MODE_LENGTH);
@@ -5971,7 +5975,7 @@ function create3X3() {
             
                 fillColor: fillCol,
                 fillOpacity: fillopac
-              }).addTo(map);
+              }).addTo(mainMap);
     
               gridModeSquares.push(surroundSquare);
             }
@@ -6008,7 +6012,7 @@ function create3X3() {
       
           fillColor: fillCol,
           fillOpacity: fillopac
-        }).addTo(map);
+        }).addTo(mainMap);
 
         gridModeSquares.push(surroundSquare);
       }
@@ -6040,7 +6044,7 @@ function create3X3() {
         
             fillColor: fillCol,
             fillOpacity: fillopac
-          }).addTo(map);
+          }).addTo(mainMap);
 
           gridModeSquares.push(surroundSquare);
         }
@@ -6070,7 +6074,7 @@ function create3X3() {
   
       fillColor: fillCol,
       fillOpacity: fillopac
-    }).addTo(map);
+    }).addTo(mainMap);
 
     gridModeSquares.push(surroundSquare);
   }
