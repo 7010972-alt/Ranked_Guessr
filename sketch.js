@@ -169,7 +169,7 @@ class Particle {
 
     let sizeScale = 1;
     let speedScale = 1;
-    this.yScale = 1
+    this.yScale = 1;
 
     sizeScale = sizeScale * (1 / (2 ** (mainMap.getZoom() - 1)))
     speedScale = speedScale * (1 / (2 ** (mainMap.getZoom() - 1)))
@@ -254,7 +254,7 @@ let interP = "Assets/interdimensionalPin.png";
 
 let currentPin = coalP;
 
-let particleImage = "Assets/particle.png"
+let particleImage = "Assets/greenPart.png";
 
 //markers
 let answermarker;
