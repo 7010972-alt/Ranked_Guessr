@@ -161,8 +161,8 @@ class Particle {
     let speedScale = 1;
     this.yScale = 1;
 
-    sizeScale = sizeScale * (1 / (2 ** (mainMap.getZoom() - 1)))
-    speedScale = speedScale * (1 / (2 ** (mainMap.getZoom() - 1)))
+    sizeScale = sizeScale * (1 / (2 ** (mainMap.getZoom() - 1)));
+    speedScale = speedScale * (1 / (2 ** (mainMap.getZoom() - 1)));
     
     this.speedx = PARTICLESPEED * this.speedxmuilt;
     this.speedy = PARTICLESPEED * this.speedymuilt;
@@ -246,8 +246,8 @@ let interP = "Assets/interdimensionalPin.png";
 let currentPin = coalP;
 
 let particleImage = "Assets/greenPart.png";
-let redParticleImage = "Assets/particle.png"
-let testIMG = "Assets/dot.png"
+let redParticleImage = "Assets/particle.png";
+let testIMG = "Assets/dot.png";
 
 //markers
 let answermarker;
@@ -334,10 +334,10 @@ let allGeoHints = [];
 
 let inQuiz = false;
 
-const DEFAULT_SMALL_TEXT = 22;
-const DEFAULT_LARGE_TEXT = 30;
-let smallTextFont = "22px";
-let largeTextFont = "30px";
+const DEFAULT_SMALL_TEXT = 26;
+const DEFAULT_LARGE_TEXT = 40;
+let smallTextFont = "26px";
+let largeTextFont = "40px";
 
 let geoTechPic;
 
@@ -653,6 +653,9 @@ document.addEventListener("visibilitychange", function() {
 
 function setup() {
   noCanvas();
+
+  document.body.style.overflow = 'hidden';
+
 
   //add to the players list
   shared.players[myId] = true;
@@ -1302,22 +1305,21 @@ function setup() {
   LearnScreen.style("font-weight", "bold");
 
   LearnScreen.style("color", "black");
-  LearnScreen.style("border-radius", "12px");
   LearnScreen.style("border", "4px solid black");
+  LearnScreen.style("transform", "translate(-50%, -50%)");
 
   //holds the descriptions of the hints
   hintTextHolder = createDiv();
   hintTextHolder.style("background", "rgb(154, 255, 120)");
   hintTextHolder.style("z-index", "-1");
   hintTextHolder.style("opacity", "0");
+  hintTextHolder.style("transform", "translate(-50%, -50%)");
 
-  hintTextHolder.style("justify-content", "left");
+  hintTextHolder.style("justify-content", "center");
   hintTextHolder.style("align-items", "center");
   hintTextHolder.style("font-weight", "bold");
 
   hintTextHolder.style("color", "black");
-  hintTextHolder.style("border-radius", "12px");
-  hintTextHolder.style("border", "4px solid black");
 
   hintTextHolder.style("white-space", "normal");
   hintTextHolder.style("word-wrap", "break-word");
@@ -1678,9 +1680,9 @@ function displayLearn() {
     LearnScreen.style("opacity", "1");
     openHintButton.style("z-index", "25");
     openHintButton.style("opacity", "1");
-    backButton.style("z-index", "20");
+    backButton.style("z-index", "25");
     backButton.style("opacity", "1");
-    nextButton.style("z-index", "20");
+    nextButton.style("z-index", "25");
     nextButton.style("opacity", "1");
 
     showLearn = true;
@@ -3776,9 +3778,13 @@ function fixsizes() {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 4 - xButOffset, windowHeight / 2 - windowWidth / 8 - xButOffset);
   }
-  else if (dataShow || showGrid || showingSettings || showLearn) {
+  else if (dataShow || showGrid || showingSettings) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 6.5 - xButOffset, windowHeight / 2.25 - windowWidth / 8 - xButOffset);
+  }
+  if (showLearn) {
+    XButton.style("z-index", "25");
+    XButton.position(windowWidth - 50, 10);
   }
   else {
     XButton.style("z-index", "-1");
@@ -3896,23 +3902,19 @@ function fixsizes() {
   showGridScreen.style("padding-left", windowWidth / 40 + "px");
   showGridScreen.style("padding-top", windowWidth / 60 + "px");
 
-  LearnScreen.size(windowWidth / 1.5, windowWidth / 3.25);
-  LearnScreen.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
+  LearnScreen.size(windowWidth, windowHeight);
+  LearnScreen.position(windowWidth / 2, windowHeight / 2);
   LearnScreen.style("font-size", windowWidth / 69 + "px");
   LearnScreen.style("padding-left", windowWidth / 40 + "px");
   LearnScreen.style("padding-top", windowWidth / 60 + "px");
 
-  hintTextHolder.size(windowWidth / 3, windowWidth / 3.25);
-  hintTextHolder.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
-  hintTextHolder.style("font-size", windowWidth / 69 + "px");
-  hintTextHolder.style("padding-left", windowWidth / 40 + "px");
-  hintTextHolder.style("padding-top", windowWidth / 60 + "px");
+  hintTextHolder.size(windowWidth / 2.5, windowHeight - bannerHeight);
+  hintTextHolder.position(windowWidth / 3.7, windowHeight / 2 + bannerHeight);
 
   //tip picture pos
 
-  //move the right side of the learn screen
-  geoTechPic.position(windowWidth / 6.5 + windowWidth / 1.5 * 0.75 + windowWidth / 35, windowHeight / 2.25 - windowWidth / 8 + windowWidth / 6.5 + windowWidth / 100);
-  geoTechPic.size(windowWidth / 3.5, windowWidth / 3.5);
+  geoTechPic.position(windowWidth - windowWidth / 4, windowHeight / 2);
+  geoTechPic.size(windowWidth / 2.5, windowWidth / 2.5);
 
   //tech button pos
   openHintButton.position(10, 10);
