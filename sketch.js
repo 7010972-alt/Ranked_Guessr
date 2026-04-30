@@ -133,13 +133,13 @@ function preload() {
 let particles = [];
 
 const PARTICLESPEED = 0.5;
-const FADE_SPEED = 0.05;
+const FADE_SPEED = 0.04;
 const PART_SIZE = 10;
 
 
 //class for particles when you click
 class Particle {
-  constructor(x, y, image, lat) {
+  constructor(x, y, image) {
     this.x = x,
     this.y = y,
     this.sizeX = PART_SIZE,
@@ -150,19 +150,9 @@ class Particle {
     this.speedymuilt = random(-PARTICLESPEED, PARTICLESPEED);
     this.speedx;
     this.speedy;
-    this.opacity = 1;
+    this.opacity = 0.8;
     this.yScale;
   }
-
-  //show the image
-  display() {
-    let latLngBounds = L.latLngBounds([[this.x - this.sizeX, this.y - this.sizeY], [this.x + this.sizeX, this.y + this.sizeY]]);
-
-    this.part = L.imageOverlay(this.image, latLngBounds, {
-      opacity: 1,
-    }).addTo(mainMap);
-  }
-
 
   //moves the images and deletes them when they fade
   move() {
@@ -188,8 +178,9 @@ class Particle {
     this.sizeX = this.sizeX * sizeScale * this.yScale;
     this.sizeY = this.sizeY * sizeScale;
 
-
-    this.part.remove();
+    if (this.part !== undefined) {
+      this.part.remove();
+    }
 
     let latLngBounds = L.latLngBounds([[this.x - this.sizeX, this.y - this.sizeY], [this.x + this.sizeX, this.y + this.sizeY]]);
 
@@ -255,6 +246,8 @@ let interP = "Assets/interdimensionalPin.png";
 let currentPin = coalP;
 
 let particleImage = "Assets/greenPart.png";
+let redParticleImage = "Assets/particle.png"
+let testIMG = "Assets/dot.png"
 
 //markers
 let answermarker;
@@ -732,7 +725,7 @@ function setup() {
   //all English Tile Layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
-    maxZoom: 8,
+    maxZoom: 19,
     minZoom: 1,
     noWrap: true,
     attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
@@ -761,8 +754,7 @@ function setup() {
       if (!endScreen) {
         //spawn particles
         for (let i = 0; i < 25; i++) {
-          let newPart = new Particle(lat, lng, particleImage, lat);
-          newPart.display();
+          let newPart = new Particle(lat, lng, redParticleImage);
           newPart.move();
           particles.push(newPart);
         }
