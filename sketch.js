@@ -17,6 +17,48 @@ sessionStorage.setItem("partyPlayerId", myId);
 
 console.log(myId);
 
+//images
+let allPins;
+let allPinsDisplay;
+
+let allShields;
+let allShieldsDisplay;
+
+let coalS;
+let bronzeS;
+let silverS;
+let goldS;
+let diamondS;
+let obsidianS;
+let slimeS;
+let interS;
+
+let currentShield;
+let currentPin;
+
+let coalP;
+let bronzeP;
+let silverP;
+let goldP;
+let diamondP;
+let obsidianP;
+let slimeP;
+let interP;
+
+
+let particleImage;
+let redParticleImage;
+let testIMG;
+
+//markers
+let answermarker;
+let marker;
+let greenAnswer;
+let yellowAnswer;
+let purpleanswer;
+let whiteanswer;
+let blackanswer;
+
 //sounds
 const PITCH_RANGE = 0.1;
 let SFXVolume = 1.5;
@@ -40,6 +82,37 @@ let chillMusic6;
 let intenseMusic;
 
 function preload() {
+  //load images
+  allShields = "Assets/allShields.png";
+
+  coalS = "Assets/coalShield.png";
+  bronzeS = "Assets/bronzeShield.png";
+  silverS = "Assets/silverShield.png";
+  goldS = "Assets/goldShield.png";
+  diamondS = "Assets/diamondShield.png";
+  obsidianS = "Assets/obsidianShield.png";
+  slimeS = "Assets/slimeShield.png";
+  interS = "Assets/interShield.png";
+
+  coalP = "Assets/coalPin.png";
+  bronzeP = "Assets/bronzePin.png";
+  silverP = "Assets/silverPin.png";
+  goldP = "Assets/goldPin.png";
+  diamondP = "Assets/diamondPin.png";
+  obsidianP = "Assets/obsidianPin.png";
+  slimeP = "Assets/slimePin.png";
+  interP = "Assets/interdimensionalPin.png";
+
+  particleImage = "Assets/greenPart.png";
+  redParticleImage = "Assets/particle.png";
+  testIMG = "Assets/dot.png";
+
+  greenAnswer = "Assets/green_marker.png";
+  yellowAnswer = "Assets/bolt_answer.png";
+  purpleanswer = "Assets/NMPZ_answer.png";
+  whiteanswer = "Assets/Blink_answer.png";
+  blackanswer = "Assets/Blur_answer.png";
+
   //load sound
   numberRacking = loadSound("Sounds/number_racking.mp3");
   terribleGuess = loadSound("Sounds/terrible_guess.mp3");
@@ -216,47 +289,6 @@ let nextMaxStreak = 0;
 //rank sields
 let shieldSize = 80;
 let rankIcon;
-
-let allPins = "Assets/allPins.png";
-let allPinsDisplay;
-
-let allShields = "Assets/allShields.png";
-let allShieldsDisplay;
-
-let coalS = "Assets/coalShield.png";
-let bronzeS = "Assets/bronzeShield.png";
-let silverS = "Assets/silverShield.png";
-let goldS = "Assets/goldShield.png";
-let diamondS = "Assets/diamondShield.png";
-let obsidianS = "Assets/obsidianShield.png";
-let slimeS = "Assets/slimeShield.png";
-let interS = "Assets/interShield.png";
-
-let currentShield = coalS;
-
-let coalP = "Assets/coalPin.png";
-let bronzeP = "Assets/bronzePin.png";
-let silverP = "Assets/silverPin.png";
-let goldP = "Assets/goldPin.png";
-let diamondP = "Assets/diamondPin.png";
-let obsidianP = "Assets/obsidianPin.png";
-let slimeP = "Assets/slimePin.png";
-let interP = "Assets/interdimensionalPin.png";
-
-let currentPin = coalP;
-
-let particleImage = "Assets/greenPart.png";
-let redParticleImage = "Assets/particle.png";
-let testIMG = "Assets/dot.png";
-
-//markers
-let answermarker;
-let marker;
-let greenAnswer = "Assets/green_marker.png";
-let yellowAnswer = "Assets/bolt_answer.png";
-let purpleanswer = "Assets/NMPZ_answer.png";
-let whiteanswer = "Assets/Blink_answer.png";
-let blackanswer = "Assets/Blur_answer.png";
 
 let answerIcon = L.icon({
   iconUrl: greenAnswer,
