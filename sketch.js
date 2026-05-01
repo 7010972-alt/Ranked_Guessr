@@ -17,6 +17,16 @@ sessionStorage.setItem("partyPlayerId", myId);
 
 console.log(myId);
 
+let answerIcon;
+
+let blitzAnswer;
+
+let NMPZAnswer;
+
+let blinkAnswer;
+
+let blurAnswer;
+
 //images
 let allPins;
 let allPinsDisplay;
@@ -84,6 +94,7 @@ let intenseMusic;
 function preload() {
   //load images
   allShields = "Assets/allShields.png";
+  allPins = "Assets/allPins.png"
 
   coalS = "Assets/coalShield.png";
   bronzeS = "Assets/bronzeShield.png";
@@ -112,6 +123,47 @@ function preload() {
   purpleanswer = "Assets/NMPZ_answer.png";
   whiteanswer = "Assets/Blink_answer.png";
   blackanswer = "Assets/Blur_answer.png";
+
+  answerIcon = L.icon({
+    iconUrl: greenAnswer,
+
+    iconSize: [28, 40], //size of the icon
+    iconAnchor: [14, 39], //point of the icon which will correspond to marker's location
+  });
+
+  blitzAnswer = L.icon({
+    iconUrl: yellowAnswer,
+
+    iconSize: [60, 75], //size of the icon
+    iconAnchor: [27, 53], //point of the icon which will correspond to marker's location
+  });
+
+  NMPZAnswer = L.icon({
+    iconUrl: purpleanswer,
+
+    iconSize: [50, 62], //size of the icon
+    iconAnchor: [25, 52], //point of the icon which will correspond to marker's location
+  });
+
+  blinkAnswer = L.icon({
+    iconUrl: whiteanswer,
+
+    iconSize: [55, 65], //size of the icon
+    iconAnchor: [27.2, 54], //point of the icon which will correspond to marker's location
+  });
+
+  blurAnswer = L.icon({
+    iconUrl: blackanswer,
+
+    iconSize: [55, 83], //size of the icon
+    iconAnchor: [27.5, 63], //point of the icon which will correspond to marker's location
+  });
+
+  currentShield = coalS;
+  currentPin = coalP;
+  allPinsDisplay = allPins
+  allShieldsDisplay = allShields
+
 
   //load sound
   numberRacking = loadSound("Sounds/number_racking.mp3");
@@ -289,41 +341,6 @@ let nextMaxStreak = 0;
 //rank sields
 let shieldSize = 80;
 let rankIcon;
-
-let answerIcon = L.icon({
-  iconUrl: greenAnswer,
-
-  iconSize: [28, 40], //size of the icon
-  iconAnchor: [14, 39], //point of the icon which will correspond to marker's location
-});
-
-let blitzAnswer = L.icon({
-  iconUrl: yellowAnswer,
-
-  iconSize: [60, 75], //size of the icon
-  iconAnchor: [27, 53], //point of the icon which will correspond to marker's location
-});
-
-let NMPZAnswer = L.icon({
-  iconUrl: purpleanswer,
-
-  iconSize: [50, 62], //size of the icon
-  iconAnchor: [25, 52], //point of the icon which will correspond to marker's location
-});
-
-let blinkAnswer = L.icon({
-  iconUrl: whiteanswer,
-
-  iconSize: [55, 65], //size of the icon
-  iconAnchor: [27.2, 54], //point of the icon which will correspond to marker's location
-});
-
-let blurAnswer = L.icon({
-  iconUrl: blackanswer,
-
-  iconSize: [55, 83], //size of the icon
-  iconAnchor: [27.5, 63], //point of the icon which will correspond to marker's location
-});
 
 let currentAnswerIcon = answerIcon;
 
@@ -749,7 +766,7 @@ function setup() {
   allShieldsDisplay.style("z-index", "-1");
   allShieldsDisplay.style("opacity", "0");
 
-  geoTechPic = createImg("");
+  geoTechPic = createImg("", "");
   geoTechPic.style("z-index", "-1");
   geoTechPic.style("opacity", "0");
   geoTechPic.style("transform", "translate(-50%, -50%)");
