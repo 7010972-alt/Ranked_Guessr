@@ -706,6 +706,8 @@ function setup() {
   noCanvas();
 
   //set the world map
+  allCountries.sort();
+  console.log(allCountries);
   currentSelectedMap = structuredClone(allCountries);
 
   document.body.style.overflow = 'hidden';
