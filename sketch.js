@@ -373,6 +373,8 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let currentSelectedMap;
+
 let allOutlines = [];
 let countryTech = false;
 let countryOutline;
@@ -702,6 +704,9 @@ document.addEventListener("visibilitychange", function() {
 
 function setup() {
   noCanvas();
+
+  //set the world map
+  currentSelectedMap = structuredClone(allCountries);
 
   document.body.style.overflow = 'hidden';
 
@@ -1492,6 +1497,12 @@ function draw() {
   for (let part of particles) {
     part.move();
   }
+}
+
+function differentMap(country) {
+  currentLocations = []
+
+  addmap(country[1])
 }
 
 //moves the pin based on lat and lng, used for test purposes
@@ -3798,13 +3809,12 @@ function blinkToggle() {
 
 
 //converts each location into a lat and lng and a country although my game developed to not even use the country part
-function addmap(map, country) {
+function addmap(map) {
   for (let location of map) {
     currentLocations.push(
       {
         lat: location[0],
         lng: location[1],
-        cnt: country,
       }
     );
   }
@@ -4313,8 +4323,9 @@ function nextmap() {
 //put all the maps from the locations script into a table
 function setupMap() {
   currentLocations = [];
-  for (let country of allCountries) {
-    addmap(country[1], country[0]);
+
+  for (let country of currentSelectedMap) {
+    addmap(country[1]);
   }
 }
 
