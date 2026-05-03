@@ -373,6 +373,11 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+
+let allMaps = {};
+let countryList = []
+
+let showingMaps = false;
 let currentSelectedMap;
 
 let allOutlines = [];
@@ -576,6 +581,14 @@ let openHintButton;
 let hintsDropDown;
 let nextButton;
 let backButton;
+
+let mapsButton;
+let mapFindType;
+let mapNameType;
+let mapsDropDown;
+let mapFileGetter;
+let fileGetterText;
+let mapDeleter;
 
 //set variables
 let blitzTime = 10;
@@ -1103,13 +1116,55 @@ function setup() {
 
   hintsDropDown.changed(currentHintDisplay);
 
+  
   //type in the comparison value for your heat map
   heatMapType = createInput();
   heatMapType.size(75, 24);
   heatMapType.style("z-index", "-1");
   heatMapType.value("1");
-
+  
   heatMapType.changed(findHeatValues);
+
+  //dropdown menu that holds all of the maps
+  mapsDropDown = createSelect();
+  mapsDropDown.size(160, 30);
+  mapsDropDown.style("z-index", "-1");
+  mapsDropDown.option("World")
+
+  mapsDropDown.changed(mapSwitches);
+
+  //button that prompts for a file
+  mapFileGetter = createFileInput(handleFile);
+  mapFileGetter.size(160, 30);
+  mapFileGetter.style("z-index", "-1");
+  mapFileGetter.hide();
+
+  fileGetterText = createButton("Upload Map JSON");
+  fileGetterText.size(160, 30);
+  fileGetterText.mousePressed(() => mapFileGetter.elt.click());
+
+  //button to delete a map
+  mapDeleter = createButton("Delete Map");
+  mapDeleter.size(160, 30);
+  mapDeleter.style("position", "absolute");
+  mapDeleter.style("z-index", "-1");
+  mapDeleter.style("background", "Red");
+
+  mapDeleter.mousePressed(deleteCurrent);
+
+  //type in the name of the map you are trying to find
+  mapFindType = createInput();
+  mapFindType.size(152, 24);
+  mapFindType.style("z-index", "-1");
+  mapFindType.value("");
+
+  mapFindType.changed(updateMapsDrop);
+
+  //type in the name of the map you are creating
+  mapNameType = createInput();
+  mapNameType.size(152, 24);
+  mapNameType.style("z-index", "-1");
+  mapNameType.value("Name Your Map");
 
   //type in the name that you want
   nameType = createInput();
@@ -1180,11 +1235,20 @@ function setup() {
 
   showLearnButton.mousePressed(displayLearn);
 
+  //button to open the Maps Menu
+  mapsButton = createButton("Maps");
+  mapsButton.size(shieldSize, 20);
+  mapsButton.style("position", "absolute");
+  mapsButton.style("z-index", "-1");
+
+  mapsButton.mousePressed(displayMaps);
+
   //button to enter quiz mode
   quizModeButton = createButton("Quiz");
-  quizModeButton.size(shieldSize, 20);
+  quizModeButton.size(shieldSize, 40);
   quizModeButton.style("position", "absolute");
   quizModeButton.style("z-index", "-1");
+  quizModeButton.style("background-color", "green");
 
   quizModeButton.mousePressed(enterQuiz);
 
@@ -1459,6 +1523,8 @@ function setup() {
   resetMapSize();
 
   addAllGeoHints();
+
+  includeAllCountries();
 }
 
 function draw() {
@@ -1495,10 +1561,136 @@ function draw() {
   showGridDrop();
   resetGuessStatus();
   allHaveGuessed();
+  moveAll();
+}
 
+function deleteCurrent() {
+  if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World") {
+    let index = mapsDropDown.elt.selectedIndex;
+    mapsDropDown.elt.remove(index);
+
+    mapsDropDown.index = 0;
+  
+    differentMap(allMaps[mapsDropDown.value()])
+  }
+}
+
+function includeAllCountries() {
+  for (let country of allCountries) {
+    mapsDropDown.option(country[0]);
+    allMaps[country[0]] = country;
+    countryList.push(country[0])
+  }
+}
+
+function handleFile(file) {
+  if (!countryList.includes(mapNameType.value()) && mapNameType.value() !== "World" && mapNameType.value() !== "") {
+    allMaps[mapNameType.value()] = convertFile(file.data)
+    mapsDropDown.option(mapNameType.value())
+  }
+}
+
+function mapSwitches() {
+  differentMap(allMaps[mapsDropDown.value()])
+}
+
+
+//displays only the maps that fit the name
+function updateMapsDrop() {
+  mapsDropDown.elt.innerHTML = "";
+
+  if (mapFindType.value() === "") {
+    for (let mapName in allMaps) {
+      mapsDropDown.option(mapName);
+    }
+  }
+
+  else {
+    for (let mapName in allMaps) {
+      if (mapName.toLowerCase().includes(mapFindType.value().toLowerCase())) {
+        mapsDropDown.option(mapName);
+      }
+    }
+  
+    if (mapsDropDown.elt.options.length === 0) {
+      mapsDropDown.option("World")
+    } 
+  }
+
+  differentMap(allMaps[mapsDropDown.value()])
+}
+
+function displayMaps() {
+  showingMaps = !showingMaps;
+
+  if (showingMaps) {
+    LearnScreen.style("z-index", "20");
+    LearnScreen.style("opacity", "1");
+
+    mapFindType.style("z-index", "25");
+    mapFindType.style("opacity", "1");
+    mapNameType.style("z-index", "25");
+    mapNameType.style("opacity", "1");
+    mapsDropDown.style("z-index", "25");
+    mapsDropDown.style("opacity", "1");
+    mapFileGetter.style("z-index", "25");
+    mapFileGetter.style("opacity", "1");
+    fileGetterText.style("z-index", "25");
+    fileGetterText.style("opacity", "1");
+    mapDeleter.style("z-index", "25");
+    mapDeleter.style("opacity", "1");
+  }
+  else {
+    closeMaps();
+  }
+
+}
+
+function closeMaps() {
+  if (showingMaps) {
+    showingMaps = false;
+    mapChange();
+  }
+  LearnScreen.style("z-index", "-1");
+  LearnScreen.style("opacity", "0");
+  mapFindType.style("z-index", "-1");
+  mapFindType.style("opacity", "0");
+  mapNameType.style("z-index", "-1");
+  mapNameType.style("opacity", "0");
+  mapsDropDown.style("z-index", "-1");
+  mapsDropDown.style("opacity", "0");
+  mapFileGetter.style("z-index", "-1");
+  mapFileGetter.style("opacity", "0");
+  fileGetterText.style("z-index", "-1");
+  fileGetterText.style("opacity", "0");
+  mapDeleter.style("z-index", "-1");
+  mapDeleter.style("opacity", "0");
+}
+
+//updates all the particles
+function moveAll() {
   for (let part of particles) {
     part.move();
   }
+}
+
+// converts json file into a coordinate table
+function convertFile(file) {
+    if (!file || !file.customCoordinates) {
+      return [];
+    }
+
+    let newFile = [];
+
+    let addedCoords =  file.customCoordinates.map(coord => [
+        coord.lat,
+        coord.lng
+    ]);
+
+    newFile.push(mapNameType.value());
+    newFile.push(addedCoords);
+
+    return newFile;
 }
 
 function differentMap(country) {
@@ -1579,6 +1771,13 @@ function addAllGeoHints() {
 function enterQuiz() {
   inQuiz = !inQuiz;
   if (inQuiz) {
+    closeLearn();
+
+    quizModeButton.style("background-color", "red");
+    quizModeButton.html("Leave")
+
+    quizModeButton.style("z-index", "25");
+    quizModeButton.style("opacity", "1");
 
     pickedCountry = undefined;
     quizImage.style("opacity", "1");
@@ -1593,7 +1792,11 @@ function enterQuiz() {
     covering= true;
   }
   else {
+    quizModeButton.style("background-color", "green");
+    quizModeButton.html("Quiz")
     quizImage.style("z-index", "-1");
+    quizModeButton.style("z-index", "-1");
+    quizModeButton.style("opacity", "0");
     covering= false;
     mapChange();
   }
@@ -1733,6 +1936,8 @@ function displayLearn() {
     selectedCountry = undefined;
     validCountry = false;
 
+    quizModeButton.style("z-index", "25");
+    quizModeButton.style("opacity", "1");
     hintsDropDown.style("z-index", "25");
     hintsDropDown.style("opacity", "1");
     hintTextHolder.style("z-index", "20");
@@ -1761,6 +1966,9 @@ function closeLearn() {
   
   LearnScreen.style("z-index", "-1");
   LearnScreen.style("opacity", "0");
+
+  quizModeButton.style("z-index", "-1");
+  quizModeButton.style("opacity", "0");
 
   openHintButton.style("z-index", "-1");
   openHintButton.style("opacity", "0");
@@ -1847,6 +2055,7 @@ function closeAll() {
   closeData();
   closeSettings();
   closeLearn();
+  closeMaps();
 }
 
 //shortens the time when all players of the parpty has guessed
@@ -2263,7 +2472,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "-1");
     hintButton.style("z-index", "-1");
     showLearnButton.style("z-index", "-1");
-    quizModeButton.style("z-index", "-1");
+    mapsButton.style("z-index", "-1");
   }
   else {
     hideUnderButton.html("Hide");
@@ -2274,7 +2483,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "2");
     hintButton.style("z-index", "2");
     showLearnButton.style("z-index", "2");
-    quizModeButton.style("z-index", "2");
+    mapsButton.style("z-index", "2");
   }
 }
 
@@ -3589,41 +3798,26 @@ function partyChange(place, type) {
 
 //I wanted the player to not be able to join parties or sets or change the dropdown value when they are in either one
 function lockStartJoin() {
-  if (inParty || setActive || endScreen || viewing || gridMode) {
+  if (inParty || setActive || endScreen || viewing || gridMode || showLearn || showingMaps || setActive) {
     setTypeDropDown.attribute("disabled", "");
     hintButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
     gridModeButton.attribute("disabled", "");
-
-    if (gridMode) {
-      gridModeButton.removeAttribute("disabled");
-    }
-
-    //keep the reset option open while a set is active
-    if (!setActive || endScreen) {
-      startSetButton.attribute("disabled", "");
-      joinButton.attribute("disabled", "");
-    }
-    else if (setActive && !endScreen) {
-      startSetButton.removeAttribute("disabled");
-      joinButton.removeAttribute("disabled");
-    }
-
-    if (!setActive) {
-      //keep the reset option open while a set is active
-      if (!inParty || endScreen) {
-        joinButton.attribute("disabled", "");
-      }
-      else if (inParty && !endScreen) {
-        joinButton.removeAttribute("disabled");
-      }
-    }
+    showLearnButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
+
   else {
-    joinButton.removeAttribute("disabled");
-    startSetButton.removeAttribute("disabled");
     setTypeDropDown.removeAttribute("disabled");
     hintButton.removeAttribute("disabled");
+    DataShowButton.removeAttribute("disabled");
     gridModeButton.removeAttribute("disabled");
+    showLearnButton.removeAttribute("disabled");
+    showRankButton.removeAttribute("disabled");
+    showSettingsButton.removeAttribute("disabled");
+    mapsButton.removeAttribute("disabled");
   }
 }
 
@@ -3825,6 +4019,13 @@ function addmap(map) {
 let xButOffset = 15;
 
 function fixsizes() {
+  mapFindType.position(10, 10);
+  mapNameType.position(200, 10);
+  mapsDropDown.position(10, 40);
+  mapFileGetter.position(200, 40);
+  fileGetterText.position(200, 40);
+  mapDeleter.position(200, 80);
+
   zoomCoords = {
     top: windowHeight - 61,
     bottom: 27,
@@ -3843,7 +4044,7 @@ function fixsizes() {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 6.5 - xButOffset, windowHeight / 2.25 - windowWidth / 8 - xButOffset);
   }
-  if (showLearn) {
+  else if (showLearn || showingMaps) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth - 50, 10);
   }
@@ -3922,6 +4123,8 @@ function fixsizes() {
 
   nameType.size(72, 20);
 
+  quizModeButton.position(windowWidth - 100, bannerHeight + 20);
+
   let underShieldX = 9;
 
   //buttons under the shield
@@ -3933,7 +4136,7 @@ function fixsizes() {
   hintButton.position(underShieldX, bannerHeight + shieldSize + 135);
   showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
   showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
-  quizModeButton.position(underShieldX, bannerHeight + shieldSize + 210);
+  mapsButton.position(underShieldX, bannerHeight + shieldSize + 210);
 
   let lowervalue = windowHeight;
   if (windowHeight > windowWidth) {
@@ -4326,9 +4529,20 @@ function nextmap() {
 function setupMap() {
   currentLocations = [];
 
-  for (let country of currentSelectedMap) {
+  for (let country of allCountries) {
     addmap(country[1]);
   }
+
+
+  //make the maps have their own coordinates in the drop downs
+  let addedMap = ["World", []]
+  for (let country of allCountries) {
+    for (let coord of country[1]) {
+      addedMap[1].push(coord)
+    }
+  }
+
+  allMaps["World"] = (addedMap)
 }
 
 //this handles submitting guesses and leaving the end screen after a guess
@@ -4361,6 +4575,10 @@ async function confirmed() {
   
       if (randomMeta.country === pickedCountry) {
         fillColor = "green";
+        goodGuessSound.play();
+      }
+      else {
+        terribleGuess.play();
       }
 
       endScreen = true;
