@@ -20013,7 +20013,7 @@ window.america = [
 //2000
 window.canada = [
   "Canada", 
-[
+  [
     [
       50.113710529356496,
       -113.52714163924786
@@ -45272,7 +45272,7 @@ window.chile = [
 //1500
 window.argentina = [
   "Argentina", 
-[
+  [
     [
       -31.157931235808476,
       -64.14631807789995
@@ -92988,7 +92988,7 @@ window.botswana = [
 //1500
 window.southafrica = [
   "South Africa",
-[
+  [
     [
       62.01478074321363,
       26.03290461023789
@@ -144181,7 +144181,7 @@ window.hongkong = [
 //2500
 window.russia = [
   "Russia",
-[
+  [
     [
       62.714754235399056,
       147.53094209373185
@@ -191205,7 +191205,7 @@ window.denmark = [
 //500
 window.norway = [
   "Norway",
-[
+  [
     [
       61.484607964402656,
       12.29617841981774
@@ -193212,7 +193212,7 @@ window.norway = [
 //500
 window.sweden = [
   "Sweden",
-[
+  [
     [
       64.11599442720264,
       15.299072900117789
@@ -195219,7 +195219,7 @@ window.sweden = [
 //500
 window.finland = [
   "Finland",
-[
+  [
     [
       62.01478074321363,
       26.03290461023789
