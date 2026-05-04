@@ -373,6 +373,7 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let savedMaps = {};
 
 let allMaps = {};
 let countryList = []
@@ -1566,12 +1567,15 @@ function draw() {
 
 function deleteCurrent() {
   if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World") {
+    delete savedMaps[mapsDropDown.value()]
+    saveProgress();
     let index = mapsDropDown.elt.selectedIndex;
     mapsDropDown.elt.remove(index);
 
     mapsDropDown.index = 0;
   
     differentMap(allMaps[mapsDropDown.value()])
+
   }
 }
 
@@ -1581,12 +1585,25 @@ function includeAllCountries() {
     allMaps[country[0]] = country;
     countryList.push(country[0])
   }
+
+  if (localStorage.getItem("custommaps") !== null) {
+    let allSaved = structuredClone(JSON.parse(localStorage.getItem("custommaps")))
+    for (let map in allSaved) {
+      allMaps[map] = allSaved[map]
+      mapsDropDown.option(map)
+    }
+  }
 }
 
 function handleFile(file) {
+
   if (!countryList.includes(mapNameType.value()) && mapNameType.value() !== "World" && mapNameType.value() !== "") {
-    allMaps[mapNameType.value()] = convertFile(file.data)
+    let converted = convertFile(file.data)
+    allMaps[mapNameType.value()] = converted
     mapsDropDown.option(mapNameType.value())
+
+    savedMaps[mapNameType.value()] = converted
+    saveProgress();
   }
 }
 
@@ -5466,6 +5483,9 @@ function saveProgress() {
 
   //other
   localStorage.setItem("name", nameType.value());
+
+  //maps
+  localStorage.setItem("custommaps", JSON.stringify(savedMaps));
 }
 
 
