@@ -1644,6 +1644,10 @@ function displayMaps() {
     LearnScreen.style("z-index", "20");
     LearnScreen.style("opacity", "1");
 
+    hintTextHolder.style("z-index", "20");
+    hintTextHolder.style("opacity", "1");
+    geoTechPic.style("z-index", "21");
+    geoTechPic.style("opacity", "1");
     mapFindType.style("z-index", "25");
     mapFindType.style("opacity", "1");
     mapNameType.style("z-index", "25");
@@ -1656,11 +1660,30 @@ function displayMaps() {
     fileGetterText.style("opacity", "1");
     mapDeleter.style("z-index", "25");
     mapDeleter.style("opacity", "1");
+
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">
+        1: Generate a Map at 
+        <a href="https://map-g3nerator.vercel.app/" target="_blank">
+          https://map-g3nerator.vercel.app/
+        </a> 
+        or make your own at 
+        <a href="https://map-making.app/" target="_blank">
+          https://map-making.app/
+        </a>
+      </span><br>
+      <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
+      <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
+      <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
+    `);
+
+    geoTechPic.attribute("src", "Assets/MapMaking.png");
   }
   else {
     closeMaps();
   }
-
 }
 
 function closeMaps() {
@@ -1668,6 +1691,8 @@ function closeMaps() {
     showingMaps = false;
     mapChange();
   }
+  geoTechPic.style("z-index", "-1");
+  geoTechPic.style("opacity", "0");
   LearnScreen.style("z-index", "-1");
   LearnScreen.style("opacity", "0");
   mapFindType.style("z-index", "-1");
@@ -1682,6 +1707,8 @@ function closeMaps() {
   fileGetterText.style("opacity", "0");
   mapDeleter.style("z-index", "-1");
   mapDeleter.style("opacity", "0");
+  hintTextHolder.style("z-index", "-1");
+  hintTextHolder.style("opacity", "0");
 }
 
 //updates all the particles
