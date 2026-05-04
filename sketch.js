@@ -1565,6 +1565,30 @@ function draw() {
   moveAll();
 }
 
+function mapTextUpdate() {
+  hintTextHolder.html(`
+    <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">
+      1: Generate a Map at 
+      <a href="https://map-g3nerator.vercel.app/" target="_blank">
+        https://map-g3nerator.vercel.app/
+      </a> 
+      or make your own at 
+      <a href="https://map-making.app/" target="_blank">
+        https://map-making.app/
+      </a>
+    </span><br>
+    <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
+    <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
+    <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+  `);
+
+  geoTechPic.attribute("src", "Assets/MapMaking.png");
+}
+
 function deleteCurrent() {
   if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World") {
     delete savedMaps[mapsDropDown.value()]
@@ -1608,7 +1632,8 @@ function handleFile(file) {
 }
 
 function mapSwitches() {
-  differentMap(allMaps[mapsDropDown.value()])
+  differentMap(allMaps[mapsDropDown.value()]);
+  mapTextUpdate();
 }
 
 
@@ -1661,25 +1686,7 @@ function displayMaps() {
     mapDeleter.style("z-index", "25");
     mapDeleter.style("opacity", "1");
 
-    hintTextHolder.html(`
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">
-        1: Generate a Map at 
-        <a href="https://map-g3nerator.vercel.app/" target="_blank">
-          https://map-g3nerator.vercel.app/
-        </a> 
-        or make your own at 
-        <a href="https://map-making.app/" target="_blank">
-          https://map-making.app/
-        </a>
-      </span><br>
-      <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
-      <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
-      <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
-    `);
-
-    geoTechPic.attribute("src", "Assets/MapMaking.png");
+    mapTextUpdate();
   }
   else {
     closeMaps();
