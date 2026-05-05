@@ -803,6 +803,95 @@ let hintedCountries = {
     }
   },
 
+  "Canada": {
+    Main: {
+      desc: "CA (Canada) is a massive country with heavy southern coverage. Canada can be mixed up with the US sometimes",
+      name: "Canada (CA)",
+      picture: "GeoTechs/CA/CA-Main.png",
+      driving: "Right",
+      plate: "Thick",
+      language: "English / French",
+      difficulty: 6
+    },
+
+    CAFlag: {
+      desc: "The CA flag is hung around very often",
+      name: "EX: Flag",
+      picture: "GeoTechs/CA/CA-Flag.png",
+      type: "EX"
+    },
+
+    CAIntersection: {
+      desc: "Checkered Intersection signs are unique to CA",
+      name: "EX: Checkered Sign",
+      picture: "GeoTechs/CA/CA-Intersection.png",
+      type: "EX"
+    },
+
+    CALamp: {
+      desc: "Hunchback metal lamps attached to poles are found in CA. DOn't get them mixed up with the Mexican ones.",
+      name: "EX: Metal Lamp",
+      picture: "GeoTechs/CA/CA-Lamp.png",
+      type: "EX"
+    },
+
+    CAMaximum: {
+      desc: "Maximum speed limit signs are unique to CA",
+      name: "EX: Speed Signs",
+      picture: "GeoTechs/CA/CA-Maximum.png",
+      type: "EX"
+    },
+
+    CAMailBoxes: {
+      desc: "Canadian Mail boxes can be seen reugularly",
+      name: "EX: Mail Boxes",
+      picture: "GeoTechs/CA/CA-Mailbox.png",
+      type: "EX"
+    },
+
+    CAPraries: {
+      desc: "These flat Praries are found in central CA",
+      name: "RR: Praries",
+      picture: "GeoTechs/CA/CA-Pararies.png",
+      type: "RR"
+    },
+
+    CAPines: {
+      desc: "Groups of short pines are common in CA",
+      name: "RR: Pines",
+      picture: "GeoTechs/CA/CA-Pines.png",
+      type: "RR"
+    },
+
+    CASignPost: {
+      desc: "These holed sign posts are found commonly in CA",
+      name: "RR: Sign Post",
+      picture: "GeoTechs/CA/CA-SignPosts.png",
+      type: "RR"
+    },
+
+    CAFrench: {
+      desc: "Quebec and New Brunswick have French. Mainly QC",
+      name: "RR: French",
+      picture: "GeoTechs/CA/CA-French.png",
+      type: "RR"
+    },
+
+    CATanks: {
+      desc: "These metal tanks are found in the praries of CA",
+      name: "RR: Metal Tanks",
+      picture: "GeoTechs/CA/CA-Tanks.png",
+      type: "RR"
+    },
+
+    CALessWords: {
+      desc: "Many signs have less words than the american ones. In america this sign would say Railroad across it",
+      name: "CC: Less Wording",
+      picture: "GeoTechs/CA/CA-Lessworcds.png",
+      type: "CC"
+    },
+  },
+
   "Croatia": {
     Main: {
       desc: "CR (Croatia) is a pretty difficult country as it is easily mixed up with the rest of the Balkans, especially Bosnia",
@@ -1032,6 +1121,95 @@ let hintedCountries = {
       name: "RR: ",
       picture: "GeoTechs/HG/HG-Support.png",
       type: "RR"
+    },
+  },
+
+  "Mexico": {
+    Main: {
+      desc: "MX (Mexico) is generally an easy country to identify. However, the landscape changes drastically from north to south.",
+      name: "Mexico (MX)",
+      picture: "GeoTechs/MX/MX-Main.png",
+      driving: "Right",
+      plate: "Thick",
+      language: "Spanish",
+      difficulty: 4
+    },
+
+    MXBollard: {
+      desc: "These round white bollards with a black bottom are unique to MX",
+      name: "EX: Bollards",
+      picture: "GeoTechs/MX/MX-Bollard.png",
+      type: "EX"
+    },
+
+    MXArrow: {
+      desc: "These thicker than usual arrows are a giveaway to MX",
+      name: "EX: Arrow",
+      picture: "GeoTechs/MX/MX-Arrow.png",
+      type: "EX"
+    },
+
+    MXRoadName: {
+      desc: "These Road names with 3 capital letters sell out a Mexican state.",
+      name: "EX: Road Names",
+      picture: "GeoTechs/MX/MX-RoadName.png",
+      type: "EX"
+    },
+
+    MXAntenna: {
+      desc: "Some MX coverage has this stubby antenna with a wire",
+      name: "RR: Antenna",
+      picture: "GeoTechs/MX/MX-Antenna.png",
+      type: "RR"
+    },
+
+    MXPole: {
+      desc: "This octagon pole is super common in MX",
+      name: "RR: Octagon Poles",
+      picture: "GeoTechs/MX/MX-Pole.png",
+      type: "RR"
+    },
+
+    MXStopSigns: {
+      desc: "ALTO stop signs are used in MX",
+      name: "RR: ALTO",
+      picture: "GeoTechs/MX/MX-Stop.png",
+      type: "RR"
+    },
+
+    MXWhiteBrick: {
+      desc: "These style White brick buildings are commonly used in MX",
+      name: "RR: White Brick Buildings",
+      picture: "GeoTechs/MX/MX-WhiteBrick.png",
+      type: "RR"
+    },
+
+    MXElectric: {
+      desc: "These cylinder Electric thingys are found in MX",
+      name: "RR: Electric Things",
+      picture: "GeoTechs/MX/MX-Electricity.png",
+      type: "RR"
+    },
+
+    MXCacti: {
+      desc: "Many different types of cacti are found all over MX",
+      name: "RR: Cacti",
+      picture: "GeoTechs/MX/MX-Cacti.png",
+      type: "RR"
+    },
+
+    MXPalms: {
+      desc: "Many different palms are found all over MX",
+      name: "CC: Palms",
+      picture: "GeoTechs/MX/MX-Palms.png",
+      type: "CC"
+    },
+
+    MXMountains: {
+      desc: "Most of MX is mountainous",
+      name: "CC: Mountains",
+      picture: "GeoTechs/MX/MX-Mountains.png",
+      type: "CC"
     },
   },
 
@@ -1604,6 +1782,25 @@ let hintedCountries = {
       desc: "compared to Russia, UKR has terrible roading, there is almost always patches in the road which is less common in Russia.",
       name: "EX: Poor Roading",
       picture: "GeoTechs/UKR/UKR-PoorRoading.png",
+      type: "EX"
+    },
+  },
+
+  "United States": {
+    Main: {
+      desc: "",
+      name: "",
+      picture: "",
+      driving: "Right",
+      plate: "",
+      language: "",
+      difficulty: 1
+    },
+
+    US: {
+      desc: "",
+      name: "",
+      picture: "",
       type: "EX"
     },
   },
