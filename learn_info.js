@@ -390,6 +390,160 @@ let hintedCountries = {
       type: "TUT"
     },
 
+    Infrastructure: {
+      desc: "Arguably the most important part of the game is Inrastructure. This includes road signs, houses, bollards, etc.",
+      name: "8.0: Infrastructure",
+      picture: "GeoTechs/0_Guide/8.00.png",
+      type: "TUT"
+    },
+
+    Infrastructure1: {
+      desc: "Bollards are little sticks by the road usually used as reflectors. Bollards are found in many countries in the world and especially in EU.",
+      name: "- 8.1: Bollards",
+      picture: "GeoTechs/0_Guide/8.10.png",
+      type: "TUT"
+    },
+
+    Infrastructure11: {
+      desc: "All EU bollards more or less share the same shape. They all generally have a white body with a black tape holding some sort of reflector. This basic Bollard is the German bollard and almost every EU country has it's own unique Bollard.",
+      name: "-- 8.11: EU Bollard",
+      picture: "GeoTechs/0_Guide/8.11.png",
+      type: "TUT"
+    },
+
+    Infrastructure12: {
+      desc: "This orange tipped bollard is found in the US but is not the only one found there.",
+      name: "-- 8.12: US Bollard",
+      picture: "GeoTechs/0_Guide/8.12.png",
+      type: "TUT"
+    },
+
+    Infrastructure12: {
+      desc: "These Bollards are found everywhere in Australia, essentially making the country free. However, they look very similar to the Turkish Bollards so make sure you are in the southern Hemishpere",
+      name: "-- 8.13: Aus Bollard",
+      picture: "GeoTechs/0_Guide/8.13.png",
+      type: "TUT"
+    },
+
+    Infrastructure2: {
+      desc: "Poles are one of the best tips toward countrys whether it be the pole top, pole body, or even material",
+      name: "- 8.2: Poles",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure21: {
+      desc: "This pole is famously known as the Brazilian ladder pole found mainly in Brazil. However, they are actually portugese inspired and are found in Paraguay, Nigeria, and Portugal as well. Also, be careful not to mix them up with other poles like the Chilean Pole.",
+      name: "- 8.21: Brazilian Ladder Pole",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure22: {
+      desc: "The Chilean pole is found in Chile and looks like the ladder pole except there are no steps for the ladders. However, this is not actually unique to Chile being in parts of Java Indonesia and common in New Zealand.",
+      name: "- 8.22: Chilean Indent Pole",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure23: {
+      desc: "These Poles kind of look like the ladder pole but the holes are noticably smaller and square shaped. Also, you might find these lat pull down tops on these pulls sometimes. These poles come from France being common in Spain, France, Belgium, and Senegal",
+      name: "- 8.23: Waffle Pole / Lat Pull Down Pole",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure24: {
+      desc: "These wooden trident poles are found all over Central Canada and US and some can be found in Australia but those look slightly different",
+      name: "- 8.24: Wooden Tridents",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure25: {
+      desc: "These poles are in a shape of an A with 2 or 3 poles connected together at the top. These are found all over northern Asia around Russia and Eastern Europe especially around Lithuania to Estonia.",
+      name: "- 8.25: A-Poles",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure26: {
+      desc: "These poles are mainly found in Mexico, France and Phillipines. The Mexican ones are usually thicker.",
+      name: "- 8.26: Metal Octagons",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure27: {
+      desc: "This cap on the pole top is found in the Nordic countries around Sweden and sometimes found in baltics around Latvia.",
+      name: "- 8.27: Nordic Cap",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure28: {
+      desc: "Holey Poles are found in a lot of areas. Holey poles differ a lot from countries that have them being Turkey, Romania, Hungary, Poland, and Gujurat India",
+      name: "- 8.28: Holey Poles",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure3: {
+      desc: "Houses are a massive yet hard to learn aspect of the game as there is not much memorization but instead getting familiar with the features.",
+      name: "- 8.3: Architecture",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure31: {
+      desc: "The thing about most Southern EU houses is their roofs. Many roofs are either brick roofing or tiled roofing often being a reddish colour. Also, wooden houses are really rare around this area but there are exceptions.",
+      name: "- 8.31: Southern EU Houses",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure32: {
+      desc: "Around Austria and above Germany you start to get different looking houses with white walls and black roofing at times.",
+      name: "- 8.32: Northern EU Houses",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure33: {
+      desc: "In the Nordics around Sweden you will get many painted wooden houses often red or yellow",
+      name: "- 8.33: Nordic Houses",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure34: {
+      desc: "Canadian and US houses are pretty distinct especially paired with the landscape. They are often light coloured or bricked eith smooth nice roofing.",
+      name: "- 8.34: Canada and US",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure35: {
+      desc: "From Mexico downward to South America you will get these stone / brick houses often white or red.",
+      name: "- 8.35: Latin America",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure36: {
+      desc: "Metal roofing is very common around the world mainly being found in Senegal, Nigeria, Indo, Phillipines, Bangladesh. Keep in mind that these countries are heavy in Metal roofing but it is not exclusive by any means.",
+      name: "- 8.36: Metal Roofing",
+      picture: "",
+      type: "TUT"
+    },
+
+    Infrastructure37: {
+      desc: "Russia's housing is one of the best beginner hints to the region as these houses have a very unique look.",
+      name: "- 8.37: Russian Housing",
+      picture: "",
+      type: "TUT"
+    },
+
     CarTech: {
       desc: "Car tech is guessing based on the google car that you are driving in. Unique cars can be used to distinguish the country like Mongolia.",
       name: "9.0: Car Tech",
