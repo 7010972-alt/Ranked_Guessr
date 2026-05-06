@@ -1788,20 +1788,104 @@ let hintedCountries = {
 
   "United States": {
     Main: {
-      desc: "",
-      name: "",
-      picture: "",
+      desc: "US (The United States) makes up around 10 percent of the coverage meaning it is a core country in the game. Also, the US is pretty massive so it is sometimes hard to region guess inside of the US.",
+      name: "United States (US)",
+      picture: "GeoTechs/US/US-Main.png",
       driving: "Right",
-      plate: "",
-      language: "",
-      difficulty: 1
+      plate: "Thick",
+      language: "English",
+      difficulty: 4
     },
 
-    US: {
-      desc: "",
-      name: "",
-      picture: "",
+    USSpeedLimit: {
+      desc: "These sigsn that say Speed limit are unique to US",
+      name: "EX: Speed Limit",
+      picture: "GeoTechs/US/US-SpeedLimit.png",
       type: "EX"
+    },
+
+    USFlag: {
+      desc: "The US flag is hung very often",
+      name: "EX: Flag",
+      picture: "GeoTechs/US/US-Flag.png",
+      type: "EX"
+    },
+
+    USUSRoad: {
+      desc: "Many roads in the US will say US",
+      name: "EX: Road Name",
+      picture: "GeoTechs/US/US-RoadName.png",
+      type: "EX"
+    },
+
+    USState: {
+      desc: "Many interstate highways will say the abreviated version of the state name",
+      name: "EX: State Names",
+      picture: "GeoTechs/US/US-StateName.png",
+      type: "EX"
+    },
+
+    USNOPAssubg: {
+      desc: "This no passing zone triangle sign is unique to US",
+      name: "EX: No Passing",
+      picture: "GeoTechs/US/US-Nopassing.png",
+      type: "EX"
+    },
+
+    USMailBox: {
+      desc: "These small black mail boxes are pretty much unique to US and Ontario in CAN",
+      name: "EX: Mail Boxes",
+      picture: "GeoTechs/US/US-Mailbox.png",
+      type: "EX"
+    },
+
+    USFencing: {
+      desc: "This white tipped fencing is found all over the US",
+      name: "EX: Tipped Fencing",
+      picture: "GeoTechs/US/US-Fencing.png",
+      type: "EX"
+    },
+
+    USPentagon: {
+      desc: "These blue Pentagon signs are found only in US",
+      name: "EX: Blue Pentagon",
+      picture: "GeoTechs/US/US-Pentagon.png",
+      type: "EX"
+    },
+
+    USBollard: {
+      desc: "These orange tipped Bollards are unique to the US",
+      name: "EX: Bollard",
+      picture: "GeoTechs/US/US-Bollard.png",
+      type: "EX"
+    },
+
+    USRumble: {
+      desc: "These little notches are a good hint for US",
+      name: "Road Rumble",
+      picture: "GeoTechs/US/US-RoadRumble.png",
+      type: "RR"
+    },
+
+    USWordy: {
+      desc: "These wordy signs are not found in Canada. Examples being the one way sign and railroad crossing sign",
+      name: "RR: Wordy Signs",
+      picture: "GeoTechs/US/US-WordySings.png",
+      type: "RR"
+    },
+
+    USPraries: {
+      desc: "These flat grassy landscape is found central US",
+      name: "RR: Praries",
+      picture: "GeoTechs/US/US-Praries.png",
+      type: "RR"
+    },
+
+    USMountains: {
+      desc: "These dry mountains are found in western / central US",
+      name: "Dry Mountains",
+      picture: "GeoTechs/US/US-DryMountains.png",
+      type: "RR"
     },
   },
 };
