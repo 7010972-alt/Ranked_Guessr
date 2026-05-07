@@ -561,7 +561,7 @@ let hintedCountries = {
     CarTech2: {
       desc: "Truck coverage is more common that roof rack. Many times it is blurred and hard to tell aswell.",
       name: "- 9.20: Truck",
-      picture: "GeoTechs/0_Guide/9.2.png",
+      picture: "GeoTechs/0_Guide/9.20.png",
       type: "TUT"
     },
 
@@ -587,7 +587,7 @@ let hintedCountries = {
     },
 
     CarTech4: {
-      desc: "Same as white car but black. Found mainly in Argentina, Uruguay and Peru.",
+      desc: "Same as white car but black. Found mainly in Argentina, South Korea, Uruguay and Peru.",
       name: "- 9.4: Black Car",
       picture: "GeoTechs/0_Guide/9.4.png",
       type: "TUT"

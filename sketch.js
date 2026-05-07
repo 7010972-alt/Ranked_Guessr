@@ -4518,10 +4518,10 @@ function keyPressed() {
   if (key === " ") {
     confirmed();
   }
-  if (key === "d") {
+  if (key === "d" || keyCode === RIGHT_ARROW) {
     nextIndex();
   }
-  if (key === "a") {
+  if (key === "a" || keyCode === LEFT_ARROW) {
     previousIndex();
   }
 }
