@@ -854,6 +854,102 @@ let hintedCountries = {
     },
   },
 
+  "Brazil": {
+    Main: {
+      desc: "BR (Brazil) is one of the big countries in the game. It is incredibly easy to recognize once you learn it. However, region guessing in the country is pretty difficult for beginners.",
+      name: "Brazil (BR)",
+      picture: "GeoTechs/BR/BR-Main.png",
+      driving: "Right",
+      plate: "Skinny Blue Line on Top",
+      language: "Portugese",
+      difficulty: 3
+    },
+
+    BRLadderPole: {
+      desc: "The Ladder part of the pole is not unique as it is found in other countries but mostly in BR. However, Brazil poles withh have a code engraved on the side of the poles and also uneven pole tops on ladders are only found in Brazil",
+      name: "EX: BR Ladder Pole",
+      picture: "GeoTechs/BR/BR-LadderPole.png",
+      type: "EX"
+    },
+
+    BRBRRaods: {
+      desc: "BR roads are only found in BR",
+      name: "EX: BR Roads",
+      picture: "GeoTechs/BR/BR-BRRoads.png",
+      type: "EX"
+    },
+
+    BRStateName: {
+      desc: "Like the US BR sometimes will show the state abreviation in their road names. SP is for Sao Paulo",
+      name: "EX: State Road Names",
+      picture: "GeoTechs/BR/BR-RoadName.png",
+      type: "EX"
+    },
+
+    BRCheverons: {
+      desc: "These specific yellow on black Cheverons are only found in Brazil with a slight gap between the arrow and the edge",
+      name: "EX: Cheverons",
+      picture: "GeoTechs/BR/BR-YellowOnBlackChevs.png",
+      type: "EX"
+    },
+
+    BRLiscense: {
+      desc: "BR Liscense plates are somewhat skinny with a blue line over them. Keep in mind that this was also Argentina's old plate so some old coverage in Arg will also have this plate",
+      name: "EX: Blue Line Plate",
+      picture: "GeoTechs/BR/BR-Liscense.png",
+      type: "EX"
+    },
+
+    BRWaterTank: {
+      desc: "This blue water tank with this unique shape is pretty much unique to BR",
+      name: "EX: Water Tank",
+      picture: "GeoTechs/BR/BR-WaterTank.png",
+      type: "EX"
+    },
+
+    BRPhoneNumber: {
+      desc: "These unique 5 digit to 4 digit phone numbers are unique to BR. Also, there is sometime a 2 digit area code that can help you narrow down the region",
+      name: "EX: Phone Numbers",
+      picture: "GeoTechs/BR/BR-PhoneNumbers.png",
+      type: "EX"
+    },
+
+    BRParanaPines: {
+      desc: "Parana Pines are very unique and found only in southern BR",
+      name: "EX: Parana Pines",
+      picture: "GeoTechs/BR/BR-ParanaPines.png",
+      type: "EX"
+    },
+
+    BRPare: {
+      desc: "These Pare stop signs are found in South America",
+      name: "RR: Pare Stop Signs",
+      picture: "GeoTechs/BR/BR-Pare.png",
+      type: "RR"
+    },
+
+    BRRedDirt: {
+      desc: "One of the biggest clues to BR is their red dirt",
+      name: "RR: Red Dirt",
+      picture: "GeoTechs/BR/BR-RedDirt.png",
+      type: "RR"
+    },
+
+    BRWhitePainted: {
+      desc: "Many poles in BR have white paint at the bottom",
+      name: "RR: White Bottom Paint",
+      picture: "GeoTechs/BR/BR-White Painted.png",
+      type: "RR"
+    },
+
+    BRPortugese: {
+      desc: "BR's offical language is Portugese unlike the rest of South America that speaks Spanish. Many Portugese words end in cau",
+      name: "RR: Portugese",
+      picture: "GeoTechs/BR/BR-Portugese.png",
+      type: "RR"
+    },
+  },
+
   "Bulgaria": {
     Main: {
       desc: "BG (Bulgaria) is generally an easy country. It is very mountainous, and they use a greek like language. Also, it does not share many similarities with it's neighbours",
