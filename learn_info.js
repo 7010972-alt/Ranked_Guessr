@@ -697,6 +697,25 @@ let hintedCountries = {
     },
   },
 
+  "Australia": {
+    Main: {
+      desc: "",
+      name: "",
+      picture: "",
+      driving: "Right",
+      plate: "",
+      language: "",
+      difficulty: 3
+    },
+
+    AUS: {
+      desc: "",
+      name: "EX: ",
+      picture: "",
+      type: "EX"
+    },
+  },
+
   "Austria": {
     Main: {
       desc: "AT (Austria) is an insanely mountanous country and is one of the 3 German speaking countries.",
