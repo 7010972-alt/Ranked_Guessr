@@ -585,6 +585,7 @@ let backButton;
 
 let mapsButton;
 let mapFindType;
+let mapTypeDropDown;
 let mapNameType;
 let mapsDropDown;
 let mapFileGetter;
@@ -1134,6 +1135,17 @@ function setup() {
 
   mapsDropDown.changed(mapSwitches);
 
+  //dropdown that changes the map type
+  mapTypeDropDown = createSelect();
+  mapTypeDropDown.size(160, 30);
+  mapTypeDropDown.style("z-index", "-1");
+  mapTypeDropDown.option("Basic")
+  mapTypeDropDown.option("Learn")
+  mapTypeDropDown.option("Custom")
+
+
+  mapTypeDropDown.changed(mapTypeSwitch);
+
   //button that prompts for a file
   mapFileGetter = createFileInput(handleFile);
   mapFileGetter.size(160, 30);
@@ -1526,6 +1538,8 @@ function setup() {
   addAllGeoHints();
 
   includeAllCountries();
+
+  includeAllLearn();
 }
 
 function draw() {
@@ -1563,6 +1577,10 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+function mapTypeSwitch() {
+  updateMapsDrop();
 }
 
 function mapTextUpdate() {
@@ -1619,6 +1637,26 @@ function includeAllCountries() {
   }
 }
 
+function includeAllLearn() {
+  for (let learnMap of allLearn) {
+    addmap(learnMap[1]);
+
+    let addedMap = [learnMap[0], []]
+    for (let learnMap of allLearn) {
+      for (let coord of learnMap[1]) {
+        addedMap[1].push(coord)
+      }
+    }
+    allMaps[learnMap[0]] = (addedMap)
+  }
+}
+
+function addLearnDropDowns() {
+  for (let learnMap of allLearn) {
+    mapsDropDown.option(learnMap[0])
+  }
+}
+
 function handleFile(file) {
 
   if (!countryList.includes(mapNameType.value()) && mapNameType.value() !== "World" && mapNameType.value() !== "") {
@@ -1636,27 +1674,57 @@ function mapSwitches() {
   mapTextUpdate();
 }
 
-
-//displays only the maps that fit the name
-function updateMapsDrop() {
+function addToDropDown(list) {
   mapsDropDown.elt.innerHTML = "";
+  
+  mapsDropDown.option("World")
 
   if (mapFindType.value() === "") {
-    for (let mapName in allMaps) {
-      mapsDropDown.option(mapName);
+    for (let mapName of list) {
+      mapsDropDown.option(mapName[0]);
     }
   }
 
   else {
-    for (let mapName in allMaps) {
-      if (mapName.toLowerCase().includes(mapFindType.value().toLowerCase())) {
-        mapsDropDown.option(mapName);
+    for (let mapName of list) {
+      if (mapName[0].toLowerCase().includes(mapFindType.value().toLowerCase())) {
+        mapsDropDown.option(mapName[0]);
       }
     }
   
     if (mapsDropDown.elt.options.length === 0) {
       mapsDropDown.option("World")
     } 
+  }
+}
+
+
+//displays only the maps that fit the name
+function updateMapsDrop() {
+  //change the map drop down to what is typed in the user input
+
+  if (mapTypeDropDown.value() === "Custom") {
+    for (let mapname in allMaps) {
+      mapsDropDown.option(mapname);
+    }
+
+    for (let i = 0; i < mapsDropDown.elt.options.length; i++) {
+      for (let badMap of allCountries) {
+        if (mapsDropDown.elt.options[i].text === badMap[0]) {
+          mapsDropDown.elt.remove(i);
+          break;
+        }
+      }
+    }
+  }
+
+  //only show learnable maps and make it work for the type
+  else if (mapTypeDropDown.value() === "Learn") {
+    addToDropDown(allLearn);
+  }
+
+  else {
+    addToDropDown(allCountries);
   }
 
   differentMap(allMaps[mapsDropDown.value()])
@@ -1679,6 +1747,8 @@ function displayMaps() {
     mapNameType.style("opacity", "1");
     mapsDropDown.style("z-index", "25");
     mapsDropDown.style("opacity", "1");
+    mapTypeDropDown.style("z-index", "25");
+    mapTypeDropDown.style("opacity", "1");
     mapFileGetter.style("z-index", "25");
     mapFileGetter.style("opacity", "1");
     fileGetterText.style("z-index", "25");
@@ -1708,6 +1778,8 @@ function closeMaps() {
   mapNameType.style("opacity", "0");
   mapsDropDown.style("z-index", "-1");
   mapsDropDown.style("opacity", "0");
+  mapTypeDropDown.style("z-index", "-1");
+  mapTypeDropDown.style("opacity", "0");
   mapFileGetter.style("z-index", "-1");
   mapFileGetter.style("opacity", "0");
   fileGetterText.style("z-index", "-1");
@@ -4072,7 +4144,8 @@ let xButOffset = 15;
 function fixsizes() {
   mapFindType.position(10, 10);
   mapNameType.position(200, 10);
-  mapsDropDown.position(10, 40);
+  mapsDropDown.position(10, 70);
+  mapTypeDropDown.position(10, 40);
   mapFileGetter.position(200, 40);
   fileGetterText.position(200, 40);
   mapDeleter.position(200, 80);
