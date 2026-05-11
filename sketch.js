@@ -94,7 +94,7 @@ let intenseMusic;
 function preload() {
   //load images
   allShields = "Assets/allShields.png";
-  allPins = "Assets/allPins.png"
+  allPins = "Assets/allPins.png";
 
   coalS = "Assets/coalShield.png";
   bronzeS = "Assets/bronzeShield.png";
@@ -161,8 +161,8 @@ function preload() {
 
   currentShield = coalS;
   currentPin = coalP;
-  allPinsDisplay = allPins
-  allShieldsDisplay = allShields
+  allPinsDisplay = allPins;
+  allShieldsDisplay = allShields;
 
 
   //load sound
@@ -373,10 +373,14 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+let geoPicX = 2.5;
+let geoPicY = 2.5;
+
 let savedMaps = {};
 
 let allMaps = {};
-let countryList = []
+let countryList = [];
+let learnList = [];
 
 let showingMaps = false;
 let currentSelectedMap;
@@ -1131,7 +1135,7 @@ function setup() {
   mapsDropDown = createSelect();
   mapsDropDown.size(160, 30);
   mapsDropDown.style("z-index", "-1");
-  mapsDropDown.option("World")
+  mapsDropDown.option("World");
 
   mapsDropDown.changed(mapSwitches);
 
@@ -1139,9 +1143,9 @@ function setup() {
   mapTypeDropDown = createSelect();
   mapTypeDropDown.size(160, 30);
   mapTypeDropDown.style("z-index", "-1");
-  mapTypeDropDown.option("Basic")
-  mapTypeDropDown.option("Learn")
-  mapTypeDropDown.option("Custom")
+  mapTypeDropDown.option("Basic");
+  mapTypeDropDown.option("Learn");
+  mapTypeDropDown.option("Custom");
 
 
   mapTypeDropDown.changed(mapTypeSwitch);
@@ -1604,20 +1608,29 @@ function mapTextUpdate() {
     <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
   `);
 
-  geoTechPic.attribute("src", "Assets/MapMaking.png");
+  if (mapsDropDown.value() === "US Area Codes") {
+    geoPicX = 2.1;
+    geoPicY = 2.7;
+    geoTechPic.attribute("src", "Assets/USareaCodes.png");
+  }
+  else {
+    geoPicX = 2.5;
+    geoPicY = 2.5;
+    geoTechPic.attribute("src", "Assets/MapMaking.png");
+  }
 }
 
 function deleteCurrent() {
-  if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World") {
-    delete savedMaps[mapsDropDown.value()]
+  if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World" && !learnList.includes(mapsDropDown.value())) {
+    delete savedMaps[mapsDropDown.value()];
     saveProgress();
     let index = mapsDropDown.elt.selectedIndex;
     mapsDropDown.elt.remove(index);
 
     mapsDropDown.index = 0;
   
-    differentMap(allMaps[mapsDropDown.value()])
-
+    differentMap(allMaps[mapsDropDown.value()]);
+    mapTextUpdate();
   }
 }
 
@@ -1625,14 +1638,14 @@ function includeAllCountries() {
   for (let country of allCountries) {
     mapsDropDown.option(country[0]);
     allMaps[country[0]] = country;
-    countryList.push(country[0])
+    countryList.push(country[0]);
   }
 
   if (localStorage.getItem("custommaps") !== null) {
-    let allSaved = structuredClone(JSON.parse(localStorage.getItem("custommaps")))
+    let allSaved = structuredClone(JSON.parse(localStorage.getItem("custommaps")));
     for (let map in allSaved) {
-      allMaps[map] = allSaved[map]
-      mapsDropDown.option(map)
+      allMaps[map] = allSaved[map];
+      mapsDropDown.option(map);
     }
   }
 }
@@ -1641,30 +1654,34 @@ function includeAllLearn() {
   for (let learnMap of allLearn) {
     addmap(learnMap[1]);
 
-    let addedMap = [learnMap[0], []]
+    let addedMap = [learnMap[0], []];
     for (let learnMap of allLearn) {
       for (let coord of learnMap[1]) {
-        addedMap[1].push(coord)
+        addedMap[1].push(coord);
       }
     }
-    allMaps[learnMap[0]] = (addedMap)
+    learnList.push(learnMap[0]);
+    allMaps[learnMap[0]] = addedMap;
   }
 }
 
 function addLearnDropDowns() {
   for (let learnMap of allLearn) {
-    mapsDropDown.option(learnMap[0])
+    mapsDropDown.option(learnMap[0]);
   }
 }
 
 function handleFile(file) {
 
   if (!countryList.includes(mapNameType.value()) && mapNameType.value() !== "World" && mapNameType.value() !== "") {
-    let converted = convertFile(file.data)
-    allMaps[mapNameType.value()] = converted
-    mapsDropDown.option(mapNameType.value())
+    let converted = convertFile(file.data);
+    allMaps[mapNameType.value()] = converted;
 
-    savedMaps[mapNameType.value()] = converted
+    if (mapTypeDropDown.value() === custom) {
+      mapsDropDown.option(mapNameType.value());
+    }
+
+    savedMaps[mapNameType.value()] = converted;
     saveProgress();
   }
 }
@@ -1677,7 +1694,7 @@ function mapSwitches() {
 function addToDropDown(list) {
   mapsDropDown.elt.innerHTML = "";
   
-  mapsDropDown.option("World")
+  mapsDropDown.option("World");
 
   if (mapFindType.value() === "") {
     for (let mapName of list) {
@@ -1693,7 +1710,7 @@ function addToDropDown(list) {
     }
   
     if (mapsDropDown.elt.options.length === 0) {
-      mapsDropDown.option("World")
+      mapsDropDown.option("World");
     } 
   }
 }
@@ -1704,16 +1721,25 @@ function updateMapsDrop() {
   //change the map drop down to what is typed in the user input
 
   if (mapTypeDropDown.value() === "Custom") {
-    for (let mapname in allMaps) {
-      mapsDropDown.option(mapname);
-    }
+    mapsDropDown.elt.innerHTML = "";
 
-    for (let i = 0; i < mapsDropDown.elt.options.length; i++) {
-      for (let badMap of allCountries) {
-        if (mapsDropDown.elt.options[i].text === badMap[0]) {
-          mapsDropDown.elt.remove(i);
-          break;
+    for (let map in allMaps) {
+      let found = false;
+
+      for (let countryMap of allCountries) {
+        if (countryMap[0] === map) {
+          found = true;
         }
+      }
+
+      for (let learnMap of allLearn) {
+        if (learnMap[0] === map) {
+          found = true;
+        }
+      }
+
+      if (found === false) {
+        mapsDropDown.option(map);
       }
     }
   }
@@ -1727,7 +1753,7 @@ function updateMapsDrop() {
     addToDropDown(allCountries);
   }
 
-  differentMap(allMaps[mapsDropDown.value()])
+  differentMap(allMaps[mapsDropDown.value()]);
 }
 
 function displayMaps() {
@@ -1768,6 +1794,9 @@ function closeMaps() {
     showingMaps = false;
     mapChange();
   }
+  geoPicX = 2.5;
+  geoPicY = 2.5;
+
   geoTechPic.style("z-index", "-1");
   geoTechPic.style("opacity", "0");
   LearnScreen.style("z-index", "-1");
@@ -1799,27 +1828,27 @@ function moveAll() {
 
 // converts json file into a coordinate table
 function convertFile(file) {
-    if (!file || !file.customCoordinates) {
-      return [];
-    }
+  if (!file || !file.customCoordinates) {
+    return [];
+  }
 
-    let newFile = [];
+  let newFile = [];
 
-    let addedCoords =  file.customCoordinates.map(coord => [
-        coord.lat,
-        coord.lng
-    ]);
+  let addedCoords =  file.customCoordinates.map(coord => [
+    coord.lat,
+    coord.lng
+  ]);
 
-    newFile.push(mapNameType.value());
-    newFile.push(addedCoords);
+  newFile.push(mapNameType.value());
+  newFile.push(addedCoords);
 
-    return newFile;
+  return newFile;
 }
 
 function differentMap(country) {
-  currentLocations = []
+  currentLocations = [];
 
-  addmap(country[1])
+  addmap(country[1]);
 }
 
 //moves the pin based on lat and lng, used for test purposes
@@ -1897,7 +1926,7 @@ function enterQuiz() {
     closeLearn();
 
     quizModeButton.style("background-color", "red");
-    quizModeButton.html("Leave")
+    quizModeButton.html("Leave");
 
     quizModeButton.style("z-index", "25");
     quizModeButton.style("opacity", "1");
@@ -1916,7 +1945,7 @@ function enterQuiz() {
   }
   else {
     quizModeButton.style("background-color", "green");
-    quizModeButton.html("Quiz")
+    quizModeButton.html("Quiz");
     quizImage.style("z-index", "-1");
     quizModeButton.style("z-index", "-1");
     quizModeButton.style("opacity", "0");
@@ -4302,7 +4331,7 @@ function fixsizes() {
   //tip picture pos
 
   geoTechPic.position(windowWidth - windowWidth / 4, windowHeight / 2);
-  geoTechPic.size(windowWidth / 2.5, windowWidth / 2.5);
+  geoTechPic.size(windowWidth / geoPicX, windowWidth / geoPicY);
 
   //tech button pos
   openHintButton.position(10, 10);
@@ -4659,14 +4688,14 @@ function setupMap() {
 
 
   //make the maps have their own coordinates in the drop downs
-  let addedMap = ["World", []]
+  let addedMap = ["World", []];
   for (let country of allCountries) {
     for (let coord of country[1]) {
-      addedMap[1].push(coord)
+      addedMap[1].push(coord);
     }
   }
 
-  allMaps["World"] = (addedMap)
+  allMaps["World"] = (addedMap);
 }
 
 //this handles submitting guesses and leaving the end screen after a guess
