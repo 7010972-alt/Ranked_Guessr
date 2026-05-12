@@ -4611,8 +4611,8 @@ function startSet() {
 
   //this runs to start a set
   if (!setActive) {
-    mapsDropDown.selected("World");
-    differentMap();
+    // mapsDropDown.selected("World");
+    // differentMap();
 
     setActive = true;
     curretnRoundNumber = 1;
