@@ -1655,10 +1655,8 @@ function includeAllLearn() {
     addmap(learnMap[1]);
 
     let addedMap = [learnMap[0], []];
-    for (let learnMap of allLearn) {
-      for (let coord of learnMap[1]) {
-        addedMap[1].push(coord);
-      }
+    for (let coord of learnMap[1]) {
+      addedMap[1].push(coord);
     }
     learnList.push(learnMap[0]);
     allMaps[learnMap[0]] = addedMap;
