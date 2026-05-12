@@ -55,7 +55,6 @@ let obsidianP;
 let slimeP;
 let interP;
 
-
 let particleImage;
 let redParticleImage;
 let testIMG;
@@ -1608,7 +1607,7 @@ function mapTextUpdate() {
     <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
   `);
 
-  if (mapsDropDown.value() === "US Area Codes") {
+  if (mapsDropDown.value() === "S: US Area Codes") {
     geoPicX = 2.1;
     geoPicY = 2.7;
     geoTechPic.attribute("src", "Assets/USareaCodes.png");
@@ -1745,6 +1744,21 @@ function updateMapsDrop() {
   //only show learnable maps and make it work for the type
   else if (mapTypeDropDown.value() === "Learn") {
     addToDropDown(allLearn);
+
+    for (let i = 0; i < allLearn.length; i++) {
+      if (allLearn[i][0][0] === "S") {
+        mapsDropDown.elt.options[i + 1].style.color = 'red';
+      }
+      else if (allLearn[i][0][0] === "A") {
+        mapsDropDown.elt.options[i + 1].style.color = 'purple';
+      }
+      else if (allLearn[i][0][0] === "B") {
+        mapsDropDown.elt.options[i + 1].style.color = 'orange';
+      }
+      else if (allLearn[i][0][0] === "C") {
+        mapsDropDown.elt.options[i + 1].style.color = 'green';
+      }
+    }
   }
 
   else {
@@ -1752,6 +1766,7 @@ function updateMapsDrop() {
   }
 
   differentMap(allMaps[mapsDropDown.value()]);
+  mapsDropDown.elt.options[0].style.backgroundColor = 'yellow';
 }
 
 function displayMaps() {
@@ -3452,6 +3467,9 @@ function joinWait() {
   //join a party waiting room
   else if (!inParty) {
 
+    mapsDropDown.selected("World");
+    differentMap();
+
     closeHint();
 
     //close the map
@@ -4593,6 +4611,9 @@ function startSet() {
 
   //this runs to start a set
   if (!setActive) {
+    mapsDropDown.selected("World");
+    differentMap();
+
     setActive = true;
     curretnRoundNumber = 1;
 
