@@ -508,8 +508,8 @@ let answerLine;
 let answerPadding = 50;
 let mapOriginalHeight = 300;
 let mapOriginalWidth = 400;
-let newHeight = 450;
-let newWidth = 600;
+let newHeight = 550;
+let newWidth = 700;
 let mapBottom = 20;
 let mapRight = 75;
 let enlarged = false;
@@ -629,7 +629,7 @@ let NMPZCoverR;
 //blur cover
 let blurCover;
 let blurCovering = false;
-let blurAmount = 25;
+let blurAmount = 0;
 
 //blink cover
 let blink = false;
@@ -1077,10 +1077,10 @@ function setup() {
   setTypeDropDown.size(160, 20);
   setTypeDropDown.style("z-index", "21");
   setTypeDropDown.option("Normal", "normal");
+  setTypeDropDown.option("Colour Blind", "blur");
   setTypeDropDown.option("Blitz", "blitz");
   setTypeDropDown.option("NMPZ", "NMPZ");
   setTypeDropDown.option("Blink", "blink");
-  setTypeDropDown.option("Blur", "blur");
 
 
   //dropdown menu to select what type of info you want to see
@@ -3839,8 +3839,8 @@ function joinParty() {
       }
       else {
         cover.html(`
-          Blur Mode <br>
-          <div style="color: ${lightRed};">Difficulty: 9/10</div>
+          Colour Blind Mode <br>
+          <div style="color: ${lightOrange};">Difficulty: 5/10</div>
           <br>
           <div style="color: ${playerCol};">Players: ${Object.keys(shared.blurPlayers).length}</div>
         `);
@@ -4099,10 +4099,10 @@ function rankModify() {
     `<span style="color:black;"></span><br>` +
 
     `<span style="color:${normCol};">${"Normal: " + bestSet + "/" + nextBestSet}</span><br>` +
+    `<span style="color:${blurCol};">${"Color Blind: " + bestBlur + "/" + nextBestBlur}</span><br>` + 
     `<span style="color:${blitzCol};">${"Blitz: " + bestBlitz + "/" + nextBestBlitz}</span><br>` +
     `<span style="color:${NMPZCol};">${"NMPZ: " + bestNMPZ + "/" + nextBestNMPZ}</span><br>` +
     `<span style="color:${blinkCol};">${"Blink: " + bestBlink + "/" + nextBestBlink}</span><br>` +
-    `<span style="color:${blurCol};">${"Blur: " + bestBlur + "/" + nextBestBlur}</span><br>` + 
     `<span style="color:${gridMaxCol};">${"Grid Streak: " + gridMaxStreak + "/" + nextMaxStreak}</span>`
   );
 
@@ -4256,10 +4256,12 @@ function fixsizes() {
   let holeRadius = 24;
 
   //cut a hole in blur mode so that they can see the compass
-  blurCover.style("mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
-  blurCover.style("-webkit-mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
-  blurCover.style("mask-repeat", "no-repeat");
-  blurCover.style("-webkit-mask-repeat", "no-repeat");
+  // blurCover.style("mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
+  // blurCover.style("-webkit-mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
+  // blurCover.style("mask-repeat", "no-repeat");
+  // blurCover.style("-webkit-mask-repeat", "no-repeat");
+
+  blurCover.style("filter", "grayscale(100%)");
 
   textsize = (windowWidth + windowHeight) / textSizeScreenDividor;
   banner.style("font-size", `${textsize}px`);
