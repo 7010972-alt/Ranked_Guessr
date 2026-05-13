@@ -699,20 +699,55 @@ let hintedCountries = {
 
   "Australia": {
     Main: {
-      desc: "",
-      name: "",
-      picture: "",
-      driving: "Right",
-      plate: "",
-      language: "",
+      desc: "AUS (Australia) is sometimes mistaken for the US or NZ amongst very new players. However, these countries have major differences once learned",
+      name: "Australia (AUS)",
+      picture: "GeoTechs/AU/AU-Main.png",
+      driving: "Left",
+      plate: "Skinny White",
+      language: "English",
       difficulty: 3
     },
 
-    AUS: {
-      desc: "",
-      name: "EX: ",
-      picture: "",
+    AUSBollard: {
+      desc: "Probably the best hint for AUS are their red and grey bollards. Keep in mind that these could look like the Turkish ones so be somewhat careful",
+      name: "EX: Bollard",
+      picture: "GeoTechs/AU/AU-Bollard.png",
       type: "EX"
+    },
+
+    AUSTrees: {
+      desc: "These naturally grown Eucalyptus trees are only found in AUS and are a great hint for the country. They have a lot of thinned out branches through out the tree",
+      name: "EX: Trees",
+      picture: "GeoTechs/AU/AU-Trees.png",
+      type: "EX"
+    },
+
+    AUSGiveWay: {
+      desc: "These giveway symbols with BLACK lettering is found mainly in AUS, UK and Ireland. Keep in mind NZ's give way signs have red writing",
+      name: "RR: Give Way",
+      picture: "GeoTechs/AU/AU-GiveWay.png",
+      type: "RR"
+    },
+
+    AUSRed: {
+      desc: "Red dirt iis found in many areas of AUS especially western",
+      name: "RR: Red Dirt",
+      picture: "GeoTechs/AU/AU-RedDirt.png",
+      type: "RR"
+    },
+
+    AUSKMMarker: {
+      desc: "These solid white panneled km markers are found in AUS, UK, but not in NZ",
+      name: "RR: Speed Limit",
+      picture: "GeoTechs/AU/AU-kmmsrker.png",
+      type: "RR"
+    },
+
+    AUSRoadLining: {
+      desc: "All Lines in AUS are white",
+      name: "CC: All white Lining",
+      picture: "GeoTechs/AU/AU-RoadLining.png",
+      type: "CC"
     },
   },
 
