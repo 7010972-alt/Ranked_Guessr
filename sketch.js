@@ -595,6 +595,8 @@ let mapFileGetter;
 let fileGetterText;
 let mapDeleter;
 
+let blinkTimeType;
+
 //set variables
 let blitzTime = 10;
 
@@ -635,7 +637,7 @@ let blink = false;
 let blinkTime = 0;
 let blinkCountdown;
 let blinkMax = 3;
-let visibleTime = 0.5;
+let visibleTime = 1;
 let decreaseAmount = 0.1;
 
 //show next rank info
@@ -998,7 +1000,7 @@ function setup() {
 
   //auto map close button
   autoMapCloseButton = createButton("Auto Map Close");
-  autoMapCloseButton.size(100, 50);
+  autoMapCloseButton.size(60, 50);
   autoMapCloseButton.style("position", "absolute");
   autoMapCloseButton.style("z-index", "-1");
   autoMapCloseButton.style("background-color", "red");
@@ -1175,6 +1177,14 @@ function setup() {
   mapFindType.value("");
 
   mapFindType.changed(updateMapsDrop);
+
+  //type in the amount of time for blink to show the location
+  blinkTimeType = createInput();
+  blinkTimeType.size(152, 24);
+  blinkTimeType.style("z-index", "-1");
+  blinkTimeType.value("1");
+
+  blinkTimeType.changed(chnagedBlinkTime);
 
   //type in the name of the map you are creating
   mapNameType = createInput();
@@ -1580,6 +1590,27 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+//this checks if the number is valid
+function chnagedBlinkTime() {
+  newtime = Number(blinkTimeType.value());
+
+  if (isNaN(newtime)) {
+    newtime = 1;
+    blinkTimeType.value("1");
+  }
+
+  if (newtime > 1) {
+    newtime = 1;
+    blinkTimeType.value("1");
+  }
+  else if (newtime < 0.1) {
+    newtime = 0.1;
+    blinkTimeType.value("0.1");
+  }
+
+  visibleTime = newtime;
 }
 
 function mapTypeSwitch() {
@@ -2178,6 +2209,7 @@ function showSettings() {
     settingsScreen.style("opacity", "1");
 
     autoMapCloseButton.style("z-index", "25");
+    blinkTimeType.style("z-index", "25");
 
     showingSettings = true;
   }
@@ -2192,6 +2224,7 @@ function closeSettings() {
   settingsScreen.style("opacity", "0");
 
   autoMapCloseButton.style("z-index", "-1");
+  blinkTimeType.style("z-index", "-1");
   
   showingSettings = false;
 }
@@ -3468,7 +3501,7 @@ function joinWait() {
   else if (!inParty) {
 
     mapsDropDown.selected("World");
-    differentMap();
+    differentMap(allMaps["World"]);
 
     closeHint();
 
@@ -3992,7 +4025,7 @@ function lockStartJoin() {
 
 //this changes the ranks based on how the players best scores are
 function rankModify() {
-  if (bestSet >= 22500 && bestBlitz >= 21500 && bestNMPZ >= 21000 && bestBlink >= 20000 && bestBlur >= 15000 && gridMaxStreak >= 50) {
+  if (bestSet >= 22500 && bestBlitz >= 21500 && bestNMPZ >= 21000 && bestBlink >= 20000 && bestBlur >= 15000) {
     rank = "Inter-Dimensional";
     currentPin = interP;
     currentShield = interS;
@@ -4002,9 +4035,8 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
-    nextMaxStreak = "50";
   }
-  else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000 && gridMaxStreak >= 25) {
+  else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000) {
     rank = "Slime";
     currentPin = slimeP;
     currentShield = slimeS;
@@ -4014,9 +4046,8 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
-    nextMaxStreak = "50";
   }
-  else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500 && gridMaxStreak >= 10) {
+  else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500) {
     rank = "Obsidian";
     currentPin = obsidianP;
     currentShield = obsidianS;
@@ -4026,9 +4057,8 @@ function rankModify() {
     nextBestNMPZ = "18000";
     nextBestBlink = "17000";
     nextBestBlur = "10000";
-    nextMaxStreak = "25";
   }
-  else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500 && gridMaxStreak >= 5) {
+  else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500) {
     rank = "Diamond";
     currentPin = diamondP;
     currentShield = diamondS;
@@ -4038,9 +4068,8 @@ function rankModify() {
     nextBestNMPZ = "12500";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "10";
   }
-  else if (bestSet >= 7500 && bestBlitz >= 5000 && gridMaxStreak >= 1) {
+  else if (bestSet >= 7500 && bestBlitz >= 5000) {
     rank = "Gold";
     currentPin = goldP;
     currentShield = goldS;
@@ -4050,7 +4079,6 @@ function rankModify() {
     nextBestNMPZ = "7500";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "5";
   }
   else if (bestSet >= 5000) {
     rank = "Silver";
@@ -4062,7 +4090,6 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "1";
   }
   else if (bestSet >= 2500) {
     rank = "Bronze";
@@ -4074,7 +4101,6 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "0";
   }
   else {
     rank = "Coal";
@@ -4089,8 +4115,6 @@ function rankModify() {
   let NMPZCol = "red";
   let blinkCol = "red";
   let blurCol = "red";
-
-  let gridMaxCol = "red";
 
   if (bestSet >= nextBestSet) {
     normCol = "green";
@@ -4107,9 +4131,7 @@ function rankModify() {
   if (bestBlur >= nextBestBlur) {
     blurCol = "green";
   }
-  if (gridMaxStreak >= nextMaxStreak) {
-    gridMaxCol = "green";
-  }
+
 
   //change rank info screen so they know the req
   showRankScreen.html(
@@ -4120,8 +4142,7 @@ function rankModify() {
     `<span style="color:${blurCol};">${"Color Blind: " + bestBlur + "/" + nextBestBlur}</span><br>` + 
     `<span style="color:${blitzCol};">${"Blitz: " + bestBlitz + "/" + nextBestBlitz}</span><br>` +
     `<span style="color:${NMPZCol};">${"NMPZ: " + bestNMPZ + "/" + nextBestNMPZ}</span><br>` +
-    `<span style="color:${blinkCol};">${"Blink: " + bestBlink + "/" + nextBestBlink}</span><br>` +
-    `<span style="color:${gridMaxCol};">${"Grid Streak: " + gridMaxStreak + "/" + nextMaxStreak}</span>`
+    `<span style="color:${blinkCol};">${"Blink: " + bestBlink + "/" + nextBestBlink}</span><br>`
   );
 
 
@@ -4185,8 +4206,10 @@ function addmap(map) {
 }
 
 let xButOffset = 15;
+let spacingAmount = 60
 
 function fixsizes() {
+  
   mapFindType.position(10, 10);
   mapNameType.position(200, 10);
   mapsDropDown.position(10, 70);
@@ -4194,15 +4217,17 @@ function fixsizes() {
   mapFileGetter.position(200, 40);
   fileGetterText.position(200, 40);
   mapDeleter.position(200, 80);
-
+  
   zoomCoords = {
     top: windowHeight - 61,
     bottom: 27,
     left: windowWidth - 52,
     right: 17
   };
-
-  autoMapCloseButton.position(windowWidth / 2, windowHeight / 2);
+  
+  let settingsPadding = windowWidth / 40;
+  autoMapCloseButton.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+  blinkTimeType.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + spacingAmount);
 
   //move the close button based on what is openned
   if (showingRankInfo) {
@@ -4611,8 +4636,8 @@ function startSet() {
 
   //this runs to start a set
   if (!setActive) {
-    // mapsDropDown.selected("World");
-    // differentMap();
+    mapsDropDown.selected("World");
+    differentMap(allMaps["World"]);
 
     setActive = true;
     curretnRoundNumber = 1;
