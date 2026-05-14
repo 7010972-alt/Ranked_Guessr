@@ -1428,6 +1428,53 @@ let hintedCountries = {
     },
   },
 
+  "India": {
+    Main: {
+      desc: "IND (India) is one of the easiest countries in the world only being difficult from mixing it up with neighbouring countries and sometimes Cambodia.",
+      name: "India (IND)",
+      picture: "GeoTechs/IND/IND-Main.png",
+      driving: "Left",
+      plate: "skinny white",
+      language: "Hindi, many others...",
+      difficulty: 2
+    },
+
+    INDTridentPole: {
+      desc: "The Indian trident pole is one of the best hints to India as they are everywhere and have a curved upward pattern. Keep in mind that India rarely has other poles and the tridents will have variations.",
+      name: "EX: Trident Pole",
+      picture: "GeoTechs/IND/IND-Trident.png",
+      type: "EX"
+    },
+
+    INDCar: {
+      desc: "This special car is only found in India and specifically the north and west of the country",
+      name: "EX: India Car",
+      picture: "GeoTechs/IND/IND-Truck.png",
+      type: "EX"
+    },
+
+    INDTrashCam: {
+      desc: "This terrible camera coverage is super common in India but also common in Cambodia aswell.",
+      name: "RR: Trash Cam",
+      picture: "GeoTechs/IND/IND-Trash Cam.png",
+      type: "RR"
+    },
+
+    INDHindi: {
+      desc: "Out of all of India's languages. Hindi is the most common found central to northern of the country",
+      name: "RR: Hindi",
+      picture: "GeoTechs/IND/IND-Hindi.png",
+      type: "RR"
+    },
+
+    INDRickshaw: {
+      desc: "These small cars are very common in India and Bangledesh",
+      name: "CC: Rickshaws",
+      picture: "GeoTechs/IND/IND-specialcars.png",
+      type: "CC"
+    },
+  },
+
   "Mexico": {
     Main: {
       desc: "MX (Mexico) is generally an easy country to identify. However, the landscape changes drastically from north to south.",
