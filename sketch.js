@@ -371,7 +371,15 @@ let sizeInc = 0.001;
 let maxSizeDelay = 5;
 let changeDelay = 25;
 
+//Z Index Constants
+const FIRST_LAYER = 1;
+const SECOND_LAYER = 2;
+const THIRD_LAYER = 20;
+const FOURTH_LAYER = 25;
+
+
 //game variables
+
 let geoPicX = 2.5;
 let geoPicY = 2.5;
 
@@ -782,7 +790,7 @@ function setup() {
 
   rankIcon = createImg(currentShield, "rank display");
   rankIcon.size(shieldSize, shieldSize);
-  rankIcon.style("z-index", "2");
+  moveLayer(rankIcon, SECOND_LAYER);
   rankIcon.style("opacity", "2");
 
   allPinsDisplay = createImg(allPins, "all the pins");
@@ -975,7 +983,7 @@ function setup() {
   confirmButton = createButton("Confirm Guess");
   confirmButton.size(60, 50);
   confirmButton.style("position", "absolute");
-  confirmButton.style("z-index", "14");
+  confirmButton.style("z-index", "25");
   confirmButton.style("background-color", "rgb(255, 242, 62)");
 
   confirmButton.mousePressed(confirmed);
@@ -994,7 +1002,7 @@ function setup() {
   hideMapButton = createButton("Toggle Map");
   hideMapButton.size(60, 50);
   hideMapButton.style("position", "absolute");
-  hideMapButton.style("z-index", "12");
+  hideMapButton.style("z-index", "25");
 
   hideMapButton.mousePressed(hideMap);
 
@@ -1020,7 +1028,7 @@ function setup() {
   refreshButton = createButton("Refresh Map");
   refreshButton.size(60, 50);
   refreshButton.style("position", "absolute");
-  refreshButton.style("z-index", "12");
+  refreshButton.style("z-index", "25");
 
   refreshButton.mousePressed(refreshStreet);
 
@@ -1028,7 +1036,7 @@ function setup() {
   startSetButton = createButton("Start Set");
   startSetButton.size(80, 30);
   startSetButton.style("position", "absolute");
-  startSetButton.style("z-index", "21");
+  startSetButton.style("z-index", "25");
 
   startSetButton.mousePressed(startSet);
 
@@ -1052,7 +1060,7 @@ function setup() {
   joinButton = createButton("Join Party");
   joinButton.size(80, 30);
   joinButton.style("position", "absolute");
-  joinButton.style("z-index", "21");
+  joinButton.style("z-index", "25");
 
   joinButton.mousePressed(joinWait);
 
@@ -1076,7 +1084,7 @@ function setup() {
   //dropdown menu to select set type
   setTypeDropDown = createSelect();
   setTypeDropDown.size(160, 20);
-  setTypeDropDown.style("z-index", "21");
+  setTypeDropDown.style("z-index", "25");
   setTypeDropDown.option("Normal", "normal");
   setTypeDropDown.option("Colour Blind", "blur");
   setTypeDropDown.option("Blitz", "blitz");
@@ -1194,7 +1202,7 @@ function setup() {
 
   //type in the name that you want
   nameType = createInput();
-  nameType.style("z-index", "2");
+  moveLayer(nameType, SECOND_LAYER);
   nameType.value(randomNames[Math.floor(Math.random() * randomNames.length)]);
   nameType.style("font-size", "12px");
   nameType.style("text-align", "center");
@@ -1316,7 +1324,7 @@ function setup() {
   hideUnderButton = createButton("Show");
   hideUnderButton.size(shieldSize, 20);
   hideUnderButton.style("position", "absolute");
-  hideUnderButton.style("z-index", "2");
+  moveLayer(hideUnderButton, SECOND_LAYER);
 
   hideUnderButton.mousePressed(hideUnderShield);
 
@@ -1473,22 +1481,22 @@ function setup() {
 
   //images
   fourK = createImg("Assets/4K.png", "4K");
-  fourK.style("z-index", "21");
+  fourK.style("z-index", "25");
   fourK.style("transform", "translate(-50%, -50%)");
   fourK.style("pointer-events", "none");
 
   fourHalfK = createImg("Assets/4.8K.png", "4.8K");
-  fourHalfK.style("z-index", "21");
+  fourHalfK.style("z-index", "25");
   fourHalfK.style("transform", "translate(-50%, -50%)");
   fourHalfK.style("pointer-events", "none");
 
   plus5 = createImg("Assets/+5.png", "+5");
-  plus5.style("z-index", "21");
+  plus5.style("z-index", "25");
   plus5.style("transform", "translate(-50%, -50%)");
   plus5.style("pointer-events", "none");
 
   plus10 = createImg("Assets/+10.png", "+10");
-  plus10.style("z-index", "21");
+  plus10.style("z-index", "25");
   plus10.style("transform", "translate(-50%, -50%)");
   plus10.style("pointer-events", "none");
 
@@ -1590,6 +1598,11 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+function moveLayer(item, layer) {
+  let newLayer = Number(layer);
+  item.style("z-index", newLayer);
 }
 
 //this checks if the number is valid
@@ -1809,7 +1822,7 @@ function displayMaps() {
 
     hintTextHolder.style("z-index", "20");
     hintTextHolder.style("opacity", "1");
-    geoTechPic.style("z-index", "21");
+    geoTechPic.style("z-index", "25");
     geoTechPic.style("opacity", "1");
     mapFindType.style("z-index", "25");
     mapFindType.style("opacity", "1");
@@ -2073,7 +2086,7 @@ function currentHintDisplay() {
         selectedCountry = undefined;
         validCountry = false;
         openHintButton.style("background-color", "red");
-        geoTechPic.style("z-index", "24");
+        geoTechPic.style("z-index", "25");
         geoTechPic.style("opacity", "1");
 
         if (countryOutline !== undefined) {
@@ -2104,7 +2117,7 @@ function openCountryHint() {
     countryTech = true;
     gridMapID.hide();
 
-    geoTechPic.style("z-index", "24");
+    geoTechPic.style("z-index", "25");
     geoTechPic.style("opacity", "1");
 
     //adds every tech to the dropdown menu
@@ -2438,7 +2451,7 @@ function gridShapeChanged() {
 //show and hide the grid drop down button
 function showGridDrop() {
   if (gridMode) {
-    gridShapeDropdown.style("z-index", "21");
+    gridShapeDropdown.style("z-index", "25");
   }
   else {
     gridShapeDropdown.style("z-index", "-1");
@@ -4456,11 +4469,11 @@ function displayGrid() {
     showGridScreen.style("z-index", "20");
     showGridScreen.style("opacity", "1");
     gridMapID.show();
-    showGridDropDown.style("z-index", "21");
+    showGridDropDown.style("z-index", "25");
     showGridDropDown.style("opacity", "1");
-    heatMapDropDown.style("z-index", "21");
+    heatMapDropDown.style("z-index", "25");
     heatMapDropDown.style("opacity", "1");
-    heatMapType.style("z-index", "21");
+    heatMapType.style("z-index", "25");
     heatMapType.style("opacity", "1");
     showGrid = true;
   }
@@ -4489,10 +4502,10 @@ function showRank() {
     showRankScreen.style("z-index", "20");
     showRankScreen.style("opacity", "1");
 
-    allPinsDisplay.style("z-index", "21");
+    allPinsDisplay.style("z-index", "25");
     allPinsDisplay.style("opacity", "1");
 
-    allShieldsDisplay.style("z-index", "21");
+    allShieldsDisplay.style("z-index", "25");
     allShieldsDisplay.style("opacity", "1");
     showingRankInfo = true;
   }
