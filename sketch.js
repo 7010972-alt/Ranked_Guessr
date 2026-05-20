@@ -1190,7 +1190,7 @@ function setup() {
   blinkTimeType = createInput();
   blinkTimeType.size(152, 24);
   blinkTimeType.style("z-index", "-1");
-  blinkTimeType.value("1");
+  blinkTimeType.value("Blink Duration");
 
   blinkTimeType.changed(chnagedBlinkTime);
 
@@ -2685,6 +2685,7 @@ function hideUnderShield() {
     showLearnButton.style("z-index", "-1");
     mapsButton.style("z-index", "-1");
   }
+
   else {
     hideUnderButton.html("Hide");
     showRankButton.style("z-index", "2");

@@ -1865,6 +1865,60 @@ let hintedCountries = {
     },
   },
 
+  "South Africa": {
+    Main: {
+      desc: "SA (South Africa) is the main Africa country with coverage. It is easy to recognize being southern hemisphere and left hand drive. Although some countries also follow this trend",
+      name: "South Africa (SA)",
+      picture: "GeoTechs/SA/SA-Main.png",
+      driving: "Left",
+      plate: "Skinny White",
+      language: "English",
+      difficulty: 4
+    },
+
+    SAPoles: {
+      desc: "These insulators are unique to SA as they look like little white crowded birds.",
+      name: "EX: SA Pole",
+      picture: "GeoTechs/SA/SA-WhiteInsuls.png",
+      type: "EX"
+    },
+
+    SARoading: {
+      desc: "These road lines with white on the outer and white dashed in the center are pretty much unique to SA.",
+      name: "EX: Road Lines",
+      picture: "GeoTechs/SA/SA-PillRoading.png",
+      type: "EX"
+    },
+
+    SARRoading: {
+      desc: "R roads are super common in SA along with N roads",
+      name: "RR: R roads",
+      picture: "GeoTechs/SA/SA-Rroads.png",
+      type: "RR"
+    },
+
+    SABlueAntenna: {
+      desc: "Blue Antenna car is super common in SA and not in any other Africa country",
+      name: "RR: Blue Antenna",
+      picture: "GeoTechs/SA/SA-BlueAntenna.png",
+      type: "RR"
+    },
+
+    SABlackKnon: {
+      desc: "This car with this black thick knob antenna is common in SA",
+      name: "RR: Black Knob",
+      picture: "GeoTechs/SA/SA-blackknob.png",
+      type: "RR"
+    },
+
+    SASkinnyChevs: {
+      desc: "Skinny Cheverons are very common in SA and are found in some other countries around it.",
+      name: "RR: Skinny Cheverons",
+      picture: "GeoTechs/SA/SA-SkinnyCheverons.png",
+      type: "RR"
+    },
+  },
+
   "Serbia": {
     Main: {
       desc: "Serb (Serbia) can be a vary difficult country even when learned. It is really only dependent on one meta",
