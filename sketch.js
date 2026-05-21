@@ -1017,7 +1017,7 @@ function setup() {
 
   //button to toggle hint mode
   hintButton = createButton("Hint Mode");
-  hintButton.size(shieldSize, 20);
+  hintButton.size(60, 50);
   hintButton.style("position", "absolute");
   hintButton.style("z-index", "-1");
   hintButton.style("background-color", "red");
@@ -1304,7 +1304,7 @@ function setup() {
 
   //button to enter grid guessing mode
   gridModeButton = createButton("Grid Mode");
-  gridModeButton.size(shieldSize, 20);
+  gridModeButton.size(60, 50);
   gridModeButton.style("position", "absolute");
   gridModeButton.style("z-index", "-1");
   gridModeButton.style("background-color", "red");
@@ -1628,28 +1628,58 @@ function chnagedBlinkTime() {
 
 function mapTypeSwitch() {
   updateMapsDrop();
+  mapTextUpdate();
 }
 
+//update the text based on what map mode they are looking at
 function mapTextUpdate() {
-  hintTextHolder.html(`
-    <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
-    <br>
-    <span style="font-size: ${smallTextFont};">
-      1: Generate a Map at 
-      <a href="https://map-g3nerator.vercel.app/" target="_blank">
-        https://map-g3nerator.vercel.app/
-      </a> 
-      or make your own at 
-      <a href="https://map-making.app/" target="_blank">
-        https://map-making.app/
-      </a>
-    </span><br>
-    <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
-    <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
-    <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
-    <br>
-    <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
-  `);
+
+  if (mapTypeDropDown.value() === "Custom") {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">
+        1: Generate a Map at 
+        <a href="https://map-g3nerator.vercel.app/" target="_blank">
+          https://map-g3nerator.vercel.app/
+        </a> 
+        or make your own at 
+        <a href="https://map-making.app/" target="_blank">
+          https://map-making.app/
+        </a>
+      </span><br>
+      <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
+      <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
+      <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
+
+  else if (mapTypeDropDown.value() === "Basic") {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Basic Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">These maps hold each country in the game excluding islands</span><br>
+      <span style="font-size: ${smallTextFont};">keep in mind that some countries do not have that many locations so expect repeats</span><br>
+
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
+
+  else {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Learn Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">These maps were made to help you learn the different geotechs</span><br>
+      <span style="font-size: ${smallTextFont};">The maps are arranged in to Tiers on order you should learn them.</span><br>
+      <span style="font-size: ${smallTextFont};">D = learn first, S = very advanced</span><br>
+
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
 
   if (mapsDropDown.value() === "S: US Area Codes") {
     geoPicX = 2.1;
@@ -1718,7 +1748,7 @@ function handleFile(file) {
     let converted = convertFile(file.data);
     allMaps[mapNameType.value()] = converted;
 
-    if (mapTypeDropDown.value() === custom) {
+    if (mapTypeDropDown.value() === "Custom") {
       mapsDropDown.option(mapNameType.value());
     }
 
@@ -2222,6 +2252,8 @@ function showSettings() {
     settingsScreen.style("opacity", "1");
 
     autoMapCloseButton.style("z-index", "25");
+    hintButton.style("z-index", "25");
+    gridModeButton.style("z-index", "25");
     blinkTimeType.style("z-index", "25");
 
     showingSettings = true;
@@ -2237,6 +2269,8 @@ function closeSettings() {
   settingsScreen.style("opacity", "0");
 
   autoMapCloseButton.style("z-index", "-1");
+  gridModeButton.style("z-index", "-1");
+  hintButton.style("z-index", "-1");
   blinkTimeType.style("z-index", "-1");
   
   showingSettings = false;
@@ -2679,9 +2713,7 @@ function hideUnderShield() {
     showRankButton.style("z-index", "-1");
     showGridButton.style("z-index", "-1");
     DataShowButton.style("z-index", "-1");
-    gridModeButton.style("z-index", "-1");
     showSettingsButton.style("z-index", "-1");
-    hintButton.style("z-index", "-1");
     showLearnButton.style("z-index", "-1");
     mapsButton.style("z-index", "-1");
   }
@@ -2691,9 +2723,7 @@ function hideUnderShield() {
     showRankButton.style("z-index", "2");
     showGridButton.style("z-index", "2");
     DataShowButton.style("z-index", "2");
-    gridModeButton.style("z-index", "2");
     showSettingsButton.style("z-index", "2");
-    hintButton.style("z-index", "2");
     showLearnButton.style("z-index", "2");
     mapsButton.style("z-index", "2");
   }
@@ -4020,8 +4050,12 @@ function lockStartJoin() {
     gridModeButton.attribute("disabled", "");
     showLearnButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
-    showSettingsButton.attribute("disabled", "");
     mapsButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+
+    if (gridMode) {
+      showSettingsButton.removeAttribute("disabled");
+    }
   }
 
   else {
@@ -4241,6 +4275,9 @@ function fixsizes() {
   
   let settingsPadding = windowWidth / 40;
   autoMapCloseButton.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+  hintButton.position(windowWidth / 6.5 + settingsPadding + 60, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+  gridModeButton.position(windowWidth / 6.5 + settingsPadding + 120, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+
   blinkTimeType.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + spacingAmount);
 
   //move the close button based on what is openned
@@ -4312,11 +4349,11 @@ function fixsizes() {
   let holeY = windowHeight - 161;
   let holeRadius = 24;
 
-  //cut a hole in blur mode so that they can see the compass
-  // blurCover.style("mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
-  // blurCover.style("-webkit-mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
-  // blurCover.style("mask-repeat", "no-repeat");
-  // blurCover.style("-webkit-mask-repeat", "no-repeat");
+  // cut a hole in blur mode so that they can see the compass
+  blurCover.style("mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
+  blurCover.style("-webkit-mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
+  blurCover.style("mask-repeat", "no-repeat");
+  blurCover.style("-webkit-mask-repeat", "no-repeat");
 
   blurCover.style("filter", "grayscale(100%)");
 
@@ -4342,8 +4379,6 @@ function fixsizes() {
   showRankButton.position(underShieldX, bannerHeight + shieldSize + 35);
   showGridButton.position(underShieldX, bannerHeight + shieldSize + 60);
   DataShowButton.position(underShieldX, bannerHeight + shieldSize + 85);
-  gridModeButton.position(underShieldX, bannerHeight + shieldSize + 110);
-  hintButton.position(underShieldX, bannerHeight + shieldSize + 135);
   showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
   showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
   mapsButton.position(underShieldX, bannerHeight + shieldSize + 210);
