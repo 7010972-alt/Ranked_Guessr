@@ -605,6 +605,8 @@ let mapDeleter;
 
 let blinkTimeType;
 
+let openPinsButton;
+
 //set variables
 let blitzTime = 10;
 
