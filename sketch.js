@@ -379,6 +379,7 @@ const FOURTH_LAYER = 25;
 
 
 //game variables
+let showingPins = false;
 
 let geoPicX = 2.5;
 let geoPicY = 2.5;
@@ -606,6 +607,11 @@ let mapDeleter;
 let blinkTimeType;
 
 let openPinsButton;
+let pinsScreen;
+let pinsDropDown;
+let pinsEquip;
+
+let pinPicture;
 
 //set variables
 let blitzTime = 10;
@@ -807,6 +813,11 @@ function setup() {
   geoTechPic.style("z-index", "-1");
   geoTechPic.style("opacity", "0");
   geoTechPic.style("transform", "translate(-50%, -50%)");
+
+  pinPicture = createImg("", "");
+  pinPicture.style("z-index", "-1");
+  pinPicture.style("opacity", "0");
+  pinPicture.style("transform", "translate(-50%, -50%)");
 
   //leaflet map
   mainMap = L.map("map").setView([0, 0], 1);
@@ -1101,6 +1112,28 @@ function setup() {
   showGridDropDown.option("Total", "total");
   showGridDropDown.option("Grid", "grid");
 
+  //dropdown menu to select a pin
+  pinsDropDown = createSelect();
+  pinsDropDown.size(160, 30);
+  pinsDropDown.style("z-index", "-1");
+  pinsDropDown.option("Coal");
+  pinsDropDown.option("Bronze");
+  pinsDropDown.option("Silver");
+  pinsDropDown.option("Gold");
+  pinsDropDown.option("Diamond");
+  pinsDropDown.option("Obsidian");
+  pinsDropDown.option("Slime");
+  pinsDropDown.option("Interdimensional");
+
+  pinsDropDown.changed(changePins);
+
+  //dropdown menu to select a pin
+  pinsEquip = createButton("Equip");
+  pinsEquip.size(80, 30);
+  pinsEquip.style("z-index", "-1");
+
+  pinsEquip.mousePressed(equipCurrentPin);
+
   //dropdown menu to select what shape your grid mode select will be
   gridShapeDropdown = createSelect();
   gridShapeDropdown.size(80, 30);
@@ -1270,6 +1303,14 @@ function setup() {
   showLearnButton.style("z-index", "-1");
 
   showLearnButton.mousePressed(displayLearn);
+
+  //button to open the pins shop
+  openPinsButton = createButton("Pins");
+  openPinsButton.size(shieldSize, 20);
+  openPinsButton.style("position", "absolute");
+  openPinsButton.style("z-index", "-1");
+
+  openPinsButton.mousePressed(displayPins);
 
   //button to open the Maps Menu
   mapsButton = createButton("Maps");
@@ -1450,6 +1491,20 @@ function setup() {
   showGridScreen.style("border-radius", "12px");
   showGridScreen.style("border", "4px solid black");
 
+  //screen for the pins
+  pinsScreen = createDiv();
+  pinsScreen.style("background", "rgb(154, 255, 120)");
+  pinsScreen.style("z-index", "-1");
+  pinsScreen.style("opacity", "0");
+
+  pinsScreen.style("justify-content", "left");
+  pinsScreen.style("align-items", "center");
+  pinsScreen.style("font-weight", "bold");
+
+  pinsScreen.style("color", "black");
+  pinsScreen.style("border-radius", "12px");
+  pinsScreen.style("border", "4px solid black");
+
   //the learn screen
   LearnScreen = createDiv();
   LearnScreen.style("background", "rgb(154, 255, 120)");
@@ -1600,6 +1655,86 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+function equipCurrentPin() {
+  if (pinsDropDown.value() === "Coal") {
+    currentPin = coalP;
+  }
+  else if (pinsDropDown.value() === "Bronze") {
+    currentPin = bronzeP;
+  }
+  else if (pinsDropDown.value() === "Silver") {
+    currentPin = silverP;
+  }
+  else if (pinsDropDown.value() === "Gold") {
+    currentPin = goldP;
+  }
+  else if (pinsDropDown.value() === "Diamond") {
+    currentPin = diamondP;
+  }
+  else if (pinsDropDown.value() === "Obsidian") {
+    currentPin = obsidianP;
+  }
+  else if (pinsDropDown.value() === "Slime") {
+    currentPin = slimeP;
+  }
+  else if (pinsDropDown.value() === "Interdimensional") {
+    currentPin = interP;
+  }
+}
+
+function changePins() {
+  if (pinsDropDown.value() === "Coal") {
+    pinPicture.attribute("src", coalP);
+  }
+  else if (pinsDropDown.value() === "Bronze") {
+    pinPicture.attribute("src", bronzeP);
+  }
+  else if (pinsDropDown.value() === "Silver") {
+    pinPicture.attribute("src", silverP);
+  }
+  else if (pinsDropDown.value() === "Gold") {
+    pinPicture.attribute("src", goldP);
+  }
+  else if (pinsDropDown.value() === "Diamond") {
+    pinPicture.attribute("src", diamondP);
+  }
+  else if (pinsDropDown.value() === "Obsidian") {
+    pinPicture.attribute("src", obsidianP);
+  }
+  else if (pinsDropDown.value() === "Slime") {
+    pinPicture.attribute("src", slimeP);
+  }
+  else if (pinsDropDown.value() === "Interdimensional") {
+    pinPicture.attribute("src", interP);
+  }
+}
+
+function displayPins() {
+  showingPins = !showingPins;
+  if (showingPins) {
+    pinsScreen.style("z-index", "20");
+    pinsScreen.style("opacity", "1");
+    pinsDropDown.style("z-index", "25");
+    pinsDropDown.style("opacity", "1");
+    pinsEquip.style("z-index", "25");
+    pinsEquip.style("opacity", "1");
+    pinPicture.style("z-index", "25");
+    pinPicture.style("opacity", "1");
+    pinPicture.attribute("src", coalP);
+  }
+
+  else {
+    pinsScreen.style("z-index", "-1");
+    pinsScreen.style("opacity", "0");
+    pinsDropDown.style("z-index", "-1");
+    pinsDropDown.style("opacity", "0");
+    pinsEquip.style("z-index", "-1");
+    pinsEquip.style("opacity", "0");
+    pinPicture.style("z-index", "-1");
+    pinPicture.style("opacity", "0");
+  }
 }
 
 function moveLayer(item, layer) {
@@ -2718,6 +2853,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "-1");
     showLearnButton.style("z-index", "-1");
     mapsButton.style("z-index", "-1");
+    openPinsButton.style("z-index", "-1");
   }
 
   else {
@@ -2728,6 +2864,7 @@ function hideUnderShield() {
     showSettingsButton.style("z-index", "2");
     showLearnButton.style("z-index", "2");
     mapsButton.style("z-index", "2");
+    openPinsButton.style("z-index", "2");
   }
 }
 
@@ -4051,6 +4188,7 @@ function lockStartJoin() {
     DataShowButton.attribute("disabled", "");
     gridModeButton.attribute("disabled", "");
     showLearnButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
     mapsButton.attribute("disabled", "");
     showSettingsButton.attribute("disabled", "");
@@ -4066,6 +4204,7 @@ function lockStartJoin() {
     DataShowButton.removeAttribute("disabled");
     gridModeButton.removeAttribute("disabled");
     showLearnButton.removeAttribute("disabled");
+    openPinsButton.removeAttribute("disabled");
     showRankButton.removeAttribute("disabled");
     showSettingsButton.removeAttribute("disabled");
     mapsButton.removeAttribute("disabled");
@@ -4077,7 +4216,6 @@ function lockStartJoin() {
 function rankModify() {
   if (bestSet >= 22500 && bestBlitz >= 21500 && bestNMPZ >= 21000 && bestBlink >= 20000 && bestBlur >= 15000) {
     rank = "Inter-Dimensional";
-    currentPin = interP;
     currentShield = interS;
 
     nextBestSet = "22500";
@@ -4088,7 +4226,6 @@ function rankModify() {
   }
   else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000) {
     rank = "Slime";
-    currentPin = slimeP;
     currentShield = slimeS;
 
     nextBestSet = "22500";
@@ -4099,7 +4236,6 @@ function rankModify() {
   }
   else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500) {
     rank = "Obsidian";
-    currentPin = obsidianP;
     currentShield = obsidianS;
 
     nextBestSet = "20000";
@@ -4110,7 +4246,6 @@ function rankModify() {
   }
   else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500) {
     rank = "Diamond";
-    currentPin = diamondP;
     currentShield = diamondS;
 
     nextBestSet = "17500";
@@ -4121,7 +4256,6 @@ function rankModify() {
   }
   else if (bestSet >= 7500 && bestBlitz >= 5000) {
     rank = "Gold";
-    currentPin = goldP;
     currentShield = goldS;
 
     nextBestSet = "12500";
@@ -4132,7 +4266,6 @@ function rankModify() {
   }
   else if (bestSet >= 5000) {
     rank = "Silver";
-    currentPin = silverP;
     currentShield = silverS;
 
     nextBestSet = "7500";
@@ -4143,7 +4276,6 @@ function rankModify() {
   }
   else if (bestSet >= 2500) {
     rank = "Bronze";
-    currentPin = bronzeP;
     currentShield = bronzeS;
 
     nextBestSet = "5000";
@@ -4155,7 +4287,6 @@ function rankModify() {
   else {
     rank = "Coal";
 
-    currentPin = coalP;
     currentShield = coalS;
   }
 
@@ -4381,6 +4512,7 @@ function fixsizes() {
   showRankButton.position(underShieldX, bannerHeight + shieldSize + 35);
   showGridButton.position(underShieldX, bannerHeight + shieldSize + 60);
   DataShowButton.position(underShieldX, bannerHeight + shieldSize + 85);
+  openPinsButton.position(underShieldX, bannerHeight + shieldSize + 110);
   showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
   showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
   mapsButton.position(underShieldX, bannerHeight + shieldSize + 210);
@@ -4413,6 +4545,15 @@ function fixsizes() {
   showGridScreen.style("padding-left", windowWidth / 40 + "px");
   showGridScreen.style("padding-top", windowWidth / 60 + "px");
 
+  pinsScreen.size(windowWidth / 1.5, windowWidth / 3.25);
+  pinsScreen.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
+  pinsScreen.style("font-size", windowWidth / 69 + "px");
+  pinsScreen.style("padding-left", windowWidth / 40 + "px");
+  pinsScreen.style("padding-top", windowWidth / 60 + "px");
+
+  pinsDropDown.position(windowWidth / 6.5 + 10, windowHeight / 2.25 - windowWidth / 8 + 10);
+  pinsEquip.position(windowWidth / 6.5 + 170, windowHeight / 2.25 - windowWidth / 8 + 10);
+
   LearnScreen.size(windowWidth, windowHeight);
   LearnScreen.position(windowWidth / 2, windowHeight / 2);
   LearnScreen.style("font-size", windowWidth / 69 + "px");
@@ -4426,6 +4567,9 @@ function fixsizes() {
 
   geoTechPic.position(windowWidth - windowWidth / 4, windowHeight / 2);
   geoTechPic.size(windowWidth / geoPicX, windowWidth / geoPicY);
+
+  pinPicture.position(windowWidth / 1.5, windowHeight / 2);
+  pinPicture.size(windowWidth / 4, windowWidth / 4);
 
   //tech button pos
   openHintButton.position(10, 10);
