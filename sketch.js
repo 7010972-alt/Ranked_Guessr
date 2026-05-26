@@ -1714,9 +1714,9 @@ function changePins() {
 function displayPins() {
   showingPins = !showingPins;
   if (showingPins) {
-    pinsScreen.style("z-index", "20");
+    pinsScreen.style("z-index", "2");
     pinsScreen.style("opacity", "1");
-    pinsDropDown.style("z-index", "25");
+    pinsDropDown.style("z-index", "20");
     pinsDropDown.style("opacity", "1");
     pinsEquip.style("z-index", "25");
     pinsEquip.style("opacity", "1");
@@ -1724,17 +1724,21 @@ function displayPins() {
     pinPicture.style("opacity", "1");
     pinPicture.attribute("src", coalP);
   }
-
   else {
-    pinsScreen.style("z-index", "-1");
-    pinsScreen.style("opacity", "0");
-    pinsDropDown.style("z-index", "-1");
-    pinsDropDown.style("opacity", "0");
-    pinsEquip.style("z-index", "-1");
-    pinsEquip.style("opacity", "0");
-    pinPicture.style("z-index", "-1");
-    pinPicture.style("opacity", "0");
+    pinsClose();
   }
+}
+
+function pinsClose() {  
+  showingPins = false;
+  pinsScreen.style("z-index", "-1");
+  pinsScreen.style("opacity", "0");
+  pinsDropDown.style("z-index", "-1");
+  pinsDropDown.style("opacity", "0");
+  pinsEquip.style("z-index", "-1");
+  pinsEquip.style("opacity", "0");
+  pinPicture.style("z-index", "-1");
+  pinPicture.style("opacity", "0");
 }
 
 function moveLayer(item, layer) {
@@ -2438,6 +2442,7 @@ function closeAll() {
   closeSettings();
   closeLearn();
   closeMaps();
+  pinsClose();
 }
 
 //shortens the time when all players of the parpty has guessed
@@ -3050,24 +3055,77 @@ function showButtonLock() {
     showGridButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+
     nameType.attribute("disabled", "");
   }
   else if (dataShow) {
     showGridButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else if (showingRankInfo) {
     showGridButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else if (showGrid) {
     showRankButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showLearn) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showingMaps) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+  }
+  else if (showingSettings) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showingPins) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else {
     showGridButton.removeAttribute("disabled");
     showRankButton.removeAttribute("disabled");
     DataShowButton.removeAttribute("disabled");
+    showLearnButton.removeAttribute("disabled");
+    showSettingsButton.removeAttribute("disabled");
+    openPinsButton.removeAttribute("disabled");
+    mapsButton.removeAttribute("disabled");
   }
 }
 
@@ -4418,7 +4476,7 @@ function fixsizes() {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 4 - xButOffset, windowHeight / 2 - windowWidth / 8 - xButOffset);
   }
-  else if (dataShow || showGrid || showingSettings) {
+  else if (dataShow || showGrid || showingSettings || showingPins) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 6.5 - xButOffset, windowHeight / 2.25 - windowWidth / 8 - xButOffset);
   }
@@ -4513,9 +4571,9 @@ function fixsizes() {
   showGridButton.position(underShieldX, bannerHeight + shieldSize + 60);
   DataShowButton.position(underShieldX, bannerHeight + shieldSize + 85);
   openPinsButton.position(underShieldX, bannerHeight + shieldSize + 110);
-  showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
-  showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
-  mapsButton.position(underShieldX, bannerHeight + shieldSize + 210);
+  showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 135);
+  showLearnButton.position(underShieldX, bannerHeight + shieldSize + 160);
+  mapsButton.position(underShieldX, bannerHeight + shieldSize + 185);
 
   let lowervalue = windowHeight;
   if (windowHeight > windowWidth) {
@@ -4529,7 +4587,7 @@ function fixsizes() {
     hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 35);
   }
   else {
-    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 235);
+    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 210);
   }
 
   //change sizes of the rank info in relation to the screensizes
@@ -4551,8 +4609,8 @@ function fixsizes() {
   pinsScreen.style("padding-left", windowWidth / 40 + "px");
   pinsScreen.style("padding-top", windowWidth / 60 + "px");
 
-  pinsDropDown.position(windowWidth / 6.5 + 10, windowHeight / 2.25 - windowWidth / 8 + 10);
-  pinsEquip.position(windowWidth / 6.5 + 170, windowHeight / 2.25 - windowWidth / 8 + 10);
+  pinsDropDown.position(windowWidth / 6.5 + 30, windowHeight / 2.25 - windowWidth / 8 + 10);
+  pinsEquip.position(windowWidth / 6.5 + 190, windowHeight / 2.25 - windowWidth / 8 + 10);
 
   LearnScreen.size(windowWidth, windowHeight);
   LearnScreen.position(windowWidth / 2, windowHeight / 2);
