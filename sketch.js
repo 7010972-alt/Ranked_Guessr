@@ -379,6 +379,7 @@ const FOURTH_LAYER = 25;
 
 
 //game variables
+let rankLevel = 1;
 let showingPins = false;
 
 let geoPicX = 2.5;
@@ -610,7 +611,7 @@ let openPinsButton;
 let pinsScreen;
 let pinsDropDown;
 let pinsEquip;
-
+let pinsTextHolder;
 let pinPicture;
 
 //set variables
@@ -1536,6 +1537,23 @@ function setup() {
   hintTextHolder.style("word-wrap", "break-word");
   hintTextHolder.style("overflow-wrap", "break-word");
 
+  //holds the descriptions of each pin
+  pinsTextHolder = createDiv();
+  pinsTextHolder.style("background", "rgb(154, 255, 120)");
+  pinsTextHolder.style("z-index", "-1");
+  pinsTextHolder.style("opacity", "0");
+  pinsTextHolder.style("transform", "translate(-50%, -50%)");
+
+  pinsTextHolder.style("justify-content", "center");
+  pinsTextHolder.style("align-items", "center");
+  pinsTextHolder.style("font-weight", "bold");
+
+  pinsTextHolder.style("color", "black");
+
+  pinsTextHolder.style("white-space", "normal");
+  pinsTextHolder.style("word-wrap", "break-word");
+  pinsTextHolder.style("overflow-wrap", "break-word");
+
   //images
   fourK = createImg("Assets/4K.png", "4K");
   fourK.style("z-index", "25");
@@ -1658,66 +1676,139 @@ function draw() {
 }
 
 function equipCurrentPin() {
-  if (pinsDropDown.value() === "Coal") {
+  if (pinsDropDown.value() === "Coal" && rankLevel >= 1) {
     currentPin = coalP;
   }
-  else if (pinsDropDown.value() === "Bronze") {
+  else if (pinsDropDown.value() === "Bronze" && rankLevel >= 2) {
     currentPin = bronzeP;
   }
-  else if (pinsDropDown.value() === "Silver") {
+  else if (pinsDropDown.value() === "Silver" && rankLevel >= 3) {
     currentPin = silverP;
   }
-  else if (pinsDropDown.value() === "Gold") {
+  else if (pinsDropDown.value() === "Gold" && rankLevel >= 4) {
     currentPin = goldP;
   }
-  else if (pinsDropDown.value() === "Diamond") {
+  else if (pinsDropDown.value() === "Diamond" && rankLevel >= 5) {
     currentPin = diamondP;
   }
-  else if (pinsDropDown.value() === "Obsidian") {
+  else if (pinsDropDown.value() === "Obsidian" && rankLevel >= 6) {
     currentPin = obsidianP;
   }
-  else if (pinsDropDown.value() === "Slime") {
+  else if (pinsDropDown.value() === "Slime" && rankLevel >= 7) {
     currentPin = slimeP;
   }
-  else if (pinsDropDown.value() === "Interdimensional") {
+  else if (pinsDropDown.value() === "Interdimensional" && rankLevel >= 8) {
     currentPin = interP;
   }
 }
 
 function changePins() {
+  let title = "none";
+  let requirement = "none";
+  let description = "none";
+
   if (pinsDropDown.value() === "Coal") {
     pinPicture.attribute("src", coalP);
+
+    title = "Coal Pin";
+    requirement = "Reach Coal Rank";
+    description = "A pin that 100% of the players have. YOU ARE NOT SPECIAL";
   }
+
+
   else if (pinsDropDown.value() === "Bronze") {
     pinPicture.attribute("src", bronzeP);
+
+    title = "Bronze Pin";
+    requirement = "Reach Bronze Rank";
+    description = "A pin so easy to aquire that even a monkey do so";
   }
+
+
   else if (pinsDropDown.value() === "Silver") {
     pinPicture.attribute("src", silverP);
+
+    title = "Silver Pin";
+    requirement = "Reach Silver Rank";
+    description = "A pin that resembles a decent understanding of Geoguessr";
   }
+
+
   else if (pinsDropDown.value() === "Gold") {
     pinPicture.attribute("src", goldP);
+
+    title = "Gold Pin";
+    requirement = "Reach Gold Rank";
+    description = "A pin that reveals Midas wasn't half bad at Geoguessr";
   }
+
+
   else if (pinsDropDown.value() === "Diamond") {
     pinPicture.attribute("src", diamondP);
+
+    title = "Diamond Pin";
+    requirement = "Reach Diamond Rank";
+    description = "A pin only aquired by the over achieving";
   }
+
+
   else if (pinsDropDown.value() === "Obsidian") {
     pinPicture.attribute("src", obsidianP);
+
+    title = "Obsidian Pin";
+    requirement = "Reach Obsidian Rank";
+    description = "A pin that exceeds all expectations";
   }
+
+
   else if (pinsDropDown.value() === "Slime") {
     pinPicture.attribute("src", slimeP);
+
+    title = "Slime Pin";
+    requirement = "Reach Slime Rank";
+    description = "A pin that shows you've spent a fair share of your time Sliming in Guesses";
   }
+
+
   else if (pinsDropDown.value() === "Interdimensional") {
     pinPicture.attribute("src", interP);
+
+    title = "Interdimensional Pin";
+    requirement = "Reach Interdimensional Rank";
+    description = "A pin that stands at the pinnacle of all pins";
   }
+
+  pinsTextHolder.html(`
+    <span style="font-size: ${largeTextFont}; font-weight: bold;">${title}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${requirement}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${description}</span><br>
+  `);
 }
 
 function displayPins() {
   showingPins = !showingPins;
+
+  let title = "Coal Pin";
+  let requirement = "Reach Coal Rank";
+  let description = "A pin that 100% of the players have. YOU ARE NOT SPECIAL";
+
+  pinsTextHolder.html(`
+    <span style="font-size: ${largeTextFont}; font-weight: bold;">${title}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${requirement}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${description}</span><br>
+  `);
+
   if (showingPins) {
     pinsScreen.style("z-index", "2");
     pinsScreen.style("opacity", "1");
     pinsDropDown.style("z-index", "20");
     pinsDropDown.style("opacity", "1");
+    pinsTextHolder.style("z-index", "20");
+    pinsTextHolder.style("opacity", "1");
     pinsEquip.style("z-index", "25");
     pinsEquip.style("opacity", "1");
     pinPicture.style("z-index", "25");
@@ -1739,6 +1830,8 @@ function pinsClose() {
   pinsEquip.style("opacity", "0");
   pinPicture.style("z-index", "-1");
   pinPicture.style("opacity", "0");
+  pinsTextHolder.style("z-index", "-1");
+  pinsTextHolder.style("opacity", "0");
 }
 
 function moveLayer(item, layer) {
@@ -4281,6 +4374,8 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
+
+    rankLevel = 8;
   }
   else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000) {
     rank = "Slime";
@@ -4291,6 +4386,8 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
+
+    rankLevel = 7;
   }
   else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500) {
     rank = "Obsidian";
@@ -4301,6 +4398,8 @@ function rankModify() {
     nextBestNMPZ = "18000";
     nextBestBlink = "17000";
     nextBestBlur = "10000";
+
+    rankLevel = 6;
   }
   else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500) {
     rank = "Diamond";
@@ -4311,6 +4410,8 @@ function rankModify() {
     nextBestNMPZ = "12500";
     nextBestBlink = "0";
     nextBestBlur = "0";
+
+    rankLevel = 5;
   }
   else if (bestSet >= 7500 && bestBlitz >= 5000) {
     rank = "Gold";
@@ -4321,6 +4422,8 @@ function rankModify() {
     nextBestNMPZ = "7500";
     nextBestBlink = "0";
     nextBestBlur = "0";
+
+    rankLevel = 4;
   }
   else if (bestSet >= 5000) {
     rank = "Silver";
@@ -4331,6 +4434,8 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
+
+    rankLevel = 3;
   }
   else if (bestSet >= 2500) {
     rank = "Bronze";
@@ -4341,9 +4446,13 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
+
+    rankLevel = 2;
   }
   else {
     rank = "Coal";
+
+    rankLevel = 1;
 
     currentShield = coalS;
   }
@@ -4611,6 +4720,9 @@ function fixsizes() {
 
   pinsDropDown.position(windowWidth / 6.5 + 30, windowHeight / 2.25 - windowWidth / 8 + 10);
   pinsEquip.position(windowWidth / 6.5 + 190, windowHeight / 2.25 - windowWidth / 8 + 10);
+
+  pinsTextHolder.size(windowWidth / 4, windowHeight / 2);
+  pinsTextHolder.position(windowWidth / 3.2, windowHeight / 2);
 
   LearnScreen.size(windowWidth, windowHeight);
   LearnScreen.position(windowWidth / 2, windowHeight / 2);

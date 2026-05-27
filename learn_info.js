@@ -697,6 +697,53 @@ let hintedCountries = {
     },
   },
 
+  "Argentina": {
+    Main: {
+      desc: "",
+      name: "",
+      picture: "GeoTechs/ALB/ALB-Main.png",
+      driving: "Right",
+      plate: "Thick Plate",
+      language: "Spanish",
+      difficulty: 5
+    },
+
+    ARGPlate: {
+      desc: "THe plates in Argentina have a black dot in the middle of them",
+      name: "EX: Black Dot",
+      picture: "",
+      type: "EX"
+    },
+
+    ARGAPoles: {
+      desc: "These very iconic concrete A poles are unique to ARG",
+      name: "EX: Concrete A's",
+      picture: "",
+      type: "EX"
+    },
+
+    ARGTearDrop: {
+      desc: "These TearDrop shaped arms on concrete poles are found in ARG",
+      name: "EX: TearDrops",
+      picture: "",
+      type: "EX"
+    },
+
+    ARGRPRN: {
+      desc: "Many roads in ARG will either be RP or RN essentially making the country free",
+      name: "EX: RN Roading",
+      picture: "",
+      type: "EX"
+    },
+
+    ARGBalckCar: {
+      desc: "Black car is extremely common in ARG but can also be found in many other countries",
+      name: "RR: Black Car",
+      picture: "",
+      type: "RR"
+    },
+  },
+
   "Australia": {
     Main: {
       desc: "AUS (Australia) is sometimes mistaken for the US or NZ amongst very new players. However, these countries have major differences once learned",
