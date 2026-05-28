@@ -699,47 +699,47 @@ let hintedCountries = {
 
   "Argentina": {
     Main: {
-      desc: "",
-      name: "",
-      picture: "GeoTechs/ALB/ALB-Main.png",
+      desc: "ARG (Argentina) is a pretty big country that is almost always made free by it's road names",
+      name: "Argentina (ARG)",
+      picture: "GeoTechs/ARG/ARG-Main.png",
       driving: "Right",
       plate: "Thick Plate",
       language: "Spanish",
-      difficulty: 5
+      difficulty: 4
     },
 
     ARGPlate: {
       desc: "THe plates in Argentina have a black dot in the middle of them",
       name: "EX: Black Dot",
-      picture: "",
+      picture: "GeoTechs/ARG/ARG-Plate.png",
       type: "EX"
     },
 
     ARGAPoles: {
       desc: "These very iconic concrete A poles are unique to ARG",
       name: "EX: Concrete A's",
-      picture: "",
+      picture: "GeoTechs/ARG/ARG-Apole.png",
       type: "EX"
     },
 
     ARGTearDrop: {
       desc: "These TearDrop shaped arms on concrete poles are found in ARG",
       name: "EX: TearDrops",
-      picture: "",
+      picture: "GeoTechs/ARG/ARG-Tear.png",
       type: "EX"
     },
 
     ARGRPRN: {
       desc: "Many roads in ARG will either be RP or RN essentially making the country free",
       name: "EX: RN Roading",
-      picture: "",
+      picture: "GeoTechs/ARG/ARG-RPRoads.png",
       type: "EX"
     },
 
     ARGBalckCar: {
       desc: "Black car is extremely common in ARG but can also be found in many other countries",
       name: "RR: Black Car",
-      picture: "",
+      picture: "GeoTechs/ARG/ARG-Black.png",
       type: "RR"
     },
   },
