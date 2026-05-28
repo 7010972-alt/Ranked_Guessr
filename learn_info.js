@@ -1,5 +1,24 @@
 let hintedCountries = {
 
+  // Shell: {
+  //   Main: {
+  //     desc: "",
+  //     name: "",
+  //     picture: "",
+  //     driving: "",
+  //     plate: "",
+  //     language: "",
+  //     difficulty: 0
+  //   },
+
+  //   EMPTY: {
+  //     desc: "",
+  //     name: "EX: ",
+  //     picture: "",
+  //     type: "EX"
+  //   },
+  // },
+
   General: {
     Home: {
       name: "Home"
@@ -1518,6 +1537,93 @@ let hintedCountries = {
       desc: "These small cars are very common in India and Bangledesh",
       name: "CC: Rickshaws",
       picture: "GeoTechs/IND/IND-specialcars.png",
+      type: "CC"
+    },
+  },
+
+  "Indonesia": {
+    Main: {
+      desc: "INDO (Indonesia) can be very difficult as it is spread out across many islands",
+      name: "Indonesia",
+      picture: "",
+      driving: "Left",
+      plate: "Skinny White with Black Stripes",
+      language: "Indonesian",
+      difficulty: 5
+    },
+
+    INDOJIRoadName: {
+      desc: "Best hint for Indo are their JI road names",
+      name: "EX: JI Road Names",
+      picture: "",
+      type: "EX"
+    },
+
+    INDOPoleTape: {
+      desc: "These Indo pole tape colours are relatively only found in Indo",
+      name: "EX: Indo Tape",
+      picture: "",
+      type: "EX"
+    },
+
+    INDOSkinnyPoles: {
+      desc: "These unique skinny looking poles are super common within Indo. Insulators can be even or uneven and can be used to region guess on Islands.",
+      name: "EX: Indo Pole",
+      picture: "",
+      type: "EX"
+    },
+  },
+
+  "Malaysia": {
+    Main: {
+      desc: "MAL (Malaysia) can seem similar to some other south east asian countries but is set apart by its infrastructure.",
+      name: "Malaysia (MAL)",
+      picture: "",
+      driving: "Left",
+      plate: "Skinny White with Black Stripes",
+      language: "Malay",
+      difficulty: 6
+    },
+
+    MALJalanRoads: {
+      desc: "Many roads in MAL start with Jalan",
+      name: "EX: Jalan Roads",
+      picture: "",
+      type: "EX"
+    },
+
+    MALBlackSticker: {
+      desc: "Many MAL poles on the mainland have this black sticker at the bottom",
+      name: "EX: Black Sticker",
+      picture: "",
+      type: "EX"
+    },
+
+    MALBerhenti: {
+      desc: "All stop signs in MAL say Berhenti",
+      name: "EX: Stop Signs",
+      picture: "",
+      type: "EX"
+    },
+
+    MALBlackandWhite: {
+      desc: "Many Road side items like curbs and gaurdrails are painted black and white",
+      name: "RR: Black and White",
+      picture: "",
+      type: "RR"
+    },
+
+    MALNumberedRoads: {
+      desc: "Numbered Roads are super common in MAL",
+      name: "CC: Road Numbers",
+      picture: "",
+      type: "CC"
+    },
+
+    MALWhite: {
+      desc: "All white road lining is used in MAL",
+      name: "CC: White Road Lining",
+      picture: "",
       type: "CC"
     },
   },
