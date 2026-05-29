@@ -1545,7 +1545,7 @@ let hintedCountries = {
     Main: {
       desc: "INDO (Indonesia) can be very difficult as it is spread out across many islands",
       name: "Indonesia",
-      picture: "",
+      picture: "GeoTechs/INDO/INDO-Main.png",
       driving: "Left",
       plate: "Skinny White with Black Stripes",
       language: "Indonesian",
@@ -1555,21 +1555,40 @@ let hintedCountries = {
     INDOJIRoadName: {
       desc: "Best hint for Indo are their JI road names",
       name: "EX: JI Road Names",
-      picture: "",
+      picture: "GeoTechs/INDO/INDO-JIroad.png",
       type: "EX"
     },
 
     INDOPoleTape: {
       desc: "These Indo pole tape colours are relatively only found in Indo",
       name: "EX: Indo Tape",
-      picture: "",
+      picture: "GeoTechs/INDO/INDO-PoleTape.png",
       type: "EX"
     },
 
     INDOSkinnyPoles: {
       desc: "These unique skinny looking poles are super common within Indo. Insulators can be even or uneven and can be used to region guess on Islands.",
       name: "EX: Indo Pole",
-      picture: "",
+      picture: "GeoTechs/INDO/INDO-SkinnyPole.png",
+      type: "EX"
+    },
+  }, 
+
+  "Kazakhstan": {
+    Main: {
+      desc: "KAZ (Kazakhstan) shares many similarities with Russia. HOWEVER, all Kaz coverage is in a truck.",
+      name: "Kazakhstan (KAZ)",
+      picture: "GeoTechs/KAZ/KAZ-Main.png",
+      driving: "Right",
+      plate: "Skinny White",
+      language: "Kazakh",
+      difficulty: 3
+    },
+
+    KAZ: {
+      desc: "Russian Landscape with this white truck is only found in KAZ",
+      name: "EX: KAZ truck",
+      picture: "GeoTechs/KAZ/KAZ-Truck.png",
       type: "EX"
     },
   },
@@ -1578,7 +1597,7 @@ let hintedCountries = {
     Main: {
       desc: "MAL (Malaysia) can seem similar to some other south east asian countries but is set apart by its infrastructure.",
       name: "Malaysia (MAL)",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-Main.png",
       driving: "Left",
       plate: "Skinny White with Black Stripes",
       language: "Malay",
@@ -1588,42 +1607,42 @@ let hintedCountries = {
     MALJalanRoads: {
       desc: "Many roads in MAL start with Jalan",
       name: "EX: Jalan Roads",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-Jalan.png",
       type: "EX"
     },
 
     MALBlackSticker: {
       desc: "Many MAL poles on the mainland have this black sticker at the bottom",
       name: "EX: Black Sticker",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-BlackSticker.png",
       type: "EX"
     },
 
     MALBerhenti: {
       desc: "All stop signs in MAL say Berhenti",
       name: "EX: Stop Signs",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-StopSign.png",
       type: "EX"
     },
 
     MALBlackandWhite: {
       desc: "Many Road side items like curbs and gaurdrails are painted black and white",
       name: "RR: Black and White",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-BlackandWhite.png",
       type: "RR"
     },
 
     MALNumberedRoads: {
       desc: "Numbered Roads are super common in MAL",
       name: "CC: Road Numbers",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-Number.png",
       type: "CC"
     },
 
     MALWhite: {
       desc: "All white road lining is used in MAL",
       name: "CC: White Road Lining",
-      picture: "",
+      picture: "GeoTechs/MAL/MAL-White.png",
       type: "CC"
     },
   },
