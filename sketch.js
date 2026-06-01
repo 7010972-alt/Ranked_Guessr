@@ -70,6 +70,7 @@ let blackanswer;
 
 //sounds
 const PITCH_RANGE = 0.1;
+const ORIGIN_SFX = 1.5;
 let SFXVolume = 1.5;
 
 let numberRacking;
@@ -79,7 +80,8 @@ let clickSound;
 let timeWarning;
 
 //musics
-let musicVolume = 0.4;
+const ORIGIN_MUSIC = 0.4
+let musicVolume = ORIGIN_MUSIC;
 
 let chillMusic1;
 let chillMusic2;
@@ -614,6 +616,9 @@ let pinsEquip;
 let pinsTextHolder;
 let pinPicture;
 
+let musicSlider;
+let SFXSlider;
+
 //set variables
 let blitzTime = 10;
 
@@ -796,6 +801,19 @@ function setup() {
 
   //give each party a map
   setPartyMap();
+
+  //create volume sliders
+  musicSlider = createSlider(0, 200, 100);
+  musicSlider.style("z-index", "-1");
+  musicSlider.size(150);
+
+  musicSlider.changed(volumeUpdate);
+  
+  SFXSlider = createSlider(0, 200, 100);
+  SFXSlider.style("z-index", "-1");
+  SFXSlider.size(150);
+
+  SFXSlider.changed(volumeUpdate);
 
   rankIcon = createImg(currentShield, "rank display");
   rankIcon.size(shieldSize, shieldSize);
@@ -1675,6 +1693,12 @@ function draw() {
   moveAll();
 }
 
+function volumeUpdate() {
+  musicVolume = ORIGIN_MUSIC * (musicSlider.value() / 100);
+  SFXVolume = ORIGIN_SFX * (SFXSlider.value() / 100);
+  soundUpdate();
+}
+
 function equipCurrentPin() {
   if (pinsDropDown.value() === "Coal" && rankLevel >= 1) {
     currentPin = coalP;
@@ -2489,6 +2513,9 @@ function showSettings() {
     hintButton.style("z-index", "25");
     gridModeButton.style("z-index", "25");
     blinkTimeType.style("z-index", "25");
+    musicSlider.style("z-index", "25");
+    SFXSlider.style("z-index", "25");
+
 
     showingSettings = true;
   }
@@ -2506,6 +2533,8 @@ function closeSettings() {
   gridModeButton.style("z-index", "-1");
   hintButton.style("z-index", "-1");
   blinkTimeType.style("z-index", "-1");
+  musicSlider.style("z-index", "-1");
+  SFXSlider.style("z-index", "-1");
   
   showingSettings = false;
 }
@@ -2681,6 +2710,7 @@ function soundUpdate() {
   numberRacking.setVolume(SFXVolume);
   goodGuessSound.setVolume(SFXVolume);
   terribleGuess.setVolume(SFXVolume);
+  clickSound.setVolume(SFXVolume);
 }
 
 //chooses a random song when one ends
@@ -4577,6 +4607,9 @@ function fixsizes() {
   autoMapCloseButton.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
   hintButton.position(windowWidth / 6.5 + settingsPadding + 60, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
   gridModeButton.position(windowWidth / 6.5 + settingsPadding + 120, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+
+  musicSlider.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + 100);
+  SFXSlider.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + 150);
 
   blinkTimeType.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + spacingAmount);
 
