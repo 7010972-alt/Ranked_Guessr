@@ -379,8 +379,19 @@ const SECOND_LAYER = 2;
 const THIRD_LAYER = 20;
 const FOURTH_LAYER = 25;
 
+let islandsList = [
+  ["Christmas", [-10.4916425, 105.6468113]],
+  ["Cocos", [-12.1270298, 96.863208]],
+  ["Guam", [13.4671778,144.7805863]],
+  ["North Mariana", [15.1080128,145.7169768]],
+  ["Remedios", [-3.8575815,-32.4259011]]
+];
 
 //game variables
+let islandPins = [];
+
+let showingIslands = false;
+
 let rankLevel = 1;
 let showingPins = false;
 
@@ -508,7 +519,7 @@ let randomNames = [
 let hintMode = false;
 let zoomOutAfterGuess = false;
 let zoomOutPadding = 7.5;
-let hintDiv = 0.333;
+let hintDiv = 1;
 let hintRadius = 15;
 
 let ultraDis = 61049; 
@@ -618,6 +629,8 @@ let pinPicture;
 
 let musicSlider;
 let SFXSlider;
+
+let showIslandsButton;
 
 //set variables
 let blitzTime = 10;
@@ -1063,6 +1076,14 @@ function setup() {
   refreshButton.style("z-index", "25");
 
   refreshButton.mousePressed(refreshStreet);
+
+  //button to show islands with a pin
+  showIslandsButton = createButton("Show Islands");
+  showIslandsButton.size(60, 50);
+  showIslandsButton.style("position", "absolute");
+  showIslandsButton.style("z-index", "25");
+
+  showIslandsButton.mousePressed(IslandShow);
 
   //button to start a set
   startSetButton = createButton("Start Set");
@@ -1691,6 +1712,31 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+function IslandShow() {
+  showingIslands = !showingIslands;
+
+  if (showingIslands) {
+    for (let island of islandsList) {
+      let newPin = L.marker([island[1][0], island[1][1]]).addTo(mainMap);
+      islandPins.push(newPin);
+
+      newPin.bindPopup(`${island[0]}`, {
+
+        offset: [0, 0],
+        autoClose: false,
+        closeOnClick: false,
+        className: "muiltPopup"
+      }).openPopup();
+    }
+  }
+
+  else {
+    for (let pins of islandPins) {
+      pins.remove();
+    }
+  }
 }
 
 function volumeUpdate() {
@@ -2659,7 +2705,9 @@ function resetMapSize() {
       mapID.style("width", "400px");
       confirmButton.position(windowWidth - 67, windowHeight - 250);
       hideMapButton.position(windowWidth - 67, windowHeight - 310);
-      refreshButton.position(windowWidth - 67, windowHeight - 110);
+      refreshButton.position(windowWidth - 67, windowHeight - 130);
+      showIslandsButton.position(windowWidth - 67, windowHeight - 70);
+
       confirmButton.size(60, 50);
     }
     //reset map for phone
@@ -2668,10 +2716,14 @@ function resetMapSize() {
       mapID.style("bottom", "50px");
       mapID.style("right", "0px");
       mapID.style("width", `${phoneWidth}px`);
+
       confirmButton.position(0, windowHeight - 50);
       hideMapButton.position(windowWidth - 60, windowHeight - 50);
       refreshButton.position(windowWidth - 120, windowHeight - 50);
-      confirmButton.size(windowWidth - 120, 50);
+      showIslandsButton.position(windowWidth - 180, windowHeight - 50);
+
+
+      confirmButton.size(windowWidth - 180, 50);
     }
   }
 }
@@ -4376,6 +4428,7 @@ function lockStartJoin() {
 
     if (gridMode) {
       showSettingsButton.removeAttribute("disabled");
+      gridModeButton.removeAttribute("disabled");
     }
   }
 
