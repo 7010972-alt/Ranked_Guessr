@@ -80,7 +80,7 @@ let clickSound;
 let timeWarning;
 
 //musics
-const ORIGIN_MUSIC = 0.4
+const ORIGIN_MUSIC = 0.4;
 let musicVolume = ORIGIN_MUSIC;
 
 let chillMusic1;
@@ -1408,6 +1408,7 @@ function setup() {
   hideUnderButton.size(shieldSize, 20);
   hideUnderButton.style("position", "absolute");
   moveLayer(hideUnderButton, SECOND_LAYER);
+  hideUnderButton.style("background", "yellow");
 
   hideUnderButton.mousePressed(hideUnderShield);
 
@@ -1712,6 +1713,21 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+  changeSetButton();
+}
+
+//changes the button of the start set button prompting a press
+function changeSetButton() {
+  if (setTypeDropDown.value() !== "normal") {
+    startSetButton.style("background-color", "yellow");
+    joinButton.style("background-color", "yellow");
+    setTypeDropDown.style("background-color", "rgb(198, 255, 175)");
+  }
+  else {
+    startSetButton.style("background-color", "rgb(198, 255, 175)");
+    setTypeDropDown.style("background-color", "yellow");
+    joinButton.style("background-color", "rgb(198, 255, 175)");
+  }
 }
 
 function IslandShow() {
@@ -4637,7 +4653,7 @@ function addmap(map) {
 }
 
 let xButOffset = 15;
-let spacingAmount = 60
+let spacingAmount = 60;
 
 function fixsizes() {
   
@@ -4648,7 +4664,7 @@ function fixsizes() {
   mapFileGetter.position(200, 40);
   fileGetterText.position(200, 40);
   mapDeleter.position(200, 80);
-  
+
   zoomCoords = {
     top: windowHeight - 61,
     bottom: 27,
