@@ -37232,7 +37232,7 @@ window.costarica = [
       -85.16173083212591
     ]
   ]
-]
+];
 
 //200
 window.panama = [
@@ -38039,7 +38039,7 @@ window.panama = [
       -81.5427707355501
     ]
   ]
-]
+];
 
 //400
 window.colombia = [
@@ -39646,7 +39646,7 @@ window.colombia = [
       -75.6226831816561
     ]
   ]
-]
+];
 
 //400
 window.ecuador = [
@@ -41253,7 +41253,7 @@ window.ecuador = [
       -79.17486244035672
     ]
   ]
-]
+];
 
 //500
 window.peru = [
@@ -43260,7 +43260,7 @@ window.peru = [
       -71.30395282825266
     ]
   ]
-]
+];
 
 //500
 window.chile = [
@@ -45267,7 +45267,7 @@ window.chile = [
       -73.27628986789311
     ]
   ]
-]
+];
 
 //1500
 window.argentina = [
@@ -51274,7 +51274,7 @@ window.argentina = [
       -61.503726308465325
     ]
   ]
-]
+];
 
 //300
 window.bolivia = [
@@ -52481,7 +52481,7 @@ window.bolivia = [
       -68.22910405284267
     ]
   ]
-]
+];
 
 //400
 window.paraguay = [
@@ -54088,7 +54088,7 @@ window.paraguay = [
       -57.49202249949283
     ]
   ]
-]
+];
 
 //3000
 window.brazil = [
@@ -66095,7 +66095,7 @@ window.brazil = [
       -50.27580397421536
     ]
   ]
-]
+];
 
 //400
 window.uruguay = [
@@ -67702,7 +67702,7 @@ window.uruguay = [
       -56.21596305594853
     ]
   ]
-]
+];
 
 //Oceania
 
@@ -143560,7 +143560,7 @@ window.kyrgyzstan = [
       74.58020557187669
     ]
   ]
-]
+];
 
 //300
 window.mongolia = [
@@ -154984,7 +154984,7 @@ window.russia = [
       51.45840726667258
     ]
   ]
-]
+];
 
 //200
 window.ukraine = [
@@ -155791,7 +155791,7 @@ window.ukraine = [
       36.133671997770556
     ]
   ]
-]
+];
 
 //500
 window.turkey = [
@@ -157798,7 +157798,7 @@ window.turkey = [
       30.979982951118796
     ]
   ]
-]
+];
 
 //200
 window.cyprus = [
@@ -158605,7 +158605,7 @@ window.cyprus = [
       32.93582133685593
     ]
   ]
-]
+];
 
 //300
 window.greece = [
@@ -159812,7 +159812,7 @@ window.greece = [
       21.92506256271331
     ]
   ]
-]
+];
 
 //250
 window.bulgaria = [
@@ -160819,7 +160819,7 @@ window.bulgaria = [
       22.47112168240126
     ]
   ]
-]
+];
 
 //100
 window.northmacedonia = [
@@ -161226,7 +161226,7 @@ window.northmacedonia = [
       21.6707372776949
     ]
   ]
-]
+];
 
 //300
 window.albania = [
@@ -162433,7 +162433,7 @@ window.albania = [
       20.884725169118393
     ]
   ]
-]
+];
 
 //200
 window.montenegro = [
@@ -163240,7 +163240,7 @@ window.montenegro = [
       18.819684596128162
     ]
   ]
-]
+];
 
 //200
 window.bosniaandherzegovina = [
@@ -164047,7 +164047,7 @@ window.bosniaandherzegovina = [
       18.483236767091903
     ]
   ]
-]
+];
 
 //200
 window.croatia = [
@@ -164854,7 +164854,7 @@ window.croatia = [
       17.25854543477201
     ]
   ]
-]
+];
 
 //200
 window.slovenia = [
@@ -165661,7 +165661,7 @@ window.slovenia = [
       14.667870019090358
     ]
   ]
-]
+];
 
 //300
 window.serbia = [
@@ -166868,7 +166868,7 @@ window.serbia = [
       19.860472314270673
     ]
   ]
-]
+];
 
 //300
 window.romania = [
@@ -168075,7 +168075,7 @@ window.romania = [
       21.372538298905617
     ]
   ]
-]
+];
 
 //300
 window.hungary = [
@@ -169282,7 +169282,7 @@ window.hungary = [
       19.45801912697059
     ]
   ]
-]
+];
 
 //300
 window.slovakia = [
@@ -170489,7 +170489,7 @@ window.slovakia = [
       19.719619574261362
     ]
   ]
-]
+];
 
 //300
 window.austria = [
@@ -171696,7 +171696,7 @@ window.austria = [
       15.171389638309355
     ]
   ]
-]
+];
 
 //500
 window.poland = [
@@ -173703,7 +173703,7 @@ window.poland = [
       20.490290304228385
     ]
   ]
-]
+];
 
 //300
 window.czechia = [
@@ -174910,7 +174910,7 @@ window.czechia = [
       16.761307654524185
     ]
   ]
-]
+];
 
 //500
 window.germany = [
@@ -176917,7 +176917,7 @@ window.germany = [
       10.386664442637947
     ]
   ]
-]
+];
 
 //500
 window.italy = [
@@ -178924,7 +178924,7 @@ window.italy = [
       8.7420927671634
     ]
   ]
-]
+];
 
 //250
 window.netherlands = [
@@ -179931,7 +179931,7 @@ window.netherlands = [
       4.284567110928109
     ]
   ]
-]
+];
 
 //250
 window.belgium = [
@@ -180938,7 +180938,7 @@ window.belgium = [
       3.414952935184935
     ]
   ]
-]
+];
 
 //100
 window.luxembourg = [
@@ -181345,7 +181345,7 @@ window.luxembourg = [
       6.2473280404142395
     ]
   ]
-]
+];
 
 //200
 window.switzerland = [
@@ -182152,7 +182152,7 @@ window.switzerland = [
       7.662813802173928
     ]
   ]
-]
+];
 
 //500
 window.france = [
@@ -184159,7 +184159,7 @@ window.france = [
       -0.029411257726807274
     ]
   ]
-]
+];
 
 //50
 window.andorra = [
@@ -184366,7 +184366,7 @@ window.andorra = [
       1.661054670635207
     ]
   ]
-]
+];
 
 //500
 window.spain = [
@@ -186373,7 +186373,7 @@ window.spain = [
       -5.014857945445509
     ]
   ]
-]
+];
 
 //300
 window.portugal = [
@@ -187580,7 +187580,7 @@ window.portugal = [
       -7.504844994069221
     ]
   ]
-]
+];
 
 //300
 window.ireland = [
@@ -188787,7 +188787,7 @@ window.ireland = [
       -8.707151877636946
     ]
   ]
-]
+];
 
 //500
 window.unitedkingdom = [
@@ -190794,7 +190794,7 @@ window.unitedkingdom = [
       -6.603892219737536
     ]
   ]
-]
+];
 
 //300
 window.denmark = [
@@ -192001,7 +192001,7 @@ window.denmark = [
       9.53543060238292
     ]
   ]
-]
+];
 
 //500
 window.norway = [
@@ -194008,7 +194008,7 @@ window.norway = [
       9.946151822734432
     ]
   ]
-]
+];
 
 //500
 window.sweden = [
@@ -196015,7 +196015,7 @@ window.sweden = [
       14.18214187650816
     ]
   ]
-]
+];
 
 //500
 window.finland = [
@@ -198022,7 +198022,7 @@ window.finland = [
       30.337759063234575
     ]
   ]
-]
+];
 
 //200
 window.lithuania = [
@@ -198829,7 +198829,7 @@ window.lithuania = [
       24.36760926715023
     ]
   ]
-]
+];
 
 //200
 window.latvia = [
@@ -199636,7 +199636,7 @@ window.latvia = [
       25.478389591136075
     ]
   ]
-]
+];
 
 //300
 window.estonia = [
@@ -200843,7 +200843,7 @@ window.estonia = [
       26.589724460802213
     ]
   ]
-]
+];
 
 //200
 window.iceland = [
@@ -201664,7 +201664,7 @@ window.iceland = [
 //NicoBar 25
 //Faroe 50
 window.bigIslands = [
-  "Big Islands", 
+  "- Big Islands", 
   [
     [
       18.018558154311997,
@@ -203878,7 +203878,7 @@ window.bigIslands = [
 //Antarctica 5
 //Greenland 10
 window.littleIslands = [
-  "Little Islands",
+  "- Little Islands",
   [
     [
       -10.436377257532884,
@@ -205457,7 +205457,7 @@ window.usnumbers = [
       -86.13808449015396
     ]
   ]
-]
+];
 
 //A Tier
 
@@ -206377,7 +206377,7 @@ window.russianTowns = [
       86.18998
     ]
   ]
-]
+];
 
 //B Tier
 
@@ -207425,7 +207425,7 @@ window.indianlanguages = [
       91.329926
     ]
   ]
-]
+];
 
 window.usplates = [
   "B: US Plates",
@@ -208551,7 +208551,7 @@ window.usplates = [
       -109.86811
     ]
   ]
-]
+];
 
 window.advancedPoles = [
   "B: Advanced Poles",
@@ -213757,7 +213757,7 @@ window.advancedPoles = [
       75.891335
     ]
   ]
-]
+];
 
 //C Tier
 
@@ -216525,7 +216525,7 @@ window.allBollards = [
       -5.843946
     ]
   ]
-]
+];
 
 window.uniquecars = [
   "C: Unique Cars",
@@ -218675,7 +218675,7 @@ window.uniquecars = [
       16.426655
     ]
   ]
-]
+];
 
 window.basicPoles = [
   "C: Basic Poles",
@@ -220753,7 +220753,7 @@ window.basicPoles = [
       79.89275
     ]
   ]
-]
+];
 
 window.liscenseplates = [
   "C: Liscense Plates",
@@ -223039,7 +223039,7 @@ window.liscenseplates = [
       88.63104
     ]
   ]
-]
+];
 
 window.roadLines = [
   "C: Road Lines",
@@ -223625,7 +223625,7 @@ window.roadLines = [
       -90.59988
     ]
   ]
-]
+];
 
 
 //D Tier
@@ -224034,7 +224034,7 @@ window.stopSigns = [
       -84.21505
     ]
   ]
-]
+];
 
 //holdes all the learn maps in one list
 
@@ -224059,4 +224059,4 @@ window.allLearn = [
 
   //d
   stopSigns
-]
+];

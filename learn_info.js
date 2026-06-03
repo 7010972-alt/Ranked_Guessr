@@ -1,5 +1,24 @@
 let hintedCountries = {
 
+  // Shell: {
+  //   Main: {
+  //     desc: "",
+  //     name: "",
+  //     picture: "",
+  //     driving: "",
+  //     plate: "",
+  //     language: "",
+  //     difficulty: 0
+  //   },
+
+  //   EMPTY: {
+  //     desc: "",
+  //     name: "EX: ",
+  //     picture: "",
+  //     type: "EX"
+  //   },
+  // },
+
   General: {
     Home: {
       name: "Home"
@@ -697,22 +716,104 @@ let hintedCountries = {
     },
   },
 
+  "Argentina": {
+    Main: {
+      desc: "ARG (Argentina) is a pretty big country that is almost always made free by it's road names",
+      name: "Argentina (ARG)",
+      picture: "GeoTechs/ARG/ARG-Main.png",
+      driving: "Right",
+      plate: "Thick Plate",
+      language: "Spanish",
+      difficulty: 4
+    },
+
+    ARGPlate: {
+      desc: "THe plates in Argentina have a black dot in the middle of them",
+      name: "EX: Black Dot",
+      picture: "GeoTechs/ARG/ARG-Plate.png",
+      type: "EX"
+    },
+
+    ARGAPoles: {
+      desc: "These very iconic concrete A poles are unique to ARG",
+      name: "EX: Concrete A's",
+      picture: "GeoTechs/ARG/ARG-Apole.png",
+      type: "EX"
+    },
+
+    ARGTearDrop: {
+      desc: "These TearDrop shaped arms on concrete poles are found in ARG",
+      name: "EX: TearDrops",
+      picture: "GeoTechs/ARG/ARG-Tear.png",
+      type: "EX"
+    },
+
+    ARGRPRN: {
+      desc: "Many roads in ARG will either be RP or RN essentially making the country free",
+      name: "EX: RN Roading",
+      picture: "GeoTechs/ARG/ARG-RPRoads.png",
+      type: "EX"
+    },
+
+    ARGBalckCar: {
+      desc: "Black car is extremely common in ARG but can also be found in many other countries",
+      name: "RR: Black Car",
+      picture: "GeoTechs/ARG/ARG-Black.png",
+      type: "RR"
+    },
+  },
+
   "Australia": {
     Main: {
-      desc: "",
-      name: "",
-      picture: "",
-      driving: "Right",
-      plate: "",
-      language: "",
+      desc: "AUS (Australia) is sometimes mistaken for the US or NZ amongst very new players. However, these countries have major differences once learned",
+      name: "Australia (AUS)",
+      picture: "GeoTechs/AU/AU-Main.png",
+      driving: "Left",
+      plate: "Skinny White",
+      language: "English",
       difficulty: 3
     },
 
-    AUS: {
-      desc: "",
-      name: "EX: ",
-      picture: "",
+    AUSBollard: {
+      desc: "Probably the best hint for AUS are their red and grey bollards. Keep in mind that these could look like the Turkish ones so be somewhat careful",
+      name: "EX: Bollard",
+      picture: "GeoTechs/AU/AU-Bollard.png",
       type: "EX"
+    },
+
+    AUSTrees: {
+      desc: "These naturally grown Eucalyptus trees are only found in AUS and are a great hint for the country. They have a lot of thinned out branches through out the tree",
+      name: "EX: Trees",
+      picture: "GeoTechs/AU/AU-Trees.png",
+      type: "EX"
+    },
+
+    AUSGiveWay: {
+      desc: "These giveway symbols with BLACK lettering is found mainly in AUS, UK and Ireland. Keep in mind NZ's give way signs have red writing",
+      name: "RR: Give Way",
+      picture: "GeoTechs/AU/AU-GiveWay.png",
+      type: "RR"
+    },
+
+    AUSRed: {
+      desc: "Red dirt iis found in many areas of AUS especially western",
+      name: "RR: Red Dirt",
+      picture: "GeoTechs/AU/AU-RedDirt.png",
+      type: "RR"
+    },
+
+    AUSKMMarker: {
+      desc: "These solid white panneled km markers are found in AUS, UK, but not in NZ",
+      name: "RR: Speed Limit",
+      picture: "GeoTechs/AU/AU-kmmsrker.png",
+      type: "RR"
+    },
+
+    AUSRoadLining: {
+      desc: "All Lines in AUS are white",
+      name: "CC: All white Lining",
+      picture: "GeoTechs/AU/AU-RoadLining.png",
+      type: "CC"
     },
   },
 
@@ -1393,6 +1494,159 @@ let hintedCountries = {
     },
   },
 
+  "India": {
+    Main: {
+      desc: "IND (India) is one of the easiest countries in the world only being difficult from mixing it up with neighbouring countries and sometimes Cambodia.",
+      name: "India (IND)",
+      picture: "GeoTechs/IND/IND-Main.png",
+      driving: "Left",
+      plate: "skinny white",
+      language: "Hindi, many others...",
+      difficulty: 2
+    },
+
+    INDTridentPole: {
+      desc: "The Indian trident pole is one of the best hints to India as they are everywhere and have a curved upward pattern. Keep in mind that India rarely has other poles and the tridents will have variations.",
+      name: "EX: Trident Pole",
+      picture: "GeoTechs/IND/IND-Trident.png",
+      type: "EX"
+    },
+
+    INDCar: {
+      desc: "This special car is only found in India and specifically the north and west of the country",
+      name: "EX: India Car",
+      picture: "GeoTechs/IND/IND-Truck.png",
+      type: "EX"
+    },
+
+    INDTrashCam: {
+      desc: "This terrible camera coverage is super common in India but also common in Cambodia aswell.",
+      name: "RR: Trash Cam",
+      picture: "GeoTechs/IND/IND-Trash Cam.png",
+      type: "RR"
+    },
+
+    INDHindi: {
+      desc: "Out of all of India's languages. Hindi is the most common found central to northern of the country",
+      name: "RR: Hindi",
+      picture: "GeoTechs/IND/IND-Hindi.png",
+      type: "RR"
+    },
+
+    INDRickshaw: {
+      desc: "These small cars are very common in India and Bangledesh",
+      name: "CC: Rickshaws",
+      picture: "GeoTechs/IND/IND-specialcars.png",
+      type: "CC"
+    },
+  },
+
+  "Indonesia": {
+    Main: {
+      desc: "INDO (Indonesia) can be very difficult as it is spread out across many islands",
+      name: "Indonesia",
+      picture: "GeoTechs/INDO/INDO-Main.png",
+      driving: "Left",
+      plate: "Skinny White with Black Stripes",
+      language: "Indonesian",
+      difficulty: 5
+    },
+
+    INDOJIRoadName: {
+      desc: "Best hint for Indo are their JI road names",
+      name: "EX: JI Road Names",
+      picture: "GeoTechs/INDO/INDO-JIroad.png",
+      type: "EX"
+    },
+
+    INDOPoleTape: {
+      desc: "These Indo pole tape colours are relatively only found in Indo",
+      name: "EX: Indo Tape",
+      picture: "GeoTechs/INDO/INDO-PoleTape.png",
+      type: "EX"
+    },
+
+    INDOSkinnyPoles: {
+      desc: "These unique skinny looking poles are super common within Indo. Insulators can be even or uneven and can be used to region guess on Islands.",
+      name: "EX: Indo Pole",
+      picture: "GeoTechs/INDO/INDO-SkinnyPole.png",
+      type: "EX"
+    },
+  }, 
+
+  "Kazakhstan": {
+    Main: {
+      desc: "KAZ (Kazakhstan) shares many similarities with Russia. HOWEVER, all Kaz coverage is in a truck.",
+      name: "Kazakhstan (KAZ)",
+      picture: "GeoTechs/KAZ/KAZ-Main.png",
+      driving: "Right",
+      plate: "Skinny White",
+      language: "Kazakh",
+      difficulty: 3
+    },
+
+    KAZ: {
+      desc: "Russian Landscape with this white truck is only found in KAZ",
+      name: "EX: KAZ truck",
+      picture: "GeoTechs/KAZ/KAZ-Truck.png",
+      type: "EX"
+    },
+  },
+
+  "Malaysia": {
+    Main: {
+      desc: "MAL (Malaysia) can seem similar to some other south east asian countries but is set apart by its infrastructure.",
+      name: "Malaysia (MAL)",
+      picture: "GeoTechs/MAL/MAL-Main.png",
+      driving: "Left",
+      plate: "Skinny White with Black Stripes",
+      language: "Malay",
+      difficulty: 6
+    },
+
+    MALJalanRoads: {
+      desc: "Many roads in MAL start with Jalan",
+      name: "EX: Jalan Roads",
+      picture: "GeoTechs/MAL/MAL-Jalan.png",
+      type: "EX"
+    },
+
+    MALBlackSticker: {
+      desc: "Many MAL poles on the mainland have this black sticker at the bottom",
+      name: "EX: Black Sticker",
+      picture: "GeoTechs/MAL/MAL-BlackSticker.png",
+      type: "EX"
+    },
+
+    MALBerhenti: {
+      desc: "All stop signs in MAL say Berhenti",
+      name: "EX: Stop Signs",
+      picture: "GeoTechs/MAL/MAL-StopSign.png",
+      type: "EX"
+    },
+
+    MALBlackandWhite: {
+      desc: "Many Road side items like curbs and gaurdrails are painted black and white",
+      name: "RR: Black and White",
+      picture: "GeoTechs/MAL/MAL-BlackandWhite.png",
+      type: "RR"
+    },
+
+    MALNumberedRoads: {
+      desc: "Numbered Roads are super common in MAL",
+      name: "CC: Road Numbers",
+      picture: "GeoTechs/MAL/MAL-Number.png",
+      type: "CC"
+    },
+
+    MALWhite: {
+      desc: "All white road lining is used in MAL",
+      name: "CC: White Road Lining",
+      picture: "GeoTechs/MAL/MAL-White.png",
+      type: "CC"
+    },
+  },
+
   "Mexico": {
     Main: {
       desc: "MX (Mexico) is generally an easy country to identify. However, the landscape changes drastically from north to south.",
@@ -1779,6 +2033,60 @@ let hintedCountries = {
       desc: "APoles are found in RS",
       name: "RR: A poles",
       picture: "GeoTechs/RS/RS-Apole.png",
+      type: "RR"
+    },
+  },
+
+  "South Africa": {
+    Main: {
+      desc: "SA (South Africa) is the main Africa country with coverage. It is easy to recognize being southern hemisphere and left hand drive. Although some countries also follow this trend",
+      name: "South Africa (SA)",
+      picture: "GeoTechs/SA/SA-Main.png",
+      driving: "Left",
+      plate: "Skinny White",
+      language: "English",
+      difficulty: 4
+    },
+
+    SAPoles: {
+      desc: "These insulators are unique to SA as they look like little white crowded birds.",
+      name: "EX: SA Pole",
+      picture: "GeoTechs/SA/SA-WhiteInsuls.png",
+      type: "EX"
+    },
+
+    SARoading: {
+      desc: "These road lines with white on the outer and white dashed in the center are pretty much unique to SA.",
+      name: "EX: Road Lines",
+      picture: "GeoTechs/SA/SA-PillRoading.png",
+      type: "EX"
+    },
+
+    SARRoading: {
+      desc: "R roads are super common in SA along with N roads",
+      name: "RR: R roads",
+      picture: "GeoTechs/SA/SA-Rroads.png",
+      type: "RR"
+    },
+
+    SABlueAntenna: {
+      desc: "Blue Antenna car is super common in SA and not in any other Africa country",
+      name: "RR: Blue Antenna",
+      picture: "GeoTechs/SA/SA-BlueAntenna.png",
+      type: "RR"
+    },
+
+    SABlackKnon: {
+      desc: "This car with this black thick knob antenna is common in SA",
+      name: "RR: Black Knob",
+      picture: "GeoTechs/SA/SA-blackknob.png",
+      type: "RR"
+    },
+
+    SASkinnyChevs: {
+      desc: "Skinny Cheverons are very common in SA and are found in some other countries around it.",
+      name: "RR: Skinny Cheverons",
+      picture: "GeoTechs/SA/SA-SkinnyCheverons.png",
       type: "RR"
     },
   },

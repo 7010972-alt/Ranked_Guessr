@@ -55,7 +55,6 @@ let obsidianP;
 let slimeP;
 let interP;
 
-
 let particleImage;
 let redParticleImage;
 let testIMG;
@@ -71,6 +70,7 @@ let blackanswer;
 
 //sounds
 const PITCH_RANGE = 0.1;
+const ORIGIN_SFX = 1.5;
 let SFXVolume = 1.5;
 
 let numberRacking;
@@ -80,7 +80,8 @@ let clickSound;
 let timeWarning;
 
 //musics
-let musicVolume = 0.4;
+const ORIGIN_MUSIC = 0.4;
+let musicVolume = ORIGIN_MUSIC;
 
 let chillMusic1;
 let chillMusic2;
@@ -372,7 +373,27 @@ let sizeInc = 0.001;
 let maxSizeDelay = 5;
 let changeDelay = 25;
 
+//Z Index Constants
+const FIRST_LAYER = 1;
+const SECOND_LAYER = 2;
+const THIRD_LAYER = 20;
+const FOURTH_LAYER = 25;
+
+let islandsList = [
+  ["Christmas", [-10.4916425, 105.6468113]],
+  ["Cocos", [-12.1270298, 96.863208]],
+  ["Guam", [13.4671778,144.7805863]],
+  ["North Mariana", [15.1080128,145.7169768]],
+  ["Remedios", [-3.8575815,-32.4259011]]
+];
+
 //game variables
+let islandPins = [];
+
+let showingIslands = false;
+
+let rankLevel = 1;
+let showingPins = false;
 
 let geoPicX = 2.5;
 let geoPicY = 2.5;
@@ -498,7 +519,7 @@ let randomNames = [
 let hintMode = false;
 let zoomOutAfterGuess = false;
 let zoomOutPadding = 7.5;
-let hintDiv = 0.333;
+let hintDiv = 1;
 let hintRadius = 15;
 
 let ultraDis = 61049; 
@@ -509,8 +530,8 @@ let answerLine;
 let answerPadding = 50;
 let mapOriginalHeight = 300;
 let mapOriginalWidth = 400;
-let newHeight = 450;
-let newWidth = 600;
+let newHeight = 550;
+let newWidth = 700;
 let mapBottom = 20;
 let mapRight = 75;
 let enlarged = false;
@@ -597,6 +618,20 @@ let mapFileGetter;
 let fileGetterText;
 let mapDeleter;
 
+let blinkTimeType;
+
+let openPinsButton;
+let pinsScreen;
+let pinsDropDown;
+let pinsEquip;
+let pinsTextHolder;
+let pinPicture;
+
+let musicSlider;
+let SFXSlider;
+
+let showIslandsButton;
+
 //set variables
 let blitzTime = 10;
 
@@ -630,14 +665,14 @@ let NMPZCoverR;
 //blur cover
 let blurCover;
 let blurCovering = false;
-let blurAmount = 25;
+let blurAmount = 0;
 
 //blink cover
 let blink = false;
 let blinkTime = 0;
 let blinkCountdown;
 let blinkMax = 3;
-let visibleTime = 0.5;
+let visibleTime = 1;
 let decreaseAmount = 0.1;
 
 //show next rank info
@@ -787,9 +822,22 @@ function setup() {
   //give each party a map
   setPartyMap();
 
+  //create volume sliders
+  musicSlider = createSlider(0, 200, 100);
+  musicSlider.style("z-index", "-1");
+  musicSlider.size(150);
+
+  musicSlider.changed(volumeUpdate);
+  
+  SFXSlider = createSlider(0, 200, 100);
+  SFXSlider.style("z-index", "-1");
+  SFXSlider.size(150);
+
+  SFXSlider.changed(volumeUpdate);
+
   rankIcon = createImg(currentShield, "rank display");
   rankIcon.size(shieldSize, shieldSize);
-  rankIcon.style("z-index", "2");
+  moveLayer(rankIcon, SECOND_LAYER);
   rankIcon.style("opacity", "2");
 
   allPinsDisplay = createImg(allPins, "all the pins");
@@ -804,6 +852,11 @@ function setup() {
   geoTechPic.style("z-index", "-1");
   geoTechPic.style("opacity", "0");
   geoTechPic.style("transform", "translate(-50%, -50%)");
+
+  pinPicture = createImg("", "");
+  pinPicture.style("z-index", "-1");
+  pinPicture.style("opacity", "0");
+  pinPicture.style("transform", "translate(-50%, -50%)");
 
   //leaflet map
   mainMap = L.map("map").setView([0, 0], 1);
@@ -982,7 +1035,7 @@ function setup() {
   confirmButton = createButton("Confirm Guess");
   confirmButton.size(60, 50);
   confirmButton.style("position", "absolute");
-  confirmButton.style("z-index", "14");
+  confirmButton.style("z-index", "25");
   confirmButton.style("background-color", "rgb(255, 242, 62)");
 
   confirmButton.mousePressed(confirmed);
@@ -1001,13 +1054,13 @@ function setup() {
   hideMapButton = createButton("Toggle Map");
   hideMapButton.size(60, 50);
   hideMapButton.style("position", "absolute");
-  hideMapButton.style("z-index", "12");
+  hideMapButton.style("z-index", "25");
 
   hideMapButton.mousePressed(hideMap);
 
   //auto map close button
   autoMapCloseButton = createButton("Auto Map Close");
-  autoMapCloseButton.size(100, 50);
+  autoMapCloseButton.size(60, 50);
   autoMapCloseButton.style("position", "absolute");
   autoMapCloseButton.style("z-index", "-1");
   autoMapCloseButton.style("background-color", "red");
@@ -1016,7 +1069,7 @@ function setup() {
 
   //button to toggle hint mode
   hintButton = createButton("Hint Mode");
-  hintButton.size(shieldSize, 20);
+  hintButton.size(60, 50);
   hintButton.style("position", "absolute");
   hintButton.style("z-index", "-1");
   hintButton.style("background-color", "red");
@@ -1027,15 +1080,24 @@ function setup() {
   refreshButton = createButton("Refresh Map");
   refreshButton.size(60, 50);
   refreshButton.style("position", "absolute");
-  refreshButton.style("z-index", "12");
+  refreshButton.style("z-index", "25");
 
   refreshButton.mousePressed(refreshStreet);
+
+  //button to show islands with a pin
+  showIslandsButton = createButton("Show Islands");
+  showIslandsButton.size(60, 50);
+  showIslandsButton.style("position", "absolute");
+  showIslandsButton.style("z-index", "25");
+
+  showIslandsButton.mousePressed(IslandShow);
 
   //button to start a set
   startSetButton = createButton("Start Set");
   startSetButton.size(80, 30);
   startSetButton.style("position", "absolute");
   startSetButton.style("z-index", "2");
+  startSetButton.style("z-index", "25");
 
   startSetButton.mousePressed(startSet);
 
@@ -1060,6 +1122,7 @@ function setup() {
   joinButton.size(80, 30);
   joinButton.style("position", "absolute");
   joinButton.style("z-index", "2");
+  joinButton.style("z-index", "25");
 
   joinButton.mousePressed(joinWait);
 
@@ -1084,11 +1147,12 @@ function setup() {
   setTypeDropDown = createSelect();
   setTypeDropDown.size(160, 20);
   setTypeDropDown.style("z-index", "2");
+  setTypeDropDown.style("z-index", "25");
   setTypeDropDown.option("Normal", "normal");
+  setTypeDropDown.option("Colour Blind", "blur");
   setTypeDropDown.option("Blitz", "blitz");
   setTypeDropDown.option("NMPZ", "NMPZ");
   setTypeDropDown.option("Blink", "blink");
-  setTypeDropDown.option("Blur", "blur");
 
 
   //dropdown menu to select what type of info you want to see
@@ -1097,6 +1161,28 @@ function setup() {
   showGridDropDown.style("z-index", "-1");
   showGridDropDown.option("Total", "total");
   showGridDropDown.option("Grid", "grid");
+
+  //dropdown menu to select a pin
+  pinsDropDown = createSelect();
+  pinsDropDown.size(160, 30);
+  pinsDropDown.style("z-index", "-1");
+  pinsDropDown.option("Coal");
+  pinsDropDown.option("Bronze");
+  pinsDropDown.option("Silver");
+  pinsDropDown.option("Gold");
+  pinsDropDown.option("Diamond");
+  pinsDropDown.option("Obsidian");
+  pinsDropDown.option("Slime");
+  pinsDropDown.option("Interdimensional");
+
+  pinsDropDown.changed(changePins);
+
+  //dropdown menu to select a pin
+  pinsEquip = createButton("Equip");
+  pinsEquip.size(80, 30);
+  pinsEquip.style("z-index", "-1");
+
+  pinsEquip.mousePressed(equipCurrentPin);
 
   //dropdown menu to select what shape your grid mode select will be
   gridShapeDropdown = createSelect();
@@ -1201,6 +1287,14 @@ function setup() {
 
   mapFindType.changed(updateMapsDrop);
 
+  //type in the amount of time for blink to show the location
+  blinkTimeType = createInput();
+  blinkTimeType.size(152, 24);
+  blinkTimeType.style("z-index", "-1");
+  blinkTimeType.value("Blink Duration");
+
+  blinkTimeType.changed(chnagedBlinkTime);
+
   //type in the name of the map you are creating
   mapNameType = createInput();
   mapNameType.size(152, 24);
@@ -1209,7 +1303,7 @@ function setup() {
 
   //type in the name that you want
   nameType = createInput();
-  nameType.style("z-index", "2");
+  moveLayer(nameType, SECOND_LAYER);
   nameType.value(randomNames[Math.floor(Math.random() * randomNames.length)]);
   nameType.style("font-size", "12px");
   nameType.style("text-align", "center");
@@ -1285,6 +1379,13 @@ function setup() {
   showHelpButton.html('<img src="Assets/question.png" width="40" height="40">');
 
   showHelpButton.mousePressed(displayHelp);
+  //button to open the pins shop
+  openPinsButton = createButton("Pins");
+  openPinsButton.size(shieldSize, 20);
+  openPinsButton.style("position", "absolute");
+  openPinsButton.style("z-index", "-1");
+
+  openPinsButton.mousePressed(displayPins);
 
   //button to open the Maps Menu
   mapsButton = createButton("Maps");
@@ -1321,7 +1422,7 @@ function setup() {
 
   //button to enter grid guessing mode
   gridModeButton = createButton("Grid Mode");
-  gridModeButton.size(shieldSize, 20);
+  gridModeButton.size(60, 50);
   gridModeButton.style("position", "absolute");
   gridModeButton.style("z-index", "-1");
   gridModeButton.style("background-color", "red");
@@ -1341,7 +1442,8 @@ function setup() {
   hideUnderButton = createButton("Show");
   hideUnderButton.size(shieldSize, 20);
   hideUnderButton.style("position", "absolute");
-  hideUnderButton.style("z-index", "2");
+  moveLayer(hideUnderButton, SECOND_LAYER);
+  hideUnderButton.style("background", "yellow");
 
   hideUnderButton.mousePressed(hideUnderShield);
 
@@ -1465,6 +1567,20 @@ function setup() {
   showGridScreen.style("border-radius", "12px");
   showGridScreen.style("border", "4px solid black");
 
+  //screen for the pins
+  pinsScreen = createDiv();
+  pinsScreen.style("background", "rgb(154, 255, 120)");
+  pinsScreen.style("z-index", "-1");
+  pinsScreen.style("opacity", "0");
+
+  pinsScreen.style("justify-content", "left");
+  pinsScreen.style("align-items", "center");
+  pinsScreen.style("font-weight", "bold");
+
+  pinsScreen.style("color", "black");
+  pinsScreen.style("border-radius", "12px");
+  pinsScreen.style("border", "4px solid black");
+
   //the learn screen
   LearnScreen = createDiv();
   LearnScreen.style("background", "rgb(154, 255, 120)");
@@ -1526,25 +1642,41 @@ function setup() {
   helpText.style("white-space", "normal");
   helpText.style("word-wrap", "break-word");
   helpText.style("overflow-wrap", "break-word");
+  //holds the descriptions of each pin
+  pinsTextHolder = createDiv();
+  pinsTextHolder.style("background", "rgb(154, 255, 120)");
+  pinsTextHolder.style("z-index", "-1");
+  pinsTextHolder.style("opacity", "0");
+  pinsTextHolder.style("transform", "translate(-50%, -50%)");
+
+  pinsTextHolder.style("justify-content", "center");
+  pinsTextHolder.style("align-items", "center");
+  pinsTextHolder.style("font-weight", "bold");
+
+  pinsTextHolder.style("color", "black");
+
+  pinsTextHolder.style("white-space", "normal");
+  pinsTextHolder.style("word-wrap", "break-word");
+  pinsTextHolder.style("overflow-wrap", "break-word");
 
   //images
   fourK = createImg("Assets/4K.png", "4K");
-  fourK.style("z-index", "21");
+  fourK.style("z-index", "25");
   fourK.style("transform", "translate(-50%, -50%)");
   fourK.style("pointer-events", "none");
 
   fourHalfK = createImg("Assets/4.8K.png", "4.8K");
-  fourHalfK.style("z-index", "21");
+  fourHalfK.style("z-index", "25");
   fourHalfK.style("transform", "translate(-50%, -50%)");
   fourHalfK.style("pointer-events", "none");
 
   plus5 = createImg("Assets/+5.png", "+5");
-  plus5.style("z-index", "21");
+  plus5.style("z-index", "25");
   plus5.style("transform", "translate(-50%, -50%)");
   plus5.style("pointer-events", "none");
 
   plus10 = createImg("Assets/+10.png", "+10");
-  plus10.style("z-index", "21");
+  plus10.style("z-index", "25");
   plus10.style("transform", "translate(-50%, -50%)");
   plus10.style("pointer-events", "none");
 
@@ -1646,6 +1778,237 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+  changeSetButton();
+}
+
+//changes the button of the start set button prompting a press
+function changeSetButton() {
+  if (setTypeDropDown.value() !== "normal") {
+    startSetButton.style("background-color", "yellow");
+    joinButton.style("background-color", "yellow");
+    setTypeDropDown.style("background-color", "rgb(198, 255, 175)");
+  }
+  else {
+    startSetButton.style("background-color", "rgb(198, 255, 175)");
+    setTypeDropDown.style("background-color", "yellow");
+    joinButton.style("background-color", "rgb(198, 255, 175)");
+  }
+}
+
+function IslandShow() {
+  showingIslands = !showingIslands;
+
+  if (showingIslands) {
+    for (let island of islandsList) {
+      let newPin = L.marker([island[1][0], island[1][1]]).addTo(mainMap);
+      islandPins.push(newPin);
+
+      newPin.bindPopup(`${island[0]}`, {
+
+        offset: [0, 0],
+        autoClose: false,
+        closeOnClick: false,
+        className: "muiltPopup"
+      }).openPopup();
+    }
+  }
+
+  else {
+    for (let pins of islandPins) {
+      pins.remove();
+    }
+  }
+}
+
+function volumeUpdate() {
+  musicVolume = ORIGIN_MUSIC * (musicSlider.value() / 100);
+  SFXVolume = ORIGIN_SFX * (SFXSlider.value() / 100);
+  soundUpdate();
+}
+
+function equipCurrentPin() {
+  if (pinsDropDown.value() === "Coal" && rankLevel >= 1) {
+    currentPin = coalP;
+  }
+  else if (pinsDropDown.value() === "Bronze" && rankLevel >= 2) {
+    currentPin = bronzeP;
+  }
+  else if (pinsDropDown.value() === "Silver" && rankLevel >= 3) {
+    currentPin = silverP;
+  }
+  else if (pinsDropDown.value() === "Gold" && rankLevel >= 4) {
+    currentPin = goldP;
+  }
+  else if (pinsDropDown.value() === "Diamond" && rankLevel >= 5) {
+    currentPin = diamondP;
+  }
+  else if (pinsDropDown.value() === "Obsidian" && rankLevel >= 6) {
+    currentPin = obsidianP;
+  }
+  else if (pinsDropDown.value() === "Slime" && rankLevel >= 7) {
+    currentPin = slimeP;
+  }
+  else if (pinsDropDown.value() === "Interdimensional" && rankLevel >= 8) {
+    currentPin = interP;
+  }
+}
+
+function changePins() {
+  let title = "none";
+  let requirement = "none";
+  let description = "none";
+
+  if (pinsDropDown.value() === "Coal") {
+    pinPicture.attribute("src", coalP);
+
+    title = "Coal Pin";
+    requirement = "Reach Coal Rank";
+    description = "A pin that 100% of the players have. YOU ARE NOT SPECIAL";
+  }
+
+
+  else if (pinsDropDown.value() === "Bronze") {
+    pinPicture.attribute("src", bronzeP);
+
+    title = "Bronze Pin";
+    requirement = "Reach Bronze Rank";
+    description = "A pin so easy to aquire that even a monkey do so";
+  }
+
+
+  else if (pinsDropDown.value() === "Silver") {
+    pinPicture.attribute("src", silverP);
+
+    title = "Silver Pin";
+    requirement = "Reach Silver Rank";
+    description = "A pin that resembles a decent understanding of Geoguessr";
+  }
+
+
+  else if (pinsDropDown.value() === "Gold") {
+    pinPicture.attribute("src", goldP);
+
+    title = "Gold Pin";
+    requirement = "Reach Gold Rank";
+    description = "A pin that reveals Midas wasn't half bad at Geoguessr";
+  }
+
+
+  else if (pinsDropDown.value() === "Diamond") {
+    pinPicture.attribute("src", diamondP);
+
+    title = "Diamond Pin";
+    requirement = "Reach Diamond Rank";
+    description = "A pin only aquired by the over achieving";
+  }
+
+
+  else if (pinsDropDown.value() === "Obsidian") {
+    pinPicture.attribute("src", obsidianP);
+
+    title = "Obsidian Pin";
+    requirement = "Reach Obsidian Rank";
+    description = "A pin that exceeds all expectations";
+  }
+
+
+  else if (pinsDropDown.value() === "Slime") {
+    pinPicture.attribute("src", slimeP);
+
+    title = "Slime Pin";
+    requirement = "Reach Slime Rank";
+    description = "A pin that shows you've spent a fair share of your time Sliming in Guesses";
+  }
+
+
+  else if (pinsDropDown.value() === "Interdimensional") {
+    pinPicture.attribute("src", interP);
+
+    title = "Interdimensional Pin";
+    requirement = "Reach Interdimensional Rank";
+    description = "A pin that stands at the pinnacle of all pins";
+  }
+
+  pinsTextHolder.html(`
+    <span style="font-size: ${largeTextFont}; font-weight: bold;">${title}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${requirement}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${description}</span><br>
+  `);
+}
+
+function displayPins() {
+  showingPins = !showingPins;
+
+  let title = "Coal Pin";
+  let requirement = "Reach Coal Rank";
+  let description = "A pin that 100% of the players have. YOU ARE NOT SPECIAL";
+
+  pinsTextHolder.html(`
+    <span style="font-size: ${largeTextFont}; font-weight: bold;">${title}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${requirement}</span><br>
+    <br>
+    <span style="font-size: ${smallTextFont};">${description}</span><br>
+  `);
+
+  if (showingPins) {
+    pinsScreen.style("z-index", "2");
+    pinsScreen.style("opacity", "1");
+    pinsDropDown.style("z-index", "20");
+    pinsDropDown.style("opacity", "1");
+    pinsTextHolder.style("z-index", "20");
+    pinsTextHolder.style("opacity", "1");
+    pinsEquip.style("z-index", "25");
+    pinsEquip.style("opacity", "1");
+    pinPicture.style("z-index", "25");
+    pinPicture.style("opacity", "1");
+    pinPicture.attribute("src", coalP);
+  }
+  else {
+    pinsClose();
+  }
+}
+
+function pinsClose() {  
+  showingPins = false;
+  pinsScreen.style("z-index", "-1");
+  pinsScreen.style("opacity", "0");
+  pinsDropDown.style("z-index", "-1");
+  pinsDropDown.style("opacity", "0");
+  pinsEquip.style("z-index", "-1");
+  pinsEquip.style("opacity", "0");
+  pinPicture.style("z-index", "-1");
+  pinPicture.style("opacity", "0");
+  pinsTextHolder.style("z-index", "-1");
+  pinsTextHolder.style("opacity", "0");
+}
+
+function moveLayer(item, layer) {
+  let newLayer = Number(layer);
+  item.style("z-index", newLayer);
+}
+
+//this checks if the number is valid
+function chnagedBlinkTime() {
+  newtime = Number(blinkTimeType.value());
+
+  if (isNaN(newtime)) {
+    newtime = 1;
+    blinkTimeType.value("1");
+  }
+
+  if (newtime > 1) {
+    newtime = 1;
+    blinkTimeType.value("1");
+  }
+  else if (newtime < 0.1) {
+    newtime = 0.1;
+    blinkTimeType.value("0.1");
+  }
+
+  visibleTime = newtime;
 }
 
 //updates the text for the next help menu
@@ -1716,30 +2079,60 @@ function closeHelp() {
 
 function mapTypeSwitch() {
   updateMapsDrop();
+  mapTextUpdate();
 }
 
+//update the text based on what map mode they are looking at
 function mapTextUpdate() {
-  hintTextHolder.html(`
-    <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
-    <br>
-    <span style="font-size: ${smallTextFont};">
-      1: Generate a Map at 
-      <a href="https://map-g3nerator.vercel.app/" target="_blank">
-        https://map-g3nerator.vercel.app/
-      </a> 
-      or make your own at 
-      <a href="https://map-making.app/" target="_blank">
-        https://map-making.app/
-      </a>
-    </span><br>
-    <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
-    <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
-    <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
-    <br>
-    <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
-  `);
 
-  if (mapsDropDown.value() === "US Area Codes") {
+  if (mapTypeDropDown.value() === "Custom") {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Adding Custom Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">
+        1: Generate a Map at 
+        <a href="https://map-g3nerator.vercel.app/" target="_blank">
+          https://map-g3nerator.vercel.app/
+        </a> 
+        or make your own at 
+        <a href="https://map-making.app/" target="_blank">
+          https://map-making.app/
+        </a>
+      </span><br>
+      <span style="font-size: ${smallTextFont};">2: Export as a JSON file</span><br>
+      <span style="font-size: ${smallTextFont};">3: Name your Map</span><br>
+      <span style="font-size: ${smallTextFont};">4: Upload file</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
+
+  else if (mapTypeDropDown.value() === "Basic") {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Basic Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">These maps hold each country in the game excluding islands</span><br>
+      <span style="font-size: ${smallTextFont};">keep in mind that some countries do not have that many locations so expect repeats</span><br>
+
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
+
+  else {
+    hintTextHolder.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Learn Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">These maps were made to help you learn the different geotechs</span><br>
+      <span style="font-size: ${smallTextFont};">The maps are arranged in to Tiers on order you should learn them.</span><br>
+      <span style="font-size: ${smallTextFont};">D = learn first, S = very advanced</span><br>
+
+      <br>
+      <span style="font-size: ${smallTextFont};">Current Map Size: ${allMaps[mapsDropDown.value()][1].length}</span><br>
+    `);
+  }
+
+  if (mapsDropDown.value() === "S: US Area Codes") {
     geoPicX = 2.1;
     geoPicY = 2.7;
     geoTechPic.attribute("src", "Assets/USareaCodes.png");
@@ -1806,7 +2199,7 @@ function handleFile(file) {
     let converted = convertFile(file.data);
     allMaps[mapNameType.value()] = converted;
 
-    if (mapTypeDropDown.value() === custom) {
+    if (mapTypeDropDown.value() === "Custom") {
       mapsDropDown.option(mapNameType.value());
     }
 
@@ -1876,6 +2269,21 @@ function updateMapsDrop() {
   //only show learnable maps and make it work for the type
   else if (mapTypeDropDown.value() === "Learn") {
     addToDropDown(allLearn);
+
+    for (let i = 0; i < allLearn.length; i++) {
+      if (allLearn[i][0][0] === "S") {
+        mapsDropDown.elt.options[i + 1].style.color = 'red';
+      }
+      else if (allLearn[i][0][0] === "A") {
+        mapsDropDown.elt.options[i + 1].style.color = 'purple';
+      }
+      else if (allLearn[i][0][0] === "B") {
+        mapsDropDown.elt.options[i + 1].style.color = 'orange';
+      }
+      else if (allLearn[i][0][0] === "C") {
+        mapsDropDown.elt.options[i + 1].style.color = 'green';
+      }
+    }
   }
 
   else {
@@ -1883,6 +2291,7 @@ function updateMapsDrop() {
   }
 
   differentMap(allMaps[mapsDropDown.value()]);
+  mapsDropDown.elt.options[0].style.backgroundColor = 'yellow';
 }
 
 function displayMaps() {
@@ -1894,7 +2303,7 @@ function displayMaps() {
 
     hintTextHolder.style("z-index", "20");
     hintTextHolder.style("opacity", "1");
-    geoTechPic.style("z-index", "21");
+    geoTechPic.style("z-index", "25");
     geoTechPic.style("opacity", "1");
     mapFindType.style("z-index", "25");
     mapFindType.style("opacity", "1");
@@ -2158,7 +2567,7 @@ function currentHintDisplay() {
         selectedCountry = undefined;
         validCountry = false;
         openHintButton.style("background-color", "red");
-        geoTechPic.style("z-index", "24");
+        geoTechPic.style("z-index", "25");
         geoTechPic.style("opacity", "1");
 
         if (countryOutline !== undefined) {
@@ -2189,7 +2598,7 @@ function openCountryHint() {
     countryTech = true;
     gridMapID.hide();
 
-    geoTechPic.style("z-index", "24");
+    geoTechPic.style("z-index", "25");
     geoTechPic.style("opacity", "1");
 
     //adds every tech to the dropdown menu
@@ -2294,6 +2703,12 @@ function showSettings() {
     settingsScreen.style("opacity", "1");
 
     autoMapCloseButton.style("z-index", "25");
+    hintButton.style("z-index", "25");
+    gridModeButton.style("z-index", "25");
+    blinkTimeType.style("z-index", "25");
+    musicSlider.style("z-index", "25");
+    SFXSlider.style("z-index", "25");
+
 
     showingSettings = true;
   }
@@ -2308,6 +2723,11 @@ function closeSettings() {
   settingsScreen.style("opacity", "0");
 
   autoMapCloseButton.style("z-index", "-1");
+  gridModeButton.style("z-index", "-1");
+  hintButton.style("z-index", "-1");
+  blinkTimeType.style("z-index", "-1");
+  musicSlider.style("z-index", "-1");
+  SFXSlider.style("z-index", "-1");
   
   showingSettings = false;
 }
@@ -2337,6 +2757,7 @@ function closeAll() {
   closeSettings();
   closeLearn();
   closeMaps();
+  pinsClose();
 }
 
 //shortens the time when all players of the parpty has guessed
@@ -2431,7 +2852,9 @@ function resetMapSize() {
       mapID.style("width", "400px");
       confirmButton.position(windowWidth - 67, windowHeight - 250);
       hideMapButton.position(windowWidth - 67, windowHeight - 310);
-      refreshButton.position(windowWidth - 67, windowHeight - 110);
+      refreshButton.position(windowWidth - 67, windowHeight - 130);
+      showIslandsButton.position(windowWidth - 67, windowHeight - 70);
+
       confirmButton.size(60, 50);
     }
     //reset map for phone
@@ -2440,10 +2863,14 @@ function resetMapSize() {
       mapID.style("bottom", "50px");
       mapID.style("right", "0px");
       mapID.style("width", `${phoneWidth}px`);
+
       confirmButton.position(0, windowHeight - 50);
       hideMapButton.position(windowWidth - 60, windowHeight - 50);
       refreshButton.position(windowWidth - 120, windowHeight - 50);
-      confirmButton.size(windowWidth - 120, 50);
+      showIslandsButton.position(windowWidth - 180, windowHeight - 50);
+
+
+      confirmButton.size(windowWidth - 180, 50);
     }
   }
 }
@@ -2482,6 +2909,7 @@ function soundUpdate() {
   numberRacking.setVolume(SFXVolume);
   goodGuessSound.setVolume(SFXVolume);
   terribleGuess.setVolume(SFXVolume);
+  clickSound.setVolume(SFXVolume);
 }
 
 //chooses a random song when one ends
@@ -2521,7 +2949,7 @@ function gridShapeChanged() {
 //show and hide the grid drop down button
 function showGridDrop() {
   if (gridMode) {
-    gridShapeDropdown.style("z-index", "21");
+    gridShapeDropdown.style("z-index", "25");
   }
   else {
     gridShapeDropdown.style("z-index", "-1");
@@ -2749,22 +3177,21 @@ function hideUnderShield() {
     showRankButton.style("z-index", "-1");
     showGridButton.style("z-index", "-1");
     DataShowButton.style("z-index", "-1");
-    gridModeButton.style("z-index", "-1");
     showSettingsButton.style("z-index", "-1");
-    hintButton.style("z-index", "-1");
     showLearnButton.style("z-index", "-1");
     mapsButton.style("z-index", "-1");
+    openPinsButton.style("z-index", "-1");
   }
+
   else {
     hideUnderButton.html("Hide");
     showRankButton.style("z-index", "2");
     showGridButton.style("z-index", "2");
     DataShowButton.style("z-index", "2");
-    gridModeButton.style("z-index", "2");
     showSettingsButton.style("z-index", "2");
-    hintButton.style("z-index", "2");
     showLearnButton.style("z-index", "2");
     mapsButton.style("z-index", "2");
+    openPinsButton.style("z-index", "2");
   }
 }
 
@@ -2950,24 +3377,77 @@ function showButtonLock() {
     showGridButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+
     nameType.attribute("disabled", "");
   }
   else if (dataShow) {
     showGridButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else if (showingRankInfo) {
     showGridButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else if (showGrid) {
     showRankButton.attribute("disabled", "");
     DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showLearn) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showingMaps) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+  }
+  else if (showingSettings) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
+  }
+  else if (showingPins) {
+    showGridButton.attribute("disabled", "");
+    showRankButton.attribute("disabled", "");
+    DataShowButton.attribute("disabled", "");
+    showLearnButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+    mapsButton.attribute("disabled", "");
   }
   else {
     showGridButton.removeAttribute("disabled");
     showRankButton.removeAttribute("disabled");
     DataShowButton.removeAttribute("disabled");
+    showLearnButton.removeAttribute("disabled");
+    showSettingsButton.removeAttribute("disabled");
+    openPinsButton.removeAttribute("disabled");
+    mapsButton.removeAttribute("disabled");
   }
 }
 
@@ -3583,6 +4063,9 @@ function joinWait() {
   //join a party waiting room
   else if (!inParty) {
 
+    mapsDropDown.selected("World");
+    differentMap(allMaps["World"]);
+
     closeHint();
 
     //close the map
@@ -3970,8 +4453,8 @@ function joinParty() {
       }
       else {
         cover.html(`
-          Blur Mode <br>
-          <div style="color: ${lightRed};">Difficulty: 9/10</div>
+          Colour Blind Mode <br>
+          <div style="color: ${lightOrange};">Difficulty: 5/10</div>
           <br>
           <div style="color: ${playerCol};">Players: ${Object.keys(shared.blurPlayers).length}</div>
         `);
@@ -4085,9 +4568,15 @@ function lockStartJoin() {
     DataShowButton.attribute("disabled", "");
     gridModeButton.attribute("disabled", "");
     showLearnButton.attribute("disabled", "");
+    openPinsButton.attribute("disabled", "");
     showRankButton.attribute("disabled", "");
-    showSettingsButton.attribute("disabled", "");
     mapsButton.attribute("disabled", "");
+    showSettingsButton.attribute("disabled", "");
+
+    if (gridMode) {
+      showSettingsButton.removeAttribute("disabled");
+      gridModeButton.removeAttribute("disabled");
+    }
   }
 
   else {
@@ -4096,6 +4585,7 @@ function lockStartJoin() {
     DataShowButton.removeAttribute("disabled");
     gridModeButton.removeAttribute("disabled");
     showLearnButton.removeAttribute("disabled");
+    openPinsButton.removeAttribute("disabled");
     showRankButton.removeAttribute("disabled");
     showSettingsButton.removeAttribute("disabled");
     mapsButton.removeAttribute("disabled");
@@ -4105,9 +4595,8 @@ function lockStartJoin() {
 
 //this changes the ranks based on how the players best scores are
 function rankModify() {
-  if (bestSet >= 22500 && bestBlitz >= 21500 && bestNMPZ >= 21000 && bestBlink >= 20000 && bestBlur >= 15000 && gridMaxStreak >= 50) {
+  if (bestSet >= 22500 && bestBlitz >= 21500 && bestNMPZ >= 21000 && bestBlink >= 20000 && bestBlur >= 15000) {
     rank = "Inter-Dimensional";
-    currentPin = interP;
     currentShield = interS;
 
     nextBestSet = "22500";
@@ -4115,11 +4604,11 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
-    nextMaxStreak = "50";
+
+    rankLevel = 8;
   }
-  else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000 && gridMaxStreak >= 25) {
+  else if (bestSet >= 20000 && bestBlitz >= 19000 && bestNMPZ >= 18000 && bestBlink >= 17000 && bestBlur >= 10000) {
     rank = "Slime";
-    currentPin = slimeP;
     currentShield = slimeS;
 
     nextBestSet = "22500";
@@ -4127,11 +4616,11 @@ function rankModify() {
     nextBestNMPZ = "21000";
     nextBestBlink = "20000";
     nextBestBlur = "15000";
-    nextMaxStreak = "50";
+
+    rankLevel = 7;
   }
-  else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500 && gridMaxStreak >= 10) {
+  else if (bestSet >= 17500 && bestBlitz >= 15000 && bestNMPZ >= 12500) {
     rank = "Obsidian";
-    currentPin = obsidianP;
     currentShield = obsidianS;
 
     nextBestSet = "20000";
@@ -4139,11 +4628,11 @@ function rankModify() {
     nextBestNMPZ = "18000";
     nextBestBlink = "17000";
     nextBestBlur = "10000";
-    nextMaxStreak = "25";
+
+    rankLevel = 6;
   }
-  else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500 && gridMaxStreak >= 5) {
+  else if (bestSet >= 12500 && bestBlitz >= 10000 && bestNMPZ >= 7500) {
     rank = "Diamond";
-    currentPin = diamondP;
     currentShield = diamondS;
 
     nextBestSet = "17500";
@@ -4151,11 +4640,11 @@ function rankModify() {
     nextBestNMPZ = "12500";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "10";
+
+    rankLevel = 5;
   }
-  else if (bestSet >= 7500 && bestBlitz >= 5000 && gridMaxStreak >= 1) {
+  else if (bestSet >= 7500 && bestBlitz >= 5000) {
     rank = "Gold";
-    currentPin = goldP;
     currentShield = goldS;
 
     nextBestSet = "12500";
@@ -4163,11 +4652,11 @@ function rankModify() {
     nextBestNMPZ = "7500";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "5";
+
+    rankLevel = 4;
   }
   else if (bestSet >= 5000) {
     rank = "Silver";
-    currentPin = silverP;
     currentShield = silverS;
 
     nextBestSet = "7500";
@@ -4175,11 +4664,11 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "1";
+
+    rankLevel = 3;
   }
   else if (bestSet >= 2500) {
     rank = "Bronze";
-    currentPin = bronzeP;
     currentShield = bronzeS;
 
     nextBestSet = "5000";
@@ -4187,12 +4676,14 @@ function rankModify() {
     nextBestNMPZ = "0";
     nextBestBlink = "0";
     nextBestBlur = "0";
-    nextMaxStreak = "0";
+
+    rankLevel = 2;
   }
   else {
     rank = "Coal";
 
-    currentPin = coalP;
+    rankLevel = 1;
+
     currentShield = coalS;
   }
 
@@ -4202,8 +4693,6 @@ function rankModify() {
   let NMPZCol = "red";
   let blinkCol = "red";
   let blurCol = "red";
-
-  let gridMaxCol = "red";
 
   if (bestSet >= nextBestSet) {
     normCol = "green";
@@ -4220,9 +4709,7 @@ function rankModify() {
   if (bestBlur >= nextBestBlur) {
     blurCol = "green";
   }
-  if (gridMaxStreak >= nextMaxStreak) {
-    gridMaxCol = "green";
-  }
+
 
   //change rank info screen so they know the req
   showRankScreen.html(
@@ -4230,11 +4717,10 @@ function rankModify() {
     `<span style="color:black;"></span><br>` +
 
     `<span style="color:${normCol};">${"Normal: " + bestSet + "/" + nextBestSet}</span><br>` +
+    `<span style="color:${blurCol};">${"Color Blind: " + bestBlur + "/" + nextBestBlur}</span><br>` + 
     `<span style="color:${blitzCol};">${"Blitz: " + bestBlitz + "/" + nextBestBlitz}</span><br>` +
     `<span style="color:${NMPZCol};">${"NMPZ: " + bestNMPZ + "/" + nextBestNMPZ}</span><br>` +
-    `<span style="color:${blinkCol};">${"Blink: " + bestBlink + "/" + nextBestBlink}</span><br>` +
-    `<span style="color:${blurCol};">${"Blur: " + bestBlur + "/" + nextBestBlur}</span><br>` + 
-    `<span style="color:${gridMaxCol};">${"Grid Streak: " + gridMaxStreak + "/" + nextMaxStreak}</span>`
+    `<span style="color:${blinkCol};">${"Blink: " + bestBlink + "/" + nextBestBlink}</span><br>`
   );
 
 
@@ -4298,6 +4784,7 @@ function addmap(map) {
 }
 
 let xButOffset = 15;
+let spacingAmount = 60;
 
 function fixsizes() {
 
@@ -4316,6 +4803,7 @@ function fixsizes() {
   helpText.size(windowWidth / 2.5, windowHeight - bannerHeight);
   helpText.position(windowWidth / 3.7, windowHeight / 2 + bannerHeight);
 
+  
   mapFindType.position(10, 10);
   mapNameType.position(200, 10);
   mapsDropDown.position(10, 70);
@@ -4330,15 +4818,23 @@ function fixsizes() {
     left: windowWidth - 52,
     right: 17
   };
+  
+  let settingsPadding = windowWidth / 40;
+  autoMapCloseButton.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+  hintButton.position(windowWidth / 6.5 + settingsPadding + 60, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
+  gridModeButton.position(windowWidth / 6.5 + settingsPadding + 120, windowHeight / 2.25 - windowWidth / 8 + settingsPadding);
 
-  autoMapCloseButton.position(windowWidth / 2, windowHeight / 2);
+  musicSlider.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + 100);
+  SFXSlider.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + 150);
+
+  blinkTimeType.position(windowWidth / 6.5 + settingsPadding, windowHeight / 2.25 - windowWidth / 8 + settingsPadding + spacingAmount);
 
   //move the close button based on what is openned
   if (showingRankInfo) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 4 - xButOffset, windowHeight / 2 - windowWidth / 8 - xButOffset);
   }
-  else if (dataShow || showGrid || showingSettings) {
+  else if (dataShow || showGrid || showingSettings || showingPins) {
     XButton.style("z-index", "25");
     XButton.position(windowWidth / 6.5 - xButOffset, windowHeight / 2.25 - windowWidth / 8 - xButOffset);
   }
@@ -4402,11 +4898,13 @@ function fixsizes() {
   let holeY = windowHeight - 161;
   let holeRadius = 24;
 
-  //cut a hole in blur mode so that they can see the compass
+  // cut a hole in blur mode so that they can see the compass
   blurCover.style("mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
   blurCover.style("-webkit-mask-image", `radial-gradient(circle ${holeRadius}px at ${holeX}px ${holeY}px, transparent 0, transparent ${holeRadius}px, black ${holeRadius + 1}px)`);
   blurCover.style("mask-repeat", "no-repeat");
   blurCover.style("-webkit-mask-repeat", "no-repeat");
+
+  blurCover.style("filter", "grayscale(100%)");
 
   textsize = (windowWidth + windowHeight) / textSizeScreenDividor;
   banner.style("font-size", `${textsize}px`);
@@ -4430,11 +4928,10 @@ function fixsizes() {
   showRankButton.position(underShieldX, bannerHeight + shieldSize + 35);
   showGridButton.position(underShieldX, bannerHeight + shieldSize + 60);
   DataShowButton.position(underShieldX, bannerHeight + shieldSize + 85);
-  gridModeButton.position(underShieldX, bannerHeight + shieldSize + 110);
-  hintButton.position(underShieldX, bannerHeight + shieldSize + 135);
-  showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 160);
-  showLearnButton.position(underShieldX, bannerHeight + shieldSize + 185);
-  mapsButton.position(underShieldX, bannerHeight + shieldSize + 210);
+  openPinsButton.position(underShieldX, bannerHeight + shieldSize + 110);
+  showSettingsButton.position(underShieldX, bannerHeight + shieldSize + 135);
+  showLearnButton.position(underShieldX, bannerHeight + shieldSize + 160);
+  mapsButton.position(underShieldX, bannerHeight + shieldSize + 185);
 
   let lowervalue = windowHeight;
   if (windowHeight > windowWidth) {
@@ -4448,7 +4945,7 @@ function fixsizes() {
     hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 35);
   }
   else {
-    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 235);
+    hideUnderButton.position(underShieldX, bannerHeight + shieldSize + 210);
   }
 
   //change sizes of the rank info in relation to the screensizes
@@ -4464,6 +4961,18 @@ function fixsizes() {
   showGridScreen.style("padding-left", windowWidth / 40 + "px");
   showGridScreen.style("padding-top", windowWidth / 60 + "px");
 
+  pinsScreen.size(windowWidth / 1.5, windowWidth / 3.25);
+  pinsScreen.position(windowWidth / 6.5, windowHeight / 2.25 - windowWidth / 8);
+  pinsScreen.style("font-size", windowWidth / 69 + "px");
+  pinsScreen.style("padding-left", windowWidth / 40 + "px");
+  pinsScreen.style("padding-top", windowWidth / 60 + "px");
+
+  pinsDropDown.position(windowWidth / 6.5 + 30, windowHeight / 2.25 - windowWidth / 8 + 10);
+  pinsEquip.position(windowWidth / 6.5 + 190, windowHeight / 2.25 - windowWidth / 8 + 10);
+
+  pinsTextHolder.size(windowWidth / 4, windowHeight / 2);
+  pinsTextHolder.position(windowWidth / 3.2, windowHeight / 2);
+
   LearnScreen.size(windowWidth, windowHeight);
   LearnScreen.position(windowWidth / 2, windowHeight / 2);
   LearnScreen.style("font-size", windowWidth / 69 + "px");
@@ -4477,6 +4986,9 @@ function fixsizes() {
 
   geoTechPic.position(windowWidth - windowWidth / 4, windowHeight / 2);
   geoTechPic.size(windowWidth / geoPicX, windowWidth / geoPicY);
+
+  pinPicture.position(windowWidth / 1.5, windowHeight / 2);
+  pinPicture.size(windowWidth / 4, windowWidth / 4);
 
   //tech button pos
   openHintButton.position(10, 10);
@@ -4558,11 +5070,11 @@ function displayGrid() {
     showGridScreen.style("z-index", "20");
     showGridScreen.style("opacity", "1");
     gridMapID.show();
-    showGridDropDown.style("z-index", "21");
+    showGridDropDown.style("z-index", "25");
     showGridDropDown.style("opacity", "1");
-    heatMapDropDown.style("z-index", "21");
+    heatMapDropDown.style("z-index", "25");
     heatMapDropDown.style("opacity", "1");
-    heatMapType.style("z-index", "21");
+    heatMapType.style("z-index", "25");
     heatMapType.style("opacity", "1");
     showGrid = true;
   }
@@ -4591,10 +5103,10 @@ function showRank() {
     showRankScreen.style("z-index", "20");
     showRankScreen.style("opacity", "1");
 
-    allPinsDisplay.style("z-index", "21");
+    allPinsDisplay.style("z-index", "25");
     allPinsDisplay.style("opacity", "1");
 
-    allShieldsDisplay.style("z-index", "21");
+    allShieldsDisplay.style("z-index", "25");
     allShieldsDisplay.style("opacity", "1");
     showingRankInfo = true;
   }
@@ -4738,6 +5250,9 @@ function startSet() {
 
   //this runs to start a set
   if (!setActive) {
+    mapsDropDown.selected("World");
+    differentMap(allMaps["World"]);
+
     setActive = true;
     curretnRoundNumber = 1;
 
