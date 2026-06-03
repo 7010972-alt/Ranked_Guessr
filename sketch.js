@@ -373,6 +373,7 @@ let maxSizeDelay = 5;
 let changeDelay = 25;
 
 //game variables
+
 let geoPicX = 2.5;
 let geoPicY = 2.5;
 
@@ -666,6 +667,13 @@ let settingsScreen;
 let showSettingsButton;
 let showingSettings = false;
 
+//help tab
+let helpScreen;
+let showHelpButton;
+let showingHelp = false;
+let helpDropDown;
+let helpText;
+
 //p5 party local variables
 let partyPoints = 0;
 let inParty = false;
@@ -945,7 +953,7 @@ function setup() {
   banner = createDiv(bannerText);
   banner.style("background", "rgb(154, 255, 120)");
   banner.style("color", "white");
-  banner.style("z-index", "20");
+  banner.style("z-index", "1");
 
   banner.style("display", "flex");
   banner.style("padding-right", "2vw");
@@ -1027,7 +1035,7 @@ function setup() {
   startSetButton = createButton("Start Set");
   startSetButton.size(80, 30);
   startSetButton.style("position", "absolute");
-  startSetButton.style("z-index", "21");
+  startSetButton.style("z-index", "2");
 
   startSetButton.mousePressed(startSet);
 
@@ -1051,7 +1059,7 @@ function setup() {
   joinButton = createButton("Join Party");
   joinButton.size(80, 30);
   joinButton.style("position", "absolute");
-  joinButton.style("z-index", "21");
+  joinButton.style("z-index", "2");
 
   joinButton.mousePressed(joinWait);
 
@@ -1075,7 +1083,7 @@ function setup() {
   //dropdown menu to select set type
   setTypeDropDown = createSelect();
   setTypeDropDown.size(160, 20);
-  setTypeDropDown.style("z-index", "21");
+  setTypeDropDown.style("z-index", "2");
   setTypeDropDown.option("Normal", "normal");
   setTypeDropDown.option("Blitz", "blitz");
   setTypeDropDown.option("NMPZ", "NMPZ");
@@ -1114,6 +1122,22 @@ function setup() {
   heatMapDropDown.option("Guessed", "guessed");
 
   heatMapDropDown.changed(findHeatValues);
+
+  //dropdown menu to select what type of heat map you want to see
+  helpDropDown = createSelect();
+  helpDropDown.style("z-index", "-1");
+
+  helpDropDown.style("text-align", "center");
+  helpDropDown.style("text-align-last", "center");
+  helpDropDown.style("font-weight", "bold");
+
+  helpDropDown.option("Main");
+  helpDropDown.option("Ranks and Sets");
+  helpDropDown.option("Parties");
+  helpDropDown.option("Custom Maps");
+  helpDropDown.option("Learn");
+
+  helpDropDown.changed(updateHelpText);
 
   //dropdown menu that holds all of the countries Hints
   hintsDropDown = createSelect();
@@ -1251,6 +1275,16 @@ function setup() {
   showLearnButton.style("z-index", "-1");
 
   showLearnButton.mousePressed(displayLearn);
+
+  //button to open the help screen
+  showHelpButton = createButton("");
+  showHelpButton.style('background', 'transparent');
+  showHelpButton.style('border', 'none');
+  showHelpButton.style("position", "absolute");
+  showHelpButton.style("z-index", "25");
+  showHelpButton.html('<img src="Assets/question.png" width="40" height="40">');
+
+  showHelpButton.mousePressed(displayHelp);
 
   //button to open the Maps Menu
   mapsButton = createButton("Maps");
@@ -1445,6 +1479,20 @@ function setup() {
   LearnScreen.style("border", "4px solid black");
   LearnScreen.style("transform", "translate(-50%, -50%)");
 
+  //the help screen
+  helpScreen = createDiv();
+  helpScreen.style("background", "rgb(154, 255, 120)");
+  helpScreen.style("z-index", "-1");
+  helpScreen.style("opacity", "0");
+
+  helpScreen.style("justify-content", "left");
+  helpScreen.style("align-items", "center");
+  helpScreen.style("font-weight", "bold");
+
+  helpScreen.style("color", "black");
+  helpScreen.style("border", "4px solid black");
+  helpScreen.style("transform", "translate(-50%, -50%)");
+
   //holds the descriptions of the hints
   hintTextHolder = createDiv();
   hintTextHolder.style("background", "rgb(154, 255, 120)");
@@ -1461,6 +1509,23 @@ function setup() {
   hintTextHolder.style("white-space", "normal");
   hintTextHolder.style("word-wrap", "break-word");
   hintTextHolder.style("overflow-wrap", "break-word");
+
+  //help Text Holder
+  helpText = createDiv();
+  helpText.style("background", "rgb(154, 255, 120)");
+  helpText.style("z-index", "-1");
+  helpText.style("opacity", "0");
+  helpText.style("transform", "translate(-50%, -50%)");
+
+  helpText.style("justify-content", "center");
+  helpText.style("align-items", "center");
+  helpText.style("font-weight", "bold");
+
+  helpText.style("color", "black");
+
+  helpText.style("white-space", "normal");
+  helpText.style("word-wrap", "break-word");
+  helpText.style("overflow-wrap", "break-word");
 
   //images
   fourK = createImg("Assets/4K.png", "4K");
@@ -1581,6 +1646,72 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+}
+
+//updates the text for the next help menu
+function updateHelpText() {
+
+  if (helpDropDown.value() === "Main") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">A Guessing game with:</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Different guessing modes</span><br>
+      <span style="font-size: ${smallTextFont};">8 achievable ranks</span><br>
+      <span style="font-size: ${smallTextFont};">Custom Maps</span><br>
+      <span style="font-size: ${smallTextFont};">Muiltiplayer</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Ranks and Sets") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Sets</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">A group of 5 guesses in a specific gamemode</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Select a mode in the drop down (top left)</span><br>
+      <span style="font-size: ${smallTextFont};">Click Start Set</span><br>
+      <br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Ranks</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Ranks are achieved by hitting set score milestones</span><br>
+      <span style="font-size: ${smallTextFont};">Ranks have a custom shield icon and a pin</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">press show (left side under shield Icon)</span><br>
+      <span style="font-size: ${smallTextFont};">Click Rank to view next milestones</span><br>
+    `);
+  }
+
+  else {
+    helpText.html(`
+    `);
+  }
+}
+
+function displayHelp() {
+  showingHelp = !showingHelp;
+
+  if (showingHelp) {
+    helpScreen.style("z-index", "20");
+    helpScreen.style("opacity", "1");
+
+    helpDropDown.style("z-index", "25");
+    helpDropDown.style("opacity", "1");
+    helpText.style("z-index", "25");
+    helpText.style("opacity", "1");
+  }
+  else {
+    closeHelp();
+  }
+}
+
+function closeHelp() {
+  helpScreen.style("z-index", "-1");
+  helpScreen.style("opacity", "0");
+  helpDropDown.style("z-index", "-1");
+  helpDropDown.style("opacity", "0");
+  helpText.style("z-index", "-1");
+  helpText.style("opacity", "0");
 }
 
 function mapTypeSwitch() {
@@ -4169,6 +4300,22 @@ function addmap(map) {
 let xButOffset = 15;
 
 function fixsizes() {
+
+  helpScreen.size(windowWidth, windowHeight);
+  helpScreen.position(windowWidth / 2, windowHeight / 2);
+  helpScreen.style("font-size", windowWidth / 69 + "px");
+  helpScreen.style("padding-left", windowWidth / 40 + "px");
+  helpScreen.style("padding-top", windowWidth / 60 + "px");
+
+  showHelpButton.position(windowWidth - 62, bannerHeight + 10);
+
+  helpDropDown.position(0, 0);
+  helpDropDown.size(windowWidth, bannerHeight);
+  helpDropDown.style("font-size", largeTextFont);
+
+  helpText.size(windowWidth / 2.5, windowHeight - bannerHeight);
+  helpText.position(windowWidth / 3.7, windowHeight / 2 + bannerHeight);
+
   mapFindType.position(10, 10);
   mapNameType.position(200, 10);
   mapsDropDown.position(10, 70);
