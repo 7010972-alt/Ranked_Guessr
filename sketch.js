@@ -59,6 +59,9 @@ let particleImage;
 let redParticleImage;
 let testIMG;
 
+let arrow;
+let helpIcon;
+
 //markers
 let answermarker;
 let marker;
@@ -124,6 +127,9 @@ function preload() {
   purpleanswer = "Assets/NMPZ_answer.png";
   whiteanswer = "Assets/Blink_answer.png";
   blackanswer = "Assets/Blur_answer.png";
+
+  arrow = "Assets/Green Triangle.png";
+  helpIcon = "Assets/question.png"
 
   answerIcon = L.icon({
     iconUrl: greenAnswer,
@@ -376,6 +382,7 @@ let changeDelay = 25;
 //Z Index Constants
 const FIRST_LAYER = 1;
 const SECOND_LAYER = 2;
+const SPECIAL_LAYER = 3;
 const THIRD_LAYER = 20;
 const FOURTH_LAYER = 25;
 
@@ -388,6 +395,15 @@ let islandsList = [
 ];
 
 //game variables
+let arrowRange = 15;
+
+let arrowSpeed = 1;
+const ORIGINAL_ARROW_OFFSET = 45;
+let arrowOffset = ORIGINAL_ARROW_OFFSET;
+const ORIGINAL_ARROW_SPEED = 0.3;
+
+let tutPressed = false;
+
 let islandPins = [];
 
 let showingIslands = false;
@@ -571,6 +587,8 @@ let optyheight = bannerHeight / 2;
 let optxwidthDivisor = 25;
 
 let switching = true;
+
+let triangleClicker;
 
 //UI Buttons
 let confirmButton;
@@ -840,6 +858,12 @@ function setup() {
   moveLayer(rankIcon, SECOND_LAYER);
   rankIcon.style("opacity", "2");
 
+  triangleClicker = createImg(arrow, "rank display");
+  triangleClicker.size(50, 50);
+  moveLayer(triangleClicker, SECOND_LAYER);
+  triangleClicker.style("opacity", "2");
+  triangleClicker.style("rotate", "45deg");
+
   allPinsDisplay = createImg(allPins, "all the pins");
   allPinsDisplay.style("z-index", "-1");
   allPinsDisplay.style("opacity", "0");
@@ -1006,7 +1030,7 @@ function setup() {
   banner = createDiv(bannerText);
   banner.style("background", "rgb(154, 255, 120)");
   banner.style("color", "white");
-  banner.style("z-index", "1");
+  banner.style("z-index", "2");
 
   banner.style("display", "flex");
   banner.style("padding-right", "2vw");
@@ -1096,8 +1120,7 @@ function setup() {
   startSetButton = createButton("Start Set");
   startSetButton.size(80, 30);
   startSetButton.style("position", "absolute");
-  startSetButton.style("z-index", "2");
-  startSetButton.style("z-index", "25");
+  startSetButton.style("z-index", "3");
 
   startSetButton.mousePressed(startSet);
 
@@ -1121,8 +1144,7 @@ function setup() {
   joinButton = createButton("Join Party");
   joinButton.size(80, 30);
   joinButton.style("position", "absolute");
-  joinButton.style("z-index", "2");
-  joinButton.style("z-index", "25");
+  joinButton.style("z-index", "3");
 
   joinButton.mousePressed(joinWait);
 
@@ -1146,8 +1168,7 @@ function setup() {
   //dropdown menu to select set type
   setTypeDropDown = createSelect();
   setTypeDropDown.size(160, 20);
-  setTypeDropDown.style("z-index", "2");
-  setTypeDropDown.style("z-index", "25");
+  setTypeDropDown.style("z-index", "3");
   setTypeDropDown.option("Normal", "normal");
   setTypeDropDown.option("Colour Blind", "blur");
   setTypeDropDown.option("Blitz", "blitz");
@@ -1732,16 +1753,16 @@ function setup() {
   if (localStorage.getItem("name") !== null) {
     nameType.value(localStorage.getItem("name"));
   }
+  if (localStorage.getItem("TUT") !== null) {
+    tutPressed = localStorage.getItem("TUT") === "true";
+  }
 
   changeMapSize();
-
   resetMapSize();
-
   addAllGeoHints();
-
   includeAllCountries();
-
   includeAllLearn();
+  checkArrow();
 }
 
 function draw() {
@@ -1779,6 +1800,24 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
+  animateArrow();
+}
+
+//remove the arrow if the player has already seen the tutorial
+function checkArrow() {
+  if (tutPressed) {
+    triangleClicker.style("z-index", "-1");
+    triangleClicker.style("opacity", "0");
+  }
+}
+
+//moves the arrow
+function animateArrow() {
+  if (arrowOffset > ORIGINAL_ARROW_OFFSET + arrowRange || arrowOffset < ORIGINAL_ARROW_OFFSET - arrowRange) {
+    arrowSpeed = -arrowSpeed;
+  }
+
+  arrowOffset += ORIGINAL_ARROW_SPEED * arrowSpeed;
 }
 
 //locks buttons while in set or party
@@ -1855,6 +1894,7 @@ function updateHelpText() {
       <br>
       <span style="font-size: ${smallTextFont};">Once one player has guessed, all others will only have 10s left.</span><br>
       <span style="font-size: ${smallTextFont};">Need atleast 2 players in the waiting room to start a party.</span><br>
+      <span style="font-size: ${smallTextFont};">Set name before joining (top left under shield).</span><br>
       <span style="font-size: ${smallTextFont};">Optional buff with the addition of "Hint Mode" in the waiting room.</span><br>
       <br>
       <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
@@ -1910,6 +1950,11 @@ function displayHelp() {
   showingHelp = !showingHelp;
 
   if (showingHelp) {
+    tutPressed = true;
+    saveProgress();
+    triangleClicker.style("z-index", "-1");
+    triangleClicker.style("opacity", "0");
+
     closeAll();
 
     updateHelpText();
@@ -4889,6 +4934,7 @@ function fixsizes() {
   helpText.size(windowWidth / 1.5, windowHeight - bannerHeight);
   helpText.position(windowWidth / 2.5, windowHeight / 2 + bannerHeight);
 
+  triangleClicker.position(windowWidth - 62 - arrowOffset, bannerHeight + 10 + arrowOffset);
   
   mapFindType.position(10, 10);
   mapNameType.position(200, 10);
@@ -6369,6 +6415,7 @@ function saveProgress() {
 
   //other
   localStorage.setItem("name", nameType.value());
+  localStorage.setItem("TUT", tutPressed);
 
   //maps
   localStorage.setItem("custommaps", JSON.stringify(savedMaps));
