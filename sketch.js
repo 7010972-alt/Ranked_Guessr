@@ -751,7 +751,7 @@ window.addEventListener("beforeunload", removePlayerFromLists);
 
 document.addEventListener("visibilitychange", function() {
   if (document.visibilityState === "visible") {
-    if (!afterViewing && (setActive || inParty)) {
+    if (!afterViewing && (inParty)) {
       location.reload();
     }
     else {
@@ -1218,10 +1218,11 @@ function setup() {
   helpDropDown.style("font-weight", "bold");
 
   helpDropDown.option("Main");
-  helpDropDown.option("Ranks and Sets");
-  helpDropDown.option("Parties");
-  helpDropDown.option("Custom Maps");
+  helpDropDown.option("Sets");
+  helpDropDown.option("Ranks");
+  helpDropDown.option("Muiltiplayer");
   helpDropDown.option("Learn");
+  helpDropDown.option("Maps");
 
   helpDropDown.changed(updateHelpText);
 
@@ -1397,10 +1398,10 @@ function setup() {
 
   //button to enter quiz mode
   quizModeButton = createButton("Quiz");
-  quizModeButton.size(shieldSize, 40);
+  quizModeButton.size(80, 50);
   quizModeButton.style("position", "absolute");
   quizModeButton.style("z-index", "-1");
-  quizModeButton.style("background-color", "green");
+  quizModeButton.style("background-color", "rgb(198, 255, 175)");
 
   quizModeButton.mousePressed(enterQuiz);
 
@@ -1778,21 +1779,160 @@ function draw() {
   resetGuessStatus();
   allHaveGuessed();
   moveAll();
-  changeSetButton();
 }
 
-//changes the button of the start set button prompting a press
-function changeSetButton() {
-  if (setTypeDropDown.value() !== "normal") {
-    startSetButton.style("background-color", "yellow");
-    joinButton.style("background-color", "yellow");
-    setTypeDropDown.style("background-color", "rgb(198, 255, 175)");
+//locks buttons while in set or party
+function lockButtons() {
+  if (!buttonsHidden) {
+    hideUnderShield();
+  }
+  nameType.style("background-color", "red");
+
+
+  hideUnderButton.style("background-color", "red");
+  hideUnderButton.attribute("disabled", "");
+}
+
+//runs when a set or party ends
+function releaseButtons() {
+  nameType.style("background-color", "rgb(198, 255, 175)");
+  hideUnderButton.style("background-color", "yellow");
+  hideUnderButton.removeAttribute("disabled");
+}
+
+//updates the text for the next help menu
+function updateHelpText() {
+
+  if (helpDropDown.value() === "Main") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Guess</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">1. Look around for clues</span><br>
+      <span style="font-size: ${smallTextFont};">2. open mini map and place your pin</span><br>
+      <span style="font-size: ${smallTextFont};">3. press "Confirm" or space bar</span><br>
+      <span style="font-size: ${smallTextFont};">4. press "Confirm" or space bar again to continue</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Features</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Click the top "Main" dropdown menu to learn about other features.</span><br>
+      <span style="font-size: ${smallTextFont};">I recommend viewing atleast down to "Ranks" before playing.</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Ranks") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Ranks</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">higher ranks are achieved by hitting score milestones in different gamemodes.</span><br>
+      <span style="font-size: ${smallTextFont};">Ranks also have a custom shield icon and a pin.</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">press "Show" (left side under shield Icon)</span><br>
+      <span style="font-size: ${smallTextFont};">Click "Rank Info" to view milestones.</span><br>
+      <span style="font-size: ${smallTextFont};">Click "Pins" to view all pins.</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Sets") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Sets</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">A group of 5 guesses in a specific gamemode. Final points is the sum of all guesses.</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Select a mode in the "Normal" drop down (top left)</span><br>
+      <span style="font-size: ${smallTextFont};">Click the "Start Set" button</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Muiltiplayer") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Muiltiplayer</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">A group of 5 guesses in a specific gamemode with others shown the same location.</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Once one player has guessed, all others will only have 10s left.</span><br>
+      <span style="font-size: ${smallTextFont};">Need atleast 2 players in the waiting room to start a party.</span><br>
+      <span style="font-size: ${smallTextFont};">Optional buff with the addition of "Hint Mode" in the waiting room.</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Select a mode in the "Normal" drop down (top left)</span><br>
+      <span style="font-size: ${smallTextFont};">Click the "Join Party" button</span><br>
+      <span style="font-size: ${smallTextFont};">wait for all players then click the "Start Party" button</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">!!!Hiding the tab will result in an instant kick from the current party!!!</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Maps") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Maps</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Different Maps can be played instead of the entire world.</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Sets and Parties will always be on the World map.</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">press "Show" (left side under shield Icon)</span><br>
+      <span style="font-size: ${smallTextFont};">Click "Maps".</span><br>
+      <span style="font-size: ${smallTextFont};">Click "Basic" dropdown to look at the 3 different types of maps.</span><br>
+    `);
+  }
+
+  else if (helpDropDown.value() === "Learn") {
+    helpText.html(`
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">Learn</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Learn how to be better at guessing.</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">Full beginners guide introduction to geoguessr.</span><br>
+      <span style="font-size: ${smallTextFont};">Geohints for each country.</span><br>
+      <span style="font-size: ${smallTextFont};">Quiz feature for geohints.</span><br>
+      <br>
+      <span style="font-size: ${largeTextFont}; font-weight: bold;">How to Access</span><br>
+      <br>
+      <span style="font-size: ${smallTextFont};">press "Show" (left side under shield Icon)</span><br>
+      <span style="font-size: ${smallTextFont};">Click "Learn".</span><br>
+    `);
+  }
+
+  else {
+    helpText.html(`
+    `);
+  }
+}
+
+function displayHelp() {
+  showingHelp = !showingHelp;
+
+  if (showingHelp) {
+    closeAll();
+
+    updateHelpText();
+    helpScreen.style("z-index", "20");
+    helpScreen.style("opacity", "1");
+
+    helpDropDown.style("z-index", "25");
+    helpDropDown.style("opacity", "1");
+    helpText.style("z-index", "25");
+    helpText.style("opacity", "1");
   }
   else {
-    startSetButton.style("background-color", "rgb(198, 255, 175)");
-    setTypeDropDown.style("background-color", "yellow");
-    joinButton.style("background-color", "rgb(198, 255, 175)");
+    closeHelp();
   }
+}
+
+function closeHelp() {
+  helpScreen.style("z-index", "-1");
+  helpScreen.style("opacity", "0");
+  helpDropDown.style("z-index", "-1");
+  helpDropDown.style("opacity", "0");
+  helpText.style("z-index", "-1");
+  helpText.style("opacity", "0");
 }
 
 function IslandShow() {
@@ -2009,72 +2149,6 @@ function chnagedBlinkTime() {
   }
 
   visibleTime = newtime;
-}
-
-//updates the text for the next help menu
-function updateHelpText() {
-
-  if (helpDropDown.value() === "Main") {
-    helpText.html(`
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">A Guessing game with:</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">Different guessing modes</span><br>
-      <span style="font-size: ${smallTextFont};">8 achievable ranks</span><br>
-      <span style="font-size: ${smallTextFont};">Custom Maps</span><br>
-      <span style="font-size: ${smallTextFont};">Muiltiplayer</span><br>
-    `);
-  }
-
-  else if (helpDropDown.value() === "Ranks and Sets") {
-    helpText.html(`
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">Sets</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">A group of 5 guesses in a specific gamemode</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">Select a mode in the drop down (top left)</span><br>
-      <span style="font-size: ${smallTextFont};">Click Start Set</span><br>
-      <br>
-      <br>
-      <span style="font-size: ${largeTextFont}; font-weight: bold;">Ranks</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">Ranks are achieved by hitting set score milestones</span><br>
-      <span style="font-size: ${smallTextFont};">Ranks have a custom shield icon and a pin</span><br>
-      <br>
-      <span style="font-size: ${smallTextFont};">press show (left side under shield Icon)</span><br>
-      <span style="font-size: ${smallTextFont};">Click Rank to view next milestones</span><br>
-    `);
-  }
-
-  else {
-    helpText.html(`
-    `);
-  }
-}
-
-function displayHelp() {
-  showingHelp = !showingHelp;
-
-  if (showingHelp) {
-    helpScreen.style("z-index", "20");
-    helpScreen.style("opacity", "1");
-
-    helpDropDown.style("z-index", "25");
-    helpDropDown.style("opacity", "1");
-    helpText.style("z-index", "25");
-    helpText.style("opacity", "1");
-  }
-  else {
-    closeHelp();
-  }
-}
-
-function closeHelp() {
-  helpScreen.style("z-index", "-1");
-  helpScreen.style("opacity", "0");
-  helpDropDown.style("z-index", "-1");
-  helpDropDown.style("opacity", "0");
-  helpText.style("z-index", "-1");
-  helpText.style("opacity", "0");
 }
 
 function mapTypeSwitch() {
@@ -2482,7 +2556,7 @@ function enterQuiz() {
     covering= true;
   }
   else {
-    quizModeButton.style("background-color", "green");
+    quizModeButton.style("background-color", "rgb(198, 255, 175)");
     quizModeButton.html("Quiz");
     quizImage.style("z-index", "-1");
     quizModeButton.style("z-index", "-1");
@@ -2539,8 +2613,8 @@ function currentHintDisplay() {
         hintTextHolder.html(`
           <span style="font-size: ${largeTextFont}; font-weight: bold;">GeoTech Library</span><br>
           <br>
-          <span style="font-size: ${smallTextFont};">Beginner Guide in next page</span><br>
-          <span style="font-size: ${smallTextFont};">(Next button in bottom right)</span><br>
+          <span style="font-size: ${smallTextFont};">Beginner Guide in drop down (top left)</span><br>
+          <span style="font-size: ${smallTextFont};"> or (Next button in bottom right)</span><br>
           <br>
 
           <span style="font-size: ${largeTextFont}; font-weight: bold;">Country Specific Tech</span><br>
@@ -2548,6 +2622,13 @@ function currentHintDisplay() {
           <span style="font-size: ${smallTextFont};">1. Click on a Country</span><br>
           <span style="font-size: ${smallTextFont};">2. Click view tech (if green)</span><br>
           <span style="font-size: ${smallTextFont};">3. Choose Tech from the Dropdown</span><br>
+          <br>
+
+          <span style="font-size: ${largeTextFont}; font-weight: bold;">Quiz</span><br>
+          <br>
+          <span style="font-size: ${smallTextFont};">shows an EX geohint</span><br>
+          <span style="font-size: ${smallTextFont};">select country and confirm</span><br>
+          <span style="font-size: ${smallTextFont};">"Quiz" button (top right)</span><br>
           <br>
 
           <span style="font-size: ${largeTextFont}; font-weight: bold;">Tech Types</span><br>
@@ -3880,6 +3961,8 @@ function resetLocals() {
   timeLeft = 0;
   preChangeClickedLength = 0;
 
+  releaseButtons();
+
   for (let item of displayMarkers) {
     item.remove();
   }
@@ -4040,6 +4123,7 @@ function joinWait() {
 
   //leave the set
   if (setActive) {
+    releaseButtons();
     setActive = false;
     curretnRoundNumber = 1;
     totalSetPoints = 0;
@@ -4062,6 +4146,8 @@ function joinWait() {
 
   //join a party waiting room
   else if (!inParty) {
+
+    lockButtons();
 
     mapsDropDown.selected("World");
     differentMap(allMaps["World"]);
@@ -4800,8 +4886,8 @@ function fixsizes() {
   helpDropDown.size(windowWidth, bannerHeight);
   helpDropDown.style("font-size", largeTextFont);
 
-  helpText.size(windowWidth / 2.5, windowHeight - bannerHeight);
-  helpText.position(windowWidth / 3.7, windowHeight / 2 + bannerHeight);
+  helpText.size(windowWidth / 1.5, windowHeight - bannerHeight);
+  helpText.position(windowWidth / 2.5, windowHeight / 2 + bannerHeight);
 
   
   mapFindType.position(10, 10);
@@ -4919,7 +5005,7 @@ function fixsizes() {
 
   nameType.size(72, 20);
 
-  quizModeButton.position(windowWidth - 100, bannerHeight + 20);
+  quizModeButton.position(windowWidth - 90, bannerHeight + 10);
 
   let underShieldX = 9;
 
@@ -5250,6 +5336,9 @@ function startSet() {
 
   //this runs to start a set
   if (!setActive) {
+
+    lockButtons();
+
     mapsDropDown.selected("World");
     differentMap(allMaps["World"]);
 
@@ -6121,6 +6210,7 @@ function afterGuess() {
         }
   
         setActive = false;
+        releaseButtons();
         curretnRoundNumber = 1;
         setLocations = [];
         setClickedPoints = [];
