@@ -706,6 +706,8 @@ let showLearn = false;
 let LearnScreen;
 let hintTextHolder;
 
+let muiltTextHolder;
+
 let griddedMap;
 let gridMapID;
 
@@ -1648,6 +1650,23 @@ function setup() {
   hintTextHolder.style("word-wrap", "break-word");
   hintTextHolder.style("overflow-wrap", "break-word");
 
+  //holds the descriptions of the hints
+  muiltTextHolder = createDiv();
+  muiltTextHolder.style("background", "rgb(154, 255, 120)");
+  muiltTextHolder.style("z-index", "25");
+  muiltTextHolder.style("opacity", "1");
+  muiltTextHolder.style("transform", "translate(-50%, -50%)");
+
+  muiltTextHolder.style("justify-content", "center");
+  muiltTextHolder.style("align-items", "center");
+  muiltTextHolder.style("font-weight", "bold");
+
+  muiltTextHolder.style("color", "black");
+
+  muiltTextHolder.style("white-space", "normal");
+  muiltTextHolder.style("word-wrap", "break-word");
+  muiltTextHolder.style("overflow-wrap", "break-word");
+
   //help Text Holder
   helpText = createDiv();
   helpText.style("background", "rgb(154, 255, 120)");
@@ -1801,6 +1820,19 @@ function draw() {
   allHaveGuessed();
   moveAll();
   animateArrow();
+  showBoard();
+}
+
+//shows the bord when you are in a party
+function showBoard() {
+  if (inParty && endScreen) {
+    muiltTextHolder.style("z-index", "25");
+    muiltTextHolder.style("opacity", "1");
+  }
+  else {
+    muiltTextHolder.style("z-index", "-1");
+    muiltTextHolder.style("opacity", "0");
+  }
 }
 
 //remove the arrow if the player has already seen the tutorial
@@ -3861,6 +3893,8 @@ function showAllMarks(marks, mapcoords) {
   }
   displayMarkers = [];
 
+  let allGuesses = [];
+
   //go through each marker and show it with stats
   for (let info of Object.values(marks)) {
 
@@ -3876,6 +3910,8 @@ function showAllMarks(marks, mapcoords) {
     if (addPoints > highestGuess) {
       highestGuess = addPoints;
     }
+
+    allGuesses.push([info.name, addPoints + info.points]);
 
     let lineCol = "black";
     if (distance <= ultraDis) {
@@ -3933,12 +3969,65 @@ function showAllMarks(marks, mapcoords) {
     }).openPopup();
   }
 
+  let scoreList = [];
+  for (let info of allGuesses) {
+    scoreList.push(info[1]);
+  }
+
+  let sortedScores = selectionSort(scoreList);
+  console.log(sortedScores)
+  
+  let leaderGuesses = [];
+
+  for (let score of sortedScores) {
+    for (let info of allGuesses) {
+      if (info[1] === score) {
+        leaderGuesses.push([info[0], info[1]]);
+      }
+    }
+  }
+
+  let boardText = [];
+
+  for (let i = allGuesses.length - 1; i >= 0; i--) {
+    boardText += `<span style="font-size: ${smallTextFont};">${leaderGuesses[i][0]}: ${leaderGuesses[i][1]}</span><br>`;
+  }
+
+  console.log(boardText);
+
+  muiltTextHolder.html(boardText);
+
   if (highestGuess >= 4800) {
     show48K();
   }
   else if (highestGuess >= 4000) {
     show4K();
   }
+}
+
+function selectionSort(aList) {
+  let swapLocation = aList.length - 1;
+  
+  while (swapLocation > 0) {
+    
+    //one pass
+    let biggestLocation = 0;
+    for (let i = 0; i <= swapLocation; i++) {
+      if (aList[i] > aList[biggestLocation]) {
+        biggestLocation = i;
+      }
+    }
+    
+    //swap
+    let temp = aList[swapLocation];
+    aList[swapLocation] = aList[biggestLocation];
+    aList[biggestLocation] = temp;
+    
+    //decrease swap location
+    swapLocation--;
+  }
+
+  return aList;
 }
 
 //will kick everyone out of a party when all rounds are up and reset local varibales
@@ -4191,6 +4280,8 @@ function joinWait() {
 
   //join a party waiting room
   else if (!inParty) {
+
+    muiltTextHolder.html("");
 
     lockButtons();
 
@@ -4918,6 +5009,9 @@ let xButOffset = 15;
 let spacingAmount = 60;
 
 function fixsizes() {
+  let muiltWidth = windowWidth / 8;
+  muiltTextHolder.size(muiltWidth, muiltWidth);
+  muiltTextHolder.position(windowWidth - muiltWidth / 1.3, bannerHeight + muiltWidth / 1.8);
 
   helpScreen.size(windowWidth, windowHeight);
   helpScreen.position(windowWidth / 2, windowHeight / 2);
