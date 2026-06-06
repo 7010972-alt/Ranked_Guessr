@@ -3990,6 +3990,7 @@ function showAllMarks(marks, mapcoords) {
   let boardText = [];
 
   for (let i = allGuesses.length - 1; i >= 0; i--) {
+    if (i >= allGuesses.length - 6)
     boardText += `<span style="font-size: ${smallTextFont};">${leaderGuesses[i][0]}: ${leaderGuesses[i][1]}</span><br>`;
   }
 
@@ -5286,8 +5287,6 @@ function fixsizes() {
 
   backButton.position(0, windowHeight - 30);
   nextButton.position(windowWidth - 80, windowHeight - 30);
-
-
 }
 
 //shows the grids
