@@ -385,6 +385,7 @@ const SECOND_LAYER = 2;
 const SPECIAL_LAYER = 3;
 const THIRD_LAYER = 20;
 const FOURTH_LAYER = 25;
+const FIFTH_LAYER = 30;
 
 let islandsList = [
   ["Christmas", [-10.4916425, 105.6468113]],
@@ -396,6 +397,8 @@ let islandsList = [
 
 //game variables
 let arrowRange = 15;
+
+let showingGen = false;
 
 let arrowSpeed = 1;
 const ORIGINAL_ARROW_OFFSET = 45;
@@ -1056,6 +1059,20 @@ function setup() {
   street.style("border", "0");
   street.position(0, 0);
   street.size(windowWidth, windowHeight);
+
+  //add the part that is going to have the street view on it
+  generatorIframe = createElement("iframe");
+  generatorIframe.attribute("allowfullscreen", "");
+  generatorIframe.style("border", "0");
+  generatorIframe.position(0, 0);
+  generatorIframe.size(windowWidth, windowHeight);
+  generatorIframe.style("z-index", "-1");
+  generatorIframe.style("opacity", "0");
+
+  generatorIframe.attribute(
+    "src",
+    `https://map-degen.vercel.app/`
+  );
 
   //button to confirm
   confirmButton = createButton("Confirm Guess");
@@ -1821,6 +1838,20 @@ function draw() {
   moveAll();
   animateArrow();
   showBoard();
+}
+
+//opens and closes the map generator
+function toggleGenerator() {
+  showingGen = !showingGen
+
+  if (showingGen) {
+    generatorIframe.style("z-index", "30");
+    generatorIframe.style("opacity", "1");
+  }
+  else {
+    generatorIframe.style("z-index", "-1");
+    generatorIframe.style("opacity", "0");
+  }
 }
 
 //shows the bord when you are in a party
