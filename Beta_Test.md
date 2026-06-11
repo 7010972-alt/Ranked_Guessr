@@ -13,9 +13,15 @@
 - SFX
 - Visuals
 
+
 ## Inexpierienced Coder
 
 ### Imporve
+- easier or more obvious ways to get to some features
 
 ### Liked
+- SFX
+- custom maps
+- muiltiplayer
+- pin Icons
 
