@@ -8,7 +8,7 @@
 //I used leaflet maps which somehow had everything I needed like getting corrdinates from where I clicked, and adding markers and many more
 //the Leaflet website was incredibly easy to follow aswell https://leafletjs.com/examples.html
 
-
+//a function has been added to allow you to pinpoint the answer and it is crAns()
 
 //set up p5 party
 let shared;
@@ -2011,6 +2011,7 @@ function updateHelpText() {
   }
 }
 
+//opens the help display
 function displayHelp() {
   showingHelp = !showingHelp;
 
@@ -2036,6 +2037,7 @@ function displayHelp() {
   }
 }
 
+//closes help display
 function closeHelp() {
   helpScreen.style("z-index", "-1");
   helpScreen.style("opacity", "0");
@@ -2045,6 +2047,7 @@ function closeHelp() {
   helpText.style("opacity", "0");
 }
 
+//shows all the islands on the mini map
 function IslandShow() {
   showingIslands = !showingIslands;
 
@@ -2070,12 +2073,14 @@ function IslandShow() {
   }
 }
 
+//updates the volume every frame
 function volumeUpdate() {
   musicVolume = ORIGIN_MUSIC * (musicSlider.value() / 100);
   SFXVolume = ORIGIN_SFX * (SFXSlider.value() / 100);
   soundUpdate();
 }
 
+//equips the current pin that is selected
 function equipCurrentPin() {
   if (pinsDropDown.value() === "Coal" && rankLevel >= 1) {
     currentPin = coalP;
@@ -2103,6 +2108,7 @@ function equipCurrentPin() {
   }
 }
 
+//changes the text based on what pin was selected
 function changePins() {
   let title = "none";
   let requirement = "none";
@@ -2188,6 +2194,7 @@ function changePins() {
   `);
 }
 
+//opens the pins display screen
 function displayPins() {
   showingPins = !showingPins;
 
@@ -2221,6 +2228,7 @@ function displayPins() {
   }
 }
 
+//closes pins screen
 function pinsClose() {  
   showingPins = false;
   pinsScreen.style("z-index", "-1");
@@ -2235,6 +2243,7 @@ function pinsClose() {
   pinsTextHolder.style("opacity", "0");
 }
 
+//added to organize z indexes
 function moveLayer(item, layer) {
   let newLayer = Number(layer);
   item.style("z-index", newLayer);
@@ -2261,6 +2270,7 @@ function chnagedBlinkTime() {
   visibleTime = newtime;
 }
 
+//switches the textholder in the mapscreen
 function mapTypeSwitch() {
   updateMapsDrop();
   mapTextUpdate();
@@ -2328,6 +2338,7 @@ function mapTextUpdate() {
   }
 }
 
+//deletes the current custom map that was selected
 function deleteCurrent() {
   if (!countryList.includes(mapsDropDown.value()) && mapsDropDown.value() !== "World" && !learnList.includes(mapsDropDown.value())) {
     delete savedMaps[mapsDropDown.value()];
@@ -2342,6 +2353,7 @@ function deleteCurrent() {
   }
 }
 
+//adds every country as a seperate map that is selectable
 function includeAllCountries() {
   for (let country of allCountries) {
     mapsDropDown.option(country[0]);
@@ -2358,6 +2370,7 @@ function includeAllCountries() {
   }
 }
 
+//add each learn map as a seperate map
 function includeAllLearn() {
   for (let learnMap of allLearn) {
     addmap(learnMap[1]);
@@ -2371,12 +2384,14 @@ function includeAllLearn() {
   }
 }
 
+//adds each learn map into the drop down
 function addLearnDropDowns() {
   for (let learnMap of allLearn) {
     mapsDropDown.option(learnMap[0]);
   }
 }
 
+//converts the json into a list of coordinates
 function handleFile(file) {
 
   if (!countryList.includes(mapNameType.value()) && mapNameType.value() !== "World" && mapNameType.value() !== "") {
@@ -2392,11 +2407,13 @@ function handleFile(file) {
   }
 }
 
+//runs to switch the map
 function mapSwitches() {
   differentMap(allMaps[mapsDropDown.value()]);
   mapTextUpdate();
 }
 
+//based on what is typed in the input, shows the maps that include what is typed
 function addToDropDown(list) {
   mapsDropDown.elt.innerHTML = "";
   
@@ -2478,6 +2495,7 @@ function updateMapsDrop() {
   mapsDropDown.elt.options[0].style.backgroundColor = 'yellow';
 }
 
+//displays the map screen
 function displayMaps() {
   showingMaps = !showingMaps;
 
@@ -2511,6 +2529,7 @@ function displayMaps() {
   }
 }
 
+//closes the maps screen
 function closeMaps() {
   if (showingMaps) {
     showingMaps = false;
@@ -2605,6 +2624,7 @@ function displayallOutlines() {
   }
 }
 
+//moves down the list of drop down basically flipping the page
 function nextIndex() {
   if (hintsDropDown.elt.selectedIndex < hintsDropDown.elt.options.length - 1) {
     hintsDropDown.elt.selectedIndex++;
@@ -2613,6 +2633,7 @@ function nextIndex() {
   currentHintDisplay();
 }
 
+//moves backwards flipping the page backwards
 function previousIndex() {
   if (hintsDropDown.elt.selectedIndex >= 1) {
     hintsDropDown.elt.selectedIndex--;
@@ -2842,6 +2863,7 @@ function displayLearn() {
   }
 }
 
+//closes the learn screen
 function closeLearn() {
   hintsDropDown.elt.innerHTML = "";
   
@@ -2874,10 +2896,12 @@ function closeLearn() {
 }
 
 //for testing purposes
+//creates a pin on the map displaying the answer
 function crAns() {
   displayAns = L.marker([randomlocation.lat, randomlocation.lng]).addTo(mainMap);
 }
 
+//closes the map
 function toggleMapClose() {
   mapClose = !mapClose;
   if (mapClose) {
@@ -2888,6 +2912,7 @@ function toggleMapClose() {
   }
 }
 
+//opens settings menu
 function showSettings() {
   if (!showingSettings) {
     settingsScreen.style("z-index", "20");
